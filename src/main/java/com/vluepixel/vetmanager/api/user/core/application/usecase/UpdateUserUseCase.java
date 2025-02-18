@@ -1,11 +1,11 @@
 package com.vluepixel.vetmanager.api.user.core.application.usecase;
 
 import org.jboss.logging.MDC;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.auth.core.application.dto.JwtDto;
 import com.vluepixel.vetmanager.api.auth.core.application.port.out.JwtAuthenticationPort;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
+import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.query.FieldUpdate;
 import com.vluepixel.vetmanager.api.user.core.application.dto.UserDto;
 import com.vluepixel.vetmanager.api.user.core.application.mapper.UserMapper;
@@ -24,32 +24,32 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class UpdateUserUseCase implements UpdateUserPort {
+    private final TransactionalPort transactionalPort;
+
     private final JwtAuthenticationPort jwtAuthenticationPort;
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
     @Override
-    @Transactional
     public UserDto update(UpdateUserRequest request) {
         MDC.put("operationId", "User id " + request.getId());
         log.info("Updating user info");
 
-        User userUpdated = updateHelper(request);
+        User updatedUser = updateHelper(request);
 
         log.info("User updated");
 
-        return userMapper.toDto(userUpdated);
+        return userMapper.toDto(updatedUser);
     }
 
     @Override
-    @Transactional
     public JwtDto updateCurrentUser(UpdateUserRequest request) {
         MDC.put("operationId", "User id " + request.getId());
         log.info("Updating current user info");
 
-        User userUpdated = updateHelper(request);
-        String jwt = jwtAuthenticationPort.toJwt(userUpdated);
+        User updatedUser = updateHelper(request);
+        String jwt = jwtAuthenticationPort.toJwt(updatedUser);
 
         log.info("Current user updated");
 
@@ -57,10 +57,14 @@ public class UpdateUserUseCase implements UpdateUserPort {
     }
 
     private User updateHelper(UpdateUserRequest request) {
-        User userUpdated = userRepository.update(request.getId(),
-                FieldUpdate.set("firstName", request.getFirstName().trim()),
-                FieldUpdate.set("lastName", request.getLastName().trim()));
+        User updatedUser = transactionalPort.run((aux) -> {
+            aux.setEntityClass(User.class);
 
-        return userUpdated;
+            return userRepository.update(request.getId(),
+                    FieldUpdate.set("firstName", request.getFirstName().trim()),
+                    FieldUpdate.set("lastName", request.getLastName().trim()));
+        });
+
+        return updatedUser;
     }
 }

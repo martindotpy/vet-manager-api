@@ -3,7 +3,6 @@ package com.vluepixel.vetmanager.api.patient.medicalhistory.application.usecase;
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.equal;
 
 import org.slf4j.MDC;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.patient.medicalhistory.application.dto.MedicalHistoryDto;
 import com.vluepixel.vetmanager.api.patient.medicalhistory.application.mapper.MedicalHistoryMapper;
@@ -12,6 +11,7 @@ import com.vluepixel.vetmanager.api.patient.medicalhistory.domain.model.MedicalH
 import com.vluepixel.vetmanager.api.patient.medicalhistory.domain.repository.MedicalHistoryRepository;
 import com.vluepixel.vetmanager.api.patient.medicalhistory.domain.request.UpdateMedicalHistoryRequest;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
+import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
@@ -27,21 +27,26 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class UpdateMedicalHistoryUseCase implements UpdateMedicalHistoryPort {
+    private final TransactionalPort transactionalPort;
+
     private final MedicalHistoryRepository medicalHistoryRepository;
     private final MedicalHistoryMapper medicalHistoryMapper;
 
     @Override
-    @Transactional
     public MedicalHistoryDto update(Long patientId, UpdateMedicalHistoryRequest request) {
         MDC.put("operationId", "Medical history id " + request.getId());
         log.info("Updating medical history");
 
-        var medicalHistoryUpdated = medicalHistoryMapper.fromRequest(request).build();
-        int rowsModified = medicalHistoryRepository.updateBy(
-                Criteria.of(
-                        equal("id", request.getId()),
-                        equal("patientId", patientId)),
-                FieldUpdate.set("content", request.getContent()));
+        MedicalHistory updatedMedicalHistory = medicalHistoryMapper.fromRequest(request).build();
+        int rowsModified = transactionalPort.run((aux) -> {
+            aux.setEntityClass(MedicalHistory.class);
+
+            return medicalHistoryRepository.updateBy(
+                    Criteria.of(
+                            equal("id", request.getId()),
+                            equal("patientId", patientId)),
+                    FieldUpdate.set("content", request.getContent()));
+        });
 
         // Verify any unexpected behavior
         if (rowsModified == 0) {
@@ -56,10 +61,10 @@ public class UpdateMedicalHistoryUseCase implements UpdateMedicalHistoryPort {
                                     "' has more than one row modified"));
         }
 
-        medicalHistoryUpdated = medicalHistoryRepository.findById(request.getId()).get();
+        updatedMedicalHistory = medicalHistoryRepository.findById(request.getId()).get();
 
         log.info("Medical history updated");
 
-        return medicalHistoryMapper.toDto(medicalHistoryUpdated);
+        return medicalHistoryMapper.toDto(updatedMedicalHistory);
     }
 }
