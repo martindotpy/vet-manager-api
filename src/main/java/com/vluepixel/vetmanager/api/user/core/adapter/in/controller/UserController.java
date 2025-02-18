@@ -24,8 +24,6 @@ import com.vluepixel.vetmanager.api.shared.application.annotation.RestController
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Order;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
-import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
-import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
 import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.InvalidStateValidation;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.ValidStateValidation;
@@ -74,12 +72,10 @@ public class UserController {
      * @param firstName the first name.
      * @param lastName  the last name.
      * @param email     the email.
-     * @return paginated response with the users found
-     * @throws ValidationException if the id is less than 1 or paginated criteria is
-     *                             invalid.
+     * @return the response.
      */
     @Operation(summary = "Find all users", description = "Find all users", responses = {
-            @ApiResponse(responseCode = "200", description = "Users found successfully"),
+            @ApiResponse(responseCode = "200", description = "Users found successfully", content = @Content(schema = @Schema(implementation = PaginatedUserResponse.class))),
             @ApiResponse(responseCode = "403", description = "Only admin can access this endpoint", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class))),
     })
@@ -93,8 +89,7 @@ public class UserController {
             @RequestParam(required = false, name = "first_name") String firstName,
             @RequestParam(required = false, name = "last_name") String lastName,
             @RequestParam(required = false) String email,
-            @RequestParam(required = false) UserRole role)
-            throws ValidationException {
+            @RequestParam(required = false) UserRole role) {
         return okPaginated(
                 findUserPort::findPaginatedBy,
                 page,
@@ -117,18 +112,15 @@ public class UserController {
      * Update the current user.
      *
      * @param request the request.
-     * @return response with the JWT with the updated user
-     * @throws ValidationException if the id is not the same as the current user id
-     *                             or request is invalid.
+     * @return the response
      */
     @Operation(summary = "Update the current user", description = "Update the current user with the given data", responses = {
-            @ApiResponse(responseCode = "200", description = "User updated successfully"),
+            @ApiResponse(responseCode = "200", description = "User updated successfully", content = @Content(schema = @Schema(implementation = AuthenticationResponse.class))),
             @ApiResponse(responseCode = "403", description = "Only admin can update user information", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @PutMapping
-    public ResponseEntity<AuthenticationResponse> updateCurrentUser(@RequestBody UpdateUserRequest request)
-            throws ValidationException {
+    public ResponseEntity<?> updateCurrentUser(@RequestBody UpdateUserRequest request) {
         return ok(() -> updateCurrentUserPort.updateCurrentUser(request),
                 "Usuario actualizado correctamente",
                 ValidationRequest.of(request),
@@ -142,19 +134,16 @@ public class UserController {
      * Update the user by id.
      *
      * @param request the request.
-     * @return response with the updated user
-     * @throws ValidationException if the id is not the same as the current user id.
+     * @return the response
      */
     @Operation(summary = "Update the user by id", description = "Update the provided user with the given data", responses = {
-            @ApiResponse(responseCode = "200", description = "User updated successfully"),
+            @ApiResponse(responseCode = "200", description = "User updated successfully", content = @Content(schema = @Schema(implementation = UserResponse.class))),
             @ApiResponse(responseCode = "403", description = "Only admin can update user information", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') and #id != principal.id")
-    public ResponseEntity<UserResponse> update(@RequestBody UpdateUserRequest request, @PathVariable Long id)
-            throws ValidationException {
+    public ResponseEntity<?> update(@RequestBody UpdateUserRequest request, @PathVariable Long id) {
         return ok(() -> updateCurrentUserPort.update(request),
                 "Usuario actualizado correctamente",
                 ValidationRequest.of(request),
@@ -168,16 +157,15 @@ public class UserController {
      * Delete the user by id.
      *
      * @param id the id.
-     * @return response with an ok message
+     * @return the response.
      */
     @Operation(summary = "Delete the user by id", description = "Delete the user by id", responses = {
-            @ApiResponse(responseCode = "200", description = "User deleted successfully"),
+            @ApiResponse(responseCode = "200", description = "User deleted successfully", content = @Content(schema = @Schema(implementation = BasicResponse.class))),
             @ApiResponse(responseCode = "403", description = "Only admin can delete user", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = FailureResponse.class)))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<BasicResponse> delete(@PathVariable Long id)
-            throws ValidationException, NotFoundException {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         return ok(() -> deleteUserPort.deleteById(id),
                 "Usuario eliminado correctamente",
                 InvalidStateValidation.of(
@@ -191,17 +179,15 @@ public class UserController {
      * Update the current user email.
      *
      * @param request the request.
-     * @return response with the update user
+     * @return the response
      */
     @Operation(summary = "Update the current user email", description = "Update the current user email with the given data", responses = {
-            @ApiResponse(responseCode = "200", description = "User updated successfully"),
+            @ApiResponse(responseCode = "200", description = "User updated successfully", content = @Content(schema = @Schema(implementation = AuthenticationResponse.class))),
             @ApiResponse(responseCode = "403", description = "Only admin can update user information", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @PutMapping("/email")
-    public ResponseEntity<AuthenticationResponse> updateCurrentUserEmail(@RequestBody UpdateUserEmailRequest request)
-            throws ValidationException {
+    public ResponseEntity<?> updateCurrentUserEmail(@RequestBody UpdateUserEmailRequest request) {
         return ok(() -> updateUserEmailPort.updateCurrentUser(request),
                 "Usuario actualizado correctamente",
                 ValidationRequest.of(request),
@@ -215,20 +201,16 @@ public class UserController {
      * Update the user email by id.
      *
      * @param request the request.
-     * @return response with the JWT with the updated user
+     * @return the response
      */
     @Operation(summary = "Update the user email by id", description = "Update the provided user email with the given data", responses = {
-            @ApiResponse(responseCode = "200", description = "User updated successfully"),
+            @ApiResponse(responseCode = "200", description = "User updated successfully", content = @Content(schema = @Schema(implementation = UserResponse.class))),
             @ApiResponse(responseCode = "403", description = "Only admin can update user information", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @PutMapping("/{id}/email")
     @PreAuthorize("hasRole('ADMIN') and #id != principal.id")
-    public ResponseEntity<UserResponse> updateUserEmail(
-            @RequestBody UpdateUserEmailRequest request,
-            @PathVariable Long id)
-            throws ValidationException, NotFoundException {
+    public ResponseEntity<?> updateUserEmail(@RequestBody UpdateUserEmailRequest request, @PathVariable Long id) {
         return ok(() -> updateUserEmailPort.update(request),
                 "Usuario actualizado correctamente",
                 ValidationRequest.of(request),
@@ -236,5 +218,6 @@ public class UserController {
                         request.getId().equals(id),
                         "path.id",
                         "Id de la ruta y del cuerpo no coinciden"));
+
     }
 }
