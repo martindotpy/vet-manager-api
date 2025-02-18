@@ -15,11 +15,9 @@ import com.vluepixel.vetmanager.api.patient.race.domain.model.Race;
 import com.vluepixel.vetmanager.api.vaccine.core.domain.model.Vaccine;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -65,14 +63,11 @@ public final class Patient {
     private String characteristics;
     @Builder.Default
     private boolean deceased = false;
-    @ElementCollection(fetch = FetchType.EAGER)
-    // @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient")
     private List<@NotNull MedicalHistory> medicalHistories;
-    @ElementCollection(fetch = FetchType.EAGER)
-    // @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient")
     private List<@NotNull MedicalRecord> medicalRecords;
-    @ElementCollection(fetch = FetchType.EAGER)
-    // @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient")
     private List<@NotNull Vaccine> vaccines;
 
     @NotNull
