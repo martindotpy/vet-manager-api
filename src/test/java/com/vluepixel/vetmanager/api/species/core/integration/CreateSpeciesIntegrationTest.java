@@ -22,7 +22,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration test for the create species functionality.
  */
 public class CreateSpeciesIntegrationTest extends BaseIntegrationTest {
-    private final static String MESSAGE_OK = "Especie creada exitosamente";
+    private static final String MESSAGE_OK = "Especie creada exitosamente";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
