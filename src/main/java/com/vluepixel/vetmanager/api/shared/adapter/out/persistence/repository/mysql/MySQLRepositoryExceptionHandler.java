@@ -12,7 +12,6 @@ import org.hibernate.query.sqm.PathElementException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.dao.OptimisticLockingFailureException;
-import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
 
@@ -27,7 +26,6 @@ import com.vluepixel.vetmanager.api.shared.domain.repository.RepositoryErrorType
 import com.vluepixel.vetmanager.api.shared.domain.repository.RepositoryExceptionHandler;
 import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationError;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
@@ -55,10 +53,6 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
         }
 
         else if (e instanceof TransactionSystemException) {
-            handle(e.getCause(), entityClass);
-        }
-
-        else if (e instanceof JpaObjectRetrievalFailureException) {
             handle(e.getCause(), entityClass);
         }
 
@@ -95,10 +89,6 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
         }
 
         else if (e instanceof NonUniqueResultException childException) {
-            handle(childException, entityClass);
-        }
-
-        else if (e instanceof EntityNotFoundException childException) {
             handle(childException, entityClass);
         }
 
@@ -186,12 +176,5 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
 
     private void handle(StaleObjectStateException e, Class<?> entityClass) {
         throw new InternalServerErrorException(e);
-    }
-
-    private void handle(EntityNotFoundException e, Class<?> entityClass) {
-        String[] splittedMessage = e.getMessage().split("\\.");
-        String entityName = splittedMessage[splittedMessage.length - 1].split(" ")[0];
-
-        throw new NotFoundException(entityName);
     }
 }
