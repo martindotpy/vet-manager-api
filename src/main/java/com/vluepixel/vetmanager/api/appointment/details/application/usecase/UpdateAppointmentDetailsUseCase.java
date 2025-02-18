@@ -1,7 +1,6 @@
 package com.vluepixel.vetmanager.api.appointment.details.application.usecase;
 
 import org.slf4j.MDC;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.appointment.details.application.dto.AppointmentDetailsDto;
 import com.vluepixel.vetmanager.api.appointment.details.application.mapper.AppointmentDetailsMapper;
@@ -25,16 +24,15 @@ public class UpdateAppointmentDetailsUseCase implements UpdateAppointmentDetails
     private final AppointmentDetailsMapper appointmentDetailsMapper;
 
     @Override
-    @Transactional
     public AppointmentDetailsDto update(UpdateAppointmentDetailsRequest request) {
         MDC.put("operationId", "Appointment details id " + request.getId());
         log.info("Updating appointment details");
 
-        AppointmentDetails appointmentDetailsUpdated = appointmentDetailsMapper.fromRequest(request).build();
-        appointmentDetailsUpdated = appointmentDetailsRepository.save(appointmentDetailsUpdated);
+        AppointmentDetails updatedAppointmentDetails = appointmentDetailsMapper.fromRequest(request).build();
+        updatedAppointmentDetails = appointmentDetailsRepository.save(updatedAppointmentDetails);
 
         log.info("Appointment details updated");
 
-        return appointmentDetailsMapper.toDto(appointmentDetailsUpdated);
+        return appointmentDetailsMapper.toDto(updatedAppointmentDetails);
     }
 }

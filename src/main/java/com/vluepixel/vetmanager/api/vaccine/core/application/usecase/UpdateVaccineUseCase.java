@@ -3,9 +3,9 @@ package com.vluepixel.vetmanager.api.vaccine.core.application.usecase;
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.equal;
 
 import org.slf4j.MDC;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
+import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
@@ -27,24 +27,29 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class UpdateVaccineUseCase implements UpdateVaccinePort {
+    private final TransactionalPort transactionalPort;
+
     private final VaccineRepository vaccineRepository;
     private final VaccineMapper vaccineMapper;
 
     @Override
-    @Transactional
     public VaccineDto update(Long patientId, UpdateVaccineRequest request) {
         MDC.put("operationId", "Vaccine id " + request.getId());
         log.info("Updating vaccine info");
 
-        Vaccine vaccineUpdated = vaccineMapper.fromRequest(request).build();
-        int rowsModified = vaccineRepository.updateBy(
-                Criteria.of(
-                        equal("id", request.getId()),
-                        equal("patient.id", patientId)),
-                FieldUpdate.set("name", vaccineUpdated.getName()),
-                FieldUpdate.set("doseInMilliliters", vaccineUpdated.getDoseInMilliliters()),
-                FieldUpdate.set("providedAt", vaccineUpdated.getProvidedAt()),
-                FieldUpdate.set("vaccinator", vaccineUpdated.getVaccinator()));
+        Vaccine updatedVaccine = vaccineMapper.fromRequest(request).build();
+        int rowsModified = transactionalPort.run((aux) -> {
+            aux.setEntityClass(Vaccine.class);
+
+            return vaccineRepository.updateBy(
+                    Criteria.of(
+                            equal("id", request.getId()),
+                            equal("patient.id", patientId)),
+                    FieldUpdate.set("name", updatedVaccine.getName()),
+                    FieldUpdate.set("doseInMilliliters", updatedVaccine.getDoseInMilliliters()),
+                    FieldUpdate.set("providedAt", updatedVaccine.getProvidedAt()),
+                    FieldUpdate.set("vaccinator", updatedVaccine.getVaccinator()));
+        });
 
         // Verify any unexpected behavior
         if (rowsModified == 0) {
@@ -59,10 +64,10 @@ public class UpdateVaccineUseCase implements UpdateVaccinePort {
                                     "' has more than one row modified"));
         }
 
-        vaccineUpdated = vaccineRepository.findById(request.getId()).get();
+        Vaccine updatedVaccineAux = vaccineRepository.findById(request.getId()).get();
 
         log.info("Vaccine updated");
 
-        return vaccineMapper.toDto(vaccineUpdated);
+        return vaccineMapper.toDto(updatedVaccineAux);
     }
 }

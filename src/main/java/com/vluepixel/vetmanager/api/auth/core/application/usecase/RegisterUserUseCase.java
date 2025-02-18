@@ -7,12 +7,12 @@ import java.util.Optional;
 
 import org.slf4j.MDC;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.auth.core.application.port.in.RegisterUserPort;
 import com.vluepixel.vetmanager.api.auth.core.domain.exception.EmailAlreadyInUseException;
 import com.vluepixel.vetmanager.api.auth.core.domain.request.RegisterUserRequest;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
+import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.query.FieldUpdate;
 import com.vluepixel.vetmanager.api.user.core.application.dto.UserDto;
 import com.vluepixel.vetmanager.api.user.core.application.mapper.UserMapper;
@@ -30,13 +30,14 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class RegisterUserUseCase implements RegisterUserPort {
+    private final TransactionalPort transactionalPort;
+
     private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
     @Override
-    @Transactional
     public UserDto register(RegisterUserRequest request) {
         MDC.put("operationId", "User email " + request.getEmail());
         log.info("Registering user");
@@ -44,23 +45,25 @@ public class RegisterUserUseCase implements RegisterUserPort {
         // Verify if the email already exists with the same auth provider
         Optional<User> findUser = userRepository.findByEmailDeletedOrNot(request.getEmail());
 
-        User savedUser = null;
+        User savedUser = transactionalPort.run((aux) -> {
+            aux.setEntityClass(User.class);
 
-        if (findUser.isEmpty()) { // Create the new user
-            savedUser = create(request);
-        } else {
-            User userFound = findUser.get();
+            if (findUser.isEmpty()) { // Create the new user
+                return create(request);
+            } else {
+                User userFound = findUser.get();
 
-            if (!userFound.isDeleted()) {
-                log.error("User with email already exists",
-                        fgBrightRed(request.getEmail()));
+                if (!userFound.isDeleted()) {
+                    log.error("User with email already exists",
+                            fgBrightRed(request.getEmail()));
 
-                throw new EmailAlreadyInUseException();
+                    throw new EmailAlreadyInUseException();
+                }
+
+                // Restore the user
+                return restore(request, userFound.getId());
             }
-
-            // Restore the user
-            savedUser = restore(request, userFound.getId());
-        }
+        });
 
         log.info("User registered");
 

@@ -25,7 +25,10 @@ public final class ConflictException extends ErrorException {
     }
 
     public ConflictException(String entity, String field) {
-        this.message = this.message.replace("%", getName(field) + " de " + getName(entity));
+        String entityName = getName(entity);
+        entityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
+
+        this.message = this.message.replace("%", getName(field) + " de " + entityName);
     }
 
     public ConflictException(Class<?> entity, String field) {
