@@ -1,11 +1,11 @@
 package com.vluepixel.vetmanager.api.appointment.type.application.usecase;
 
 import org.slf4j.MDC;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.appointment.type.application.dto.AppointmentTypeDto;
 import com.vluepixel.vetmanager.api.appointment.type.application.mapper.AppointmentTypeMapper;
 import com.vluepixel.vetmanager.api.appointment.type.application.port.in.UpdateAppointmentTypePort;
-import com.vluepixel.vetmanager.api.appointment.type.domain.model.AppointmentType;
 import com.vluepixel.vetmanager.api.appointment.type.domain.repository.AppointmentTypeRepository;
 import com.vluepixel.vetmanager.api.appointment.type.domain.request.UpdateAppointmentTypeRequest;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
@@ -24,15 +24,16 @@ public class UpdateAppointmentTypeUseCase implements UpdateAppointmentTypePort {
     private final AppointmentTypeMapper appointmentTypeMapper;
 
     @Override
+    @Transactional
     public AppointmentTypeDto update(UpdateAppointmentTypeRequest request) {
         MDC.put("operationId", "Appointment type id " + request.getId());
         log.info("Updating appointment type");
 
-        AppointmentType updatedAppointmentType = appointmentTypeMapper.fromRequest(request).build();
-        updatedAppointmentType = appointmentTypeRepository.save(updatedAppointmentType);
+        var appointmentTypeUpdated = appointmentTypeMapper.fromRequest(request).build();
+        appointmentTypeUpdated = appointmentTypeRepository.save(appointmentTypeUpdated);
 
         log.info("Appointment type updated");
 
-        return appointmentTypeMapper.toDto(updatedAppointmentType);
+        return appointmentTypeMapper.toDto(appointmentTypeUpdated);
     }
 }

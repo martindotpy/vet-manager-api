@@ -10,6 +10,7 @@ import com.vluepixel.vetmanager.api.medicalrecord.core.domain.repository.Medical
 import com.vluepixel.vetmanager.api.medicalrecord.core.domain.request.CreateMedicalRecordRequest;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,7 @@ public class CreateMedicalRecordUseCase implements CreateMedicalRecordPort {
     private final MedicalRecordMapper medicalrecordMapper;
 
     @Override
+    @Transactional
     public MedicalRecordDto create(CreateMedicalRecordRequest request) {
         MDC.put("operationId", "Medical record with patient id " + request.getPatientId());
         log.info("Creating medical record");

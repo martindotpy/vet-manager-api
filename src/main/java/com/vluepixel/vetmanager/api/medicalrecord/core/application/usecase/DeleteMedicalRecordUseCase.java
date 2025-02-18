@@ -9,12 +9,12 @@ import com.vluepixel.vetmanager.api.medicalrecord.core.application.port.in.Delet
 import com.vluepixel.vetmanager.api.medicalrecord.core.domain.model.MedicalRecord;
 import com.vluepixel.vetmanager.api.medicalrecord.core.domain.repository.MedicalRecordRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
-import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.query.FieldUpdate;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,24 +25,19 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class DeleteMedicalRecordUseCase implements DeleteMedicalRecordPort {
-    private final TransactionalPort transactionalPort;
-
     private final MedicalRecordRepository medicalRecordRepository;
 
     @Override
+    @Transactional
     public void deleteByPatientIdAndId(Long patientId, Long id) {
         MDC.put("operationId", "Medical record id " + id);
         log.info("Deleting medical record by id");
 
-        int rowsModified = transactionalPort.run((aux) -> {
-            aux.setEntityClass(MedicalRecord.class);
-
-            return medicalRecordRepository.updateBy(
-                    Criteria.of(
-                            equal("id", id),
-                            equal("patient.id", id)),
-                    FieldUpdate.set("deleted", true));
-        });
+        int rowsModified = medicalRecordRepository.updateBy(
+                Criteria.of(
+                        equal("id", id),
+                        equal("patient.id", id)),
+                FieldUpdate.set("deleted", true));
 
         // Verify any unexpected behavior
         if (rowsModified == 0) {
