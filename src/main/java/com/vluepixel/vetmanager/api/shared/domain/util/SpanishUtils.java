@@ -22,7 +22,9 @@ public class SpanishUtils {
      * @return the Spanish name
      */
     public static String getName(String value) {
-        return values.getOrDefault(toSnakeCase(value), value);
+        value = toSnakeCase(value);
+
+        return values.getOrDefault(value, value);
     }
 
     /**
