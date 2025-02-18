@@ -39,8 +39,8 @@ public class AuthDataProvider {
 
     public static final UserDto ADMIN_DTO = UserDto.builder()
             .id(1L)
-            .firstName("Admin")
-            .lastName("Admin")
+            .firstName("admin")
+            .lastName("admin")
             .email("admin@admin.com")
             .profileImageUrl(null)
             .roles(List.of(UserRole.ADMIN))
