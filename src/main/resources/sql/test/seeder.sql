@@ -62,31 +62,78 @@ VALUES
     (1, 'firstclient@firstclient.com'),
     (2, 'secondclient@secondclient.com');
 
-INSERT INTO
-    `client_emails` (client_id, emails)
-VALUES
-    (1, 'firstclient@firstclient.com'),
-    (2, 'secondclient@secondclient.com');
+INSERT INTO 
+    `client_emails` (
+        client_id,
+        emails
+    )  
+VALUES  
+    (
+        1,
+        'firstclient@firstclient.com'
+    ),
+    (
+        2,
+        'secondclient@secondclient.com'
+    );
+
+INSERT INTO 
+    `client_phones` (
+        client_id,
+        phones
+    )  
+VALUES  
+    (
+        1,
+        '999999999'
+    ),
+    (
+        2,
+        '922222222'
+    );
 
 INSERT INTO
-    `client_phones` (client_id, phones)
+    `species` (
+        id,
+        `name`
+    )
 VALUES
-    (1, '999999999'),
-    (2, '922222222');
+    (
+        1,
+        'Perro'
+    ),
+    (
+        2,
+        'Gato'
+    );
 
 INSERT INTO
-    `species` (id, `name`)
+    `race` (
+        id,
+        species_id,
+        `name`
+    )
 VALUES
-    (1, 'Perro'),
-    (2, 'Gato');
-
-INSERT INTO
-    `race` (id, species_id, `name`)
-VALUES
-    (1, 1, 'Poodle'),
-    (2, 1, 'Chihuahua'),
-    (3, 2, 'Siamés'),
-    (4, 2, 'Persa');
+    (
+        1,
+        1,
+        'Poodle'
+    ),
+    (
+        2,
+        1,
+        'Chihuahua'
+    ),
+    (
+        3,
+        2,
+        'Siamés'
+    ),
+    (
+        4,
+        2,
+        'Persa'
+    );
 
 INSERT INTO
     `patient` (
