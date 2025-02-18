@@ -24,8 +24,6 @@ import com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender;
 import com.vluepixel.vetmanager.api.patient.core.domain.request.CreatePatientRequest;
 import com.vluepixel.vetmanager.api.patient.core.domain.request.UpdatePatientRequest;
 import com.vluepixel.vetmanager.api.shared.adapter.in.response.BasicResponse;
-import com.vluepixel.vetmanager.api.shared.adapter.in.response.DetailedFailureResponse;
-import com.vluepixel.vetmanager.api.shared.adapter.in.response.FailureResponse;
 import com.vluepixel.vetmanager.api.shared.application.annotation.RestControllerAdapter;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Order;
@@ -36,9 +34,6 @@ import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.InvalidStateValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -79,13 +74,10 @@ public final class PatientController {
      * @param clientAddress            The client address.
      * @param clientPhone              The client phone.
      * @param clientEmail              The client email.
-     * @return paginated response with the patients found
+     * @return Paginated response with the patients found
      * @throws ValidationException If the request parameters are invalid.
      */
-    @Operation(summary = "Get all patient by paginated criteria", responses = {
-            @ApiResponse(responseCode = "200", description = "Patients found"),
-            @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
-    })
+    @Operation(summary = "Get all patient by paginated criteria")
     @GetMapping
     public ResponseEntity<PaginatedPatientResponse> getByPaginatedCriteria(
             @RequestParam(defaultValue = "1") Integer page,
@@ -141,39 +133,13 @@ public final class PatientController {
     }
 
     /**
-     * Get a patient by id.
-     *
-     * @param id The patient id.
-     * @return response with the patient found
-     * @throws ValidationException If the id is less than 1.
-     */
-    @Operation(summary = "Get a patient by id", responses = {
-            @ApiResponse(responseCode = "200", description = "Patient found"),
-            @ApiResponse(responseCode = "404", description = "Patient not found", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
-            @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
-    })
-    @GetMapping("/{id}")
-    public ResponseEntity<PatientResponse> getById(@PathVariable Long id)
-            throws ValidationException, NotFoundException {
-        return ok(() -> findPatientPort.findById(id),
-                "Paciente encontrado exitosamente",
-                InvalidStateValidation.of(
-                        id < 1,
-                        "query.id",
-                        "El id debe ser mayor a 0"));
-    }
-
-    /**
      * Create a patient.
      *
      * @param request The create patient request.
-     * @return response with the patient created
+     * @return Response with the patient created
      * @throws ValidationException If the request is invalid.
      */
-    @Operation(summary = "Create a patient", responses = {
-            @ApiResponse(responseCode = "200", description = "Patient created"),
-            @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
-    })
+    @Operation(summary = "Create a patient")
     @PostMapping
     public ResponseEntity<PatientResponse> create(@RequestBody CreatePatientRequest request)
             throws ValidationException {
@@ -186,17 +152,13 @@ public final class PatientController {
      * Update a patient.
      *
      * @param request The update patient request.
-     * @return response with the patient updated
+     * @return Response with the patient updated
      * @throws ValidationException If the request is invalid.
      */
-    @Operation(summary = "Update a patient", responses = {
-            @ApiResponse(responseCode = "200", description = "Patient updated"),
-            @ApiResponse(responseCode = "404", description = "Patient not found", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
-            @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
-    })
+    @Operation(summary = "Update a patient")
     @PutMapping
     public ResponseEntity<PatientResponse> update(@RequestBody UpdatePatientRequest request)
-            throws ValidationException, NotFoundException {
+            throws ValidationException {
         return ok(() -> updatePatientPort.update(request),
                 "Paciente eliminado exitosamente",
                 ValidationRequest.of(request));
@@ -206,13 +168,13 @@ public final class PatientController {
      * Delete a patient.
      *
      * @param id The patient id.
-     * @return response with an ok message
+     * @return Response with an ok message
      * @throws ValidationException If the id is less than 1.
      */
     @Operation(summary = "Delete a patient")
     @DeleteMapping("/{id}")
     public ResponseEntity<BasicResponse> delete(@PathVariable Long id)
-            throws ValidationException, NotFoundException {
+            throws NotFoundException {
         return ok(() -> deletePatientPort.deleteById(id),
                 "Paciente eliminado exitosamente",
                 InvalidStateValidation.of(

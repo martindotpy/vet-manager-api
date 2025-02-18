@@ -23,8 +23,6 @@ import com.vluepixel.vetmanager.api.patient.race.application.port.in.UpdateRaceP
 import com.vluepixel.vetmanager.api.patient.race.domain.request.CreateRaceRequest;
 import com.vluepixel.vetmanager.api.patient.race.domain.request.UpdateRaceRequest;
 import com.vluepixel.vetmanager.api.shared.adapter.in.response.BasicResponse;
-import com.vluepixel.vetmanager.api.shared.adapter.in.response.DetailedFailureResponse;
-import com.vluepixel.vetmanager.api.shared.adapter.in.response.FailureResponse;
 import com.vluepixel.vetmanager.api.shared.application.annotation.RestControllerAdapter;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Order;
@@ -35,9 +33,6 @@ import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.InvalidStateValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -64,15 +59,12 @@ public final class RaceController {
      * @param id          The race id.
      * @param name        The race name.
      * @param speciesName The species name.
-     * @return paginated response with the races found
+     * @return Paginated response with the races found
      * @throws ValidationException If the page is less than 1, the id is less than
      *                             1, the size is less than 1, the order is defined
      *                             and the order_by is not defined.
      */
-    @Operation(summary = "Get all race by paginated criteria", responses = {
-            @ApiResponse(responseCode = "200", description = "Races found"),
-            @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
-    })
+    @Operation(summary = "Get all race by paginated criteria")
     @GetMapping
     public ResponseEntity<PaginatedRaceResponse> getByPaginatedCriteria(
             @RequestParam(defaultValue = "1") Integer page,
@@ -103,18 +95,13 @@ public final class RaceController {
      * Get an race by id.
      *
      * @param id The race id.
-     * @return response with the race found
+     * @return Response with the race found
      * @throws ValidationException If the id is less than 1.
-     * @throws NotFoundException   If the race is not found.
      */
-    @Operation(summary = "Get a race by id", responses = {
-            @ApiResponse(responseCode = "200", description = "Race found"),
-            @ApiResponse(responseCode = "404", description = "Race not found", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
-            @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
-    })
+    @Operation(summary = "Get a race by id")
     @GetMapping("/{id}")
     public ResponseEntity<RaceResponse> getById(@PathVariable Integer id)
-            throws ValidationException, NotFoundException {
+            throws NotFoundException {
         return ok(() -> findRacePort.findById(id),
                 "Raza encontrada",
                 InvalidStateValidation.of(
@@ -127,13 +114,10 @@ public final class RaceController {
      * Create a race.
      *
      * @param request The create race request.
-     * @return response with the created race
+     * @return Response with the created race
      * @throws ValidationException If the request is invalid.
      */
-    @Operation(summary = "Create a race", responses = {
-            @ApiResponse(responseCode = "200", description = "Race created"),
-            @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
-    })
+    @Operation(summary = "Create a race")
     @PostMapping
     public ResponseEntity<RaceResponse> create(@RequestBody CreateRaceRequest request)
             throws ValidationException {
@@ -146,15 +130,10 @@ public final class RaceController {
      * Update a race.
      *
      * @param request The update race request.
-     * @return response with the updated race
+     * @return Response with the updated race
      * @throws ValidationException If the request is invalid.
-     * @throws NotFoundException   If the race is not found.
      */
-    @Operation(summary = "Update a race", responses = {
-            @ApiResponse(responseCode = "200", description = "Race updated"),
-            @ApiResponse(responseCode = "404", description = "Race not found", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
-            @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
-    })
+    @Operation(summary = "Update a race")
     @PutMapping
     public ResponseEntity<RaceResponse> update(@RequestBody UpdateRaceRequest request)
             throws ValidationException {
@@ -169,13 +148,8 @@ public final class RaceController {
      * @param id The race id.
      * @return response with an ok message
      * @throws ValidationException If the id is less than 1.
-     * @throws NotFoundException   If the race is not found.
      */
-    @Operation(summary = "Delete a race", responses = {
-            @ApiResponse(responseCode = "200", description = "Race deleted"),
-            @ApiResponse(responseCode = "404", description = "Race not found", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
-            @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
-    })
+    @Operation(summary = "Delete a race")
     @DeleteMapping("/{id}")
     public ResponseEntity<BasicResponse> delete(@PathVariable Integer id)
             throws NotFoundException {

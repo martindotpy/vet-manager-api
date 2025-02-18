@@ -28,7 +28,7 @@ public final class RepositoryExceptionControllerAdvice {
      * Handle repository exception.
      *
      * @param e The exception.
-     * @return response with a failure message
+     * @return Response with a failure message
      */
     @ExceptionHandler(RepositoryException.class)
     public ResponseEntity<?> handle(RepositoryException e) {

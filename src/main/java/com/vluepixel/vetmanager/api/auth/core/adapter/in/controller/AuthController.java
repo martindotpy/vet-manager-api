@@ -24,8 +24,6 @@ import com.vluepixel.vetmanager.api.shared.adapter.in.response.BasicResponse;
 import com.vluepixel.vetmanager.api.shared.adapter.in.response.DetailedFailureResponse;
 import com.vluepixel.vetmanager.api.shared.adapter.in.response.FailureResponse;
 import com.vluepixel.vetmanager.api.shared.application.annotation.RestControllerAdapter;
-import com.vluepixel.vetmanager.api.shared.domain.exception.ConflictException;
-import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
 import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
 import com.vluepixel.vetmanager.api.user.core.adapter.in.response.UserResponse;
 
@@ -55,11 +53,7 @@ public class AuthController {
      * Login a user.
      *
      * @param request the login request.
-     * @return response with the JWT token
-     * @throws UserAlreadyAuthenticatedException If the user is already
-     *                                           authenticated.
-     * @throws ValidationException               If the request is invalid.
-     * @throws InvalidCredentialsException       If the credentials are invalid.
+     * @return Response with the JWT token
      */
     @Operation(summary = "Login the user", description = "Login the user with the given credentials", responses = {
             @ApiResponse(responseCode = "200", description = "User logged successfully", content = @Content(schema = @Schema(implementation = AuthenticationResponse.class))),
@@ -69,8 +63,7 @@ public class AuthController {
     })
     @SecurityRequirements
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginUserRequest request)
-            throws UserAlreadyAuthenticatedException, ValidationException, InvalidCredentialsException {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody LoginUserRequest request) {
         try {
             getCurrentUserPort.get();
 
@@ -87,20 +80,17 @@ public class AuthController {
      * Register a new user.
      *
      * @param request the register request.
-     * @return response with the registered user
-     * @throws ValidationException If the request is invalid.
-     * @throws ConflictException   If the user already exists.
+     * @return Response with the registered user
      */
     @Operation(summary = "Register a new user", description = "Register a new user", responses = {
             @ApiResponse(responseCode = "200", description = "User registered successfully", content = @Content(schema = @Schema(implementation = UserResponse.class))),
-            @ApiResponse(responseCode = "403", description = "Only admin can register new users", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
             @ApiResponse(responseCode = "409", description = "User already exists", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class))),
     })
     @PostMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<UserResponse> register(@RequestBody RegisterUserRequest request)
-            throws ValidationException, ConflictException {
+    public ResponseEntity<UserResponse> register(@RequestBody RegisterUserRequest request) {
         return ok(() -> registerUserPort.register(request),
                 "Usuario " + request.getEmail() + " ha sido registrado correctamente",
                 ValidationRequest.of(request));
@@ -110,17 +100,16 @@ public class AuthController {
      * Update the password of the current user.
      *
      * @param request the update password request.
-     * @return response with an ok message
-     * @throws ValidationException         If the request is invalid.
-     * @throws InvalidCredentialsException If the credentials are invalid.
+     * @return Response with an ok message
      */
     @Operation(summary = "Update the password", description = "Update the password of the current user", responses = {
             @ApiResponse(responseCode = "200", description = "Password updated successfully", content = @Content(schema = @Schema(implementation = BasicResponse.class))),
             @ApiResponse(responseCode = "401", description = "Invalid credentials", content = @Content(schema = @Schema(implementation = FailureResponse.class))),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
     })
     @PutMapping("/password")
     public ResponseEntity<BasicResponse> updatePassword(@RequestBody UpdatePasswordRequest request)
-            throws ValidationException, InvalidCredentialsException {
+            throws InvalidCredentialsException {
         return ok(() -> updatePasswordPort.update(request),
                 "Contraseña actualizada correctamente",
                 ValidationRequest.of(request));

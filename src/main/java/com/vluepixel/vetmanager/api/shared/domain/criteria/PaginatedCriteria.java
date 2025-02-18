@@ -30,7 +30,7 @@ public final class PaginatedCriteria extends OrderedCriteria {
      * @param order           Order.
      * @param necessaryFilter Necessary filter.
      * @param filters         Filters.
-     * @return paginated criteria instance.
+     * @return Paginated criteria instance.
      * @throws IllegalArgumentException If page or size is less than 1.
      * @throws NullPointerException     If order or any filter is null.
      */
@@ -60,7 +60,7 @@ public final class PaginatedCriteria extends OrderedCriteria {
      * @param size    Size.
      * @param order   Order.
      * @param filters Filters.
-     * @return paginated criteria instance.
+     * @return Paginated criteria instance.
      * @throws IllegalArgumentException If page or size is less than 1.
      * @throws NullPointerException     If order or any filter is null.
      */
