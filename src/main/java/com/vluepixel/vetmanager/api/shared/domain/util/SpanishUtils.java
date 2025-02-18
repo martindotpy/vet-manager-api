@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SpanishUtils {
-    private static final Map<String, String> values = loadValues();
+    private final static Map<String, String> values = loadValues();
 
     /**
      * Get the Spanish name of the value.
