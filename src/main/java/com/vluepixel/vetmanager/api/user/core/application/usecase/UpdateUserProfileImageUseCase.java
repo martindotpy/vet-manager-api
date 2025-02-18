@@ -1,13 +1,13 @@
 package com.vluepixel.vetmanager.api.user.core.application.usecase;
 
 import org.slf4j.MDC;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.auth.core.application.dto.JwtDto;
 import com.vluepixel.vetmanager.api.auth.core.application.port.out.JwtAuthenticationPort;
 import com.vluepixel.vetmanager.api.image.core.application.port.in.DeleteImagePort;
 import com.vluepixel.vetmanager.api.image.core.application.port.in.SaveImagePort;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
+import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.query.FieldUpdate;
 import com.vluepixel.vetmanager.api.user.core.application.dto.UserDto;
@@ -27,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class UpdateUserProfileImageUseCase implements UpdateUserProfileImagePort {
+    private final TransactionalPort transactionalPort;
+
     private final JwtAuthenticationPort jwtAuthenticationPort;
 
     private final SaveImagePort saveImagePort;
@@ -36,7 +38,6 @@ public class UpdateUserProfileImageUseCase implements UpdateUserProfileImagePort
     private final UserMapper userMapper;
 
     @Override
-    @Transactional
     public UserDto update(UpdateUserProfileImageRequest request) {
         MDC.put("operationId", "User id " + request.getUserId());
         log.info("Updating user image profile");
@@ -49,7 +50,6 @@ public class UpdateUserProfileImageUseCase implements UpdateUserProfileImagePort
     }
 
     @Override
-    @Transactional
     public JwtDto updateCurrentUser(UpdateUserProfileImageRequest request) {
         MDC.put("operationId", "User id " + request.getUserId());
         log.info("Updating current user image profile");
@@ -76,9 +76,13 @@ public class UpdateUserProfileImageUseCase implements UpdateUserProfileImagePort
         String savedImageUrl = saveImagePort.save(request.getData(), request.getType());
 
         // Find the user and update the image
-        User updatedUserWithoutImageUrl = userRepository.update(
-                request.getUserId(),
-                FieldUpdate.set("profileImageUrl", savedImageUrl));
+        User updatedUserWithoutImageUrl = transactionalPort.run((aux) -> {
+            aux.setEntityClass(User.class);
+
+            return userRepository.update(
+                    request.getUserId(),
+                    FieldUpdate.set("profileImageUrl", savedImageUrl));
+        });
 
         User updatedUser = userMapper.toBuilder(updatedUserWithoutImageUrl)
                 .profileImageUrl(savedImageUrl)

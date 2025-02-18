@@ -12,10 +12,12 @@ import org.hibernate.query.sqm.PathElementException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionSystemException;
 
 import com.vluepixel.vetmanager.api.shared.adapter.in.validation.JakartaValidator;
+import com.vluepixel.vetmanager.api.shared.domain.exception.CannotDeleteReferencedEntity;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ConflictException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
@@ -25,6 +27,7 @@ import com.vluepixel.vetmanager.api.shared.domain.repository.RepositoryErrorType
 import com.vluepixel.vetmanager.api.shared.domain.repository.RepositoryExceptionHandler;
 import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationError;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +55,10 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
         }
 
         else if (e instanceof TransactionSystemException) {
+            handle(e.getCause(), entityClass);
+        }
+
+        else if (e instanceof JpaObjectRetrievalFailureException) {
             handle(e.getCause(), entityClass);
         }
 
@@ -91,6 +98,10 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
             handle(childException, entityClass);
         }
 
+        else if (e instanceof EntityNotFoundException childException) {
+            handle(childException, entityClass);
+        }
+
         else if (e instanceof StaleObjectStateException childException) {
             handle(childException, entityClass);
         }
@@ -120,7 +131,11 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
         }
 
         else if (type == RepositoryErrorType.FOREIGN_KEY_CONSTRAINT_FAIL) {
-            String field = e.getErrorMessage().split("CONSTRAINT `")[1].split("`")[0];
+            String tableName = e.getCause().getMessage().split("`\\.`")[1].split("`")[0];
+            String constraint = e.getErrorMessage().split("CONSTRAINT `")[1].split("`")[0];
+
+            // Remove the 'FK_' prefix, the table name and the "_" after the table name
+            String field = constraint.substring(4 + tableName.length());
 
             throw new NotFoundException(field);
         }
@@ -131,7 +146,11 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
             throw new ValidationException(
                     List.of(new ValidationError(
                             toSnakeCase(field),
-                            getName(entityClass, field) + " no puede ser nulo(a)")));
+                            getName(field) + " no puede ser nulo(a)")));
+        }
+
+        else if (type == RepositoryErrorType.DELETE_ENTITY_REFERENCED) {
+            throw new CannotDeleteReferencedEntity(entityClass);
         }
     }
 
@@ -167,5 +186,12 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
 
     private void handle(StaleObjectStateException e, Class<?> entityClass) {
         throw new InternalServerErrorException(e);
+    }
+
+    private void handle(EntityNotFoundException e, Class<?> entityClass) {
+        String[] splittedMessage = e.getMessage().split("\\.");
+        String entityName = splittedMessage[splittedMessage.length - 1].split(" ")[0];
+
+        throw new NotFoundException(entityName);
     }
 }

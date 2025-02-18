@@ -9,7 +9,7 @@ public class UpdateRaceDataProvider {
 
     public static final UpdateRaceRequest VALID_UPDATE_RACE_REQUEST = UpdateRaceRequest
             .builder()
-            .id(1)
+            .id(3)
             .name("Pequines")
             .speciesId(1)
             .build();

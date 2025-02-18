@@ -10,7 +10,6 @@ import com.vluepixel.vetmanager.api.user.core.application.port.in.DeleteUserPort
 import com.vluepixel.vetmanager.api.user.core.domain.exception.UserCannotDeleteItselfException;
 import com.vluepixel.vetmanager.api.user.core.domain.repository.UserRepository;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +25,6 @@ public class DeleteUserUseCase implements DeleteUserPort {
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         MDC.put("operationId", "User id " + id);
         log.info("Deleting user");
