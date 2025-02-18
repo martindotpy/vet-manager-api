@@ -15,7 +15,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the get patient use case.
  */
 public class GetPatientIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "";
+    private static final String MESSAGE_OK = "Razas encontradas exitosamente";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value("a"),
+                        jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
                         jsonPath("$.total_elements").value(2),

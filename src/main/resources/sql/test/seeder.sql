@@ -121,7 +121,7 @@ VALUES
         0,
         1,
         2,
-        1,
+        2,
         'Firulays',
         'Simplemente Firulays',
         'FEMALE'
