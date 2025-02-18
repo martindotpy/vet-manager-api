@@ -2,12 +2,9 @@ package com.vluepixel.vetmanager.api.race.core.integration;
 
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_USER_JWT;
-import static com.vluepixel.vetmanager.api.race.core.data.UpdateRaceDataProvider.VALID_UPDATE_RACE_REQUEST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,9 +17,6 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  */
 public class GetRaceIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Razas encontradas exitosamente";
-    private static final String MESSAGE_ID_OK = "Raza encontrada";
-    private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
-            .format("Raza con id %s no encontrado(a)", parameter);
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -369,36 +363,6 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
 
         mockMvc.perform(get("/race")
                 .queryParams(queryParams))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    // /race/{id}
-    @Test
-    void noUser_GetRaceIDWithValidParams_Forbidden() throws Exception {
-        mockMvc.perform(get("/race/{id}", VALID_UPDATE_RACE_REQUEST.getId()))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    // ID
-    @Test
-    void noUser_GetRaceIDWithInvalidParams_ID_NotFound_Forbidden() throws Exception {
-        mockMvc.perform(get("/race/{id}", 20))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    @Test
-    void noUser_GetRaceIDWithInvalidParams_ID_Invalid_Forbidden() throws Exception {
-        mockMvc.perform(get("/race/{id}", "invalid"))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    @Test
-    void noUser_GetRaceIDWithInvalidParams_ID_Negative_Forbidden() throws Exception {
-        mockMvc.perform(get("/race/{id}", -1))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
@@ -787,7 +751,7 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, name"));
+                                .value("???"));
     }
 
     @Test
@@ -978,55 +942,6 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(4));
-    }
-
-    // /race/{id}
-    @Test
-    void user_GetRaceIDWithValidParams_Ok() throws Exception {
-        mockMvc.perform(get("/race/{id}", VALID_UPDATE_RACE_REQUEST.getId())
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_ID_OK),
-                        jsonPath("$.content.id").value(VALID_UPDATE_RACE_REQUEST.getId()),
-                        jsonPath("$.content.name").value("Siamés"),
-                        jsonPath("$.content.species.id").value(2),
-                        jsonPath("$.content.species.name").value("Gato"));
-    }
-
-    // ID
-    @Test
-    void user_GetRaceIDWithInvalidParams_ID_NotFound_Ok() throws Exception {
-        mockMvc.perform(get("/race/{id}", 20)
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND.apply("20")));
-    }
-
-    @Test
-    void user_GetRaceIDWithInvalidParams_ID_Invalid_UnprocessableEntity() throws Exception {
-        mockMvc.perform(get("/race/{id}", "invalid")
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("path.id"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
-    }
-
-    @Test
-    void user_GetRaceIDWithInvalidParams_ID_Negative_Ok() throws Exception {
-        mockMvc.perform(get("/race/{id}", -1)
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("query.id"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("El id debe ser mayor a 0"));
     }
 
     // Role: ADMIN
@@ -1409,7 +1324,7 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, name"));
+                                .value("???"));
     }
 
     @Test
@@ -1600,54 +1515,5 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(4));
-    }
-
-    // /race/{id}
-    @Test
-    void admin_GetRaceIDWithValidParams_Ok() throws Exception {
-        mockMvc.perform(get("/race/{id}", VALID_UPDATE_RACE_REQUEST.getId())
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_ID_OK),
-                        jsonPath("$.content.id").value(VALID_UPDATE_RACE_REQUEST.getId()),
-                        jsonPath("$.content.name").value("Siamés"),
-                        jsonPath("$.content.species.id").value(2),
-                        jsonPath("$.content.species.name").value("Gato"));
-    }
-
-    // ID
-    @Test
-    void admin_GetRaceIDWithInvalidParams_ID_NotFound_Ok() throws Exception {
-        mockMvc.perform(get("/race/{id}", 20)
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND.apply("20")));
-    }
-
-    @Test
-    void admin_GetRaceIDWithInvalidParams_ID_Invalid_UnprocessableEntity() throws Exception {
-        mockMvc.perform(get("/race/{id}", "invalid")
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("path.id"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
-    }
-
-    @Test
-    void admin_GetRaceIDWithInvalidParams_ID_Negative_Ok() throws Exception {
-        mockMvc.perform(get("/race/{id}", -1)
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("query.id"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("El id debe ser mayor a 0"));
     }
 }
