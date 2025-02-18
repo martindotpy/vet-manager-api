@@ -1,6 +1,7 @@
 package com.vluepixel.vetmanager.api.patient.species.application.usecase;
 
 import org.slf4j.MDC;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.patient.species.application.dto.SpeciesDto;
 import com.vluepixel.vetmanager.api.patient.species.application.mapper.SpeciesMapper;
@@ -24,15 +25,16 @@ public class UpdateSpeciesUseCase implements UpdateSpeciesPort {
     private final SpeciesMapper speciesMapper;
 
     @Override
+    @Transactional
     public SpeciesDto update(UpdateSpeciesRequest request) {
         MDC.put("operationId", "Species id " + request.getId());
         log.info("Updating species");
 
-        Species updatedSpecies = speciesMapper.fromRequest(request).build();
-        updatedSpecies = speciesRepository.save(updatedSpecies);
+        Species speciesUpdated = speciesMapper.fromRequest(request).build();
+        speciesUpdated = speciesRepository.save(speciesUpdated);
 
         log.info("Species updated");
 
-        return speciesMapper.toDto(updatedSpecies);
+        return speciesMapper.toDto(speciesUpdated);
     }
 }

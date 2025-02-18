@@ -9,12 +9,12 @@ import com.vluepixel.vetmanager.api.medicalrecord.treatment.application.port.in.
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.model.Treatment;
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.repository.TreatmentRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
-import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.query.FieldUpdate;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,25 +25,20 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class DeleteTreatmentUseCase implements DeleteTreatmentPort {
-    private final TransactionalPort transactionalPort;
-
     private final TreatmentRepository treatmentRepository;
 
     @Override
+    @Transactional
     public void deleteByPatientIdAndMedicalRecordIdAndId(Long patientId, Long medicalRecordId, Long id) {
         MDC.put("operationId", "Treatment id " + id);
         log.info("Deleting treatment by id");
 
-        int rowsModified = transactionalPort.run((aux) -> {
-            aux.setEntityClass(Treatment.class);
-
-            return treatmentRepository.updateBy(
-                    Criteria.of(
-                            equal("id", id),
-                            equal("medicalRecord.id", medicalRecordId),
-                            equal("medicalRecord.patient.id", patientId)),
-                    FieldUpdate.set("deleted", true));
-        });
+        int rowsModified = treatmentRepository.updateBy(
+                Criteria.of(
+                        equal("id", id),
+                        equal("medicalRecord.id", medicalRecordId),
+                        equal("medicalRecord.patient.id", patientId)),
+                FieldUpdate.set("deleted", true));
 
         // Verify any unexpected behavior
         if (rowsModified == 0) {

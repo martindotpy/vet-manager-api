@@ -3,6 +3,7 @@ package com.vluepixel.vetmanager.api.medicalrecord.treatment.application.usecase
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.equal;
 
 import org.slf4j.MDC;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.application.dto.TreatmentDto;
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.application.mapper.TreatmentMapper;
@@ -11,7 +12,6 @@ import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.model.Treatme
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.repository.TreatmentRepository;
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.request.UpdateTreatmentRequest;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
-import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
@@ -27,28 +27,23 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class UpdateTreatmentUseCase implements UpdateTreatmentPort {
-    private final TransactionalPort transactionalPort;
-
     private final TreatmentRepository treatmentRepository;
     private final TreatmentMapper treatmentMapper;
 
     @Override
+    @Transactional
     public TreatmentDto update(Long patientId, Long medicalRecordId, UpdateTreatmentRequest request) {
         MDC.put("operationId", "Treatment id " + request.getId());
         log.info("Updating treatment");
 
-        Treatment updatedTreatment = treatmentMapper.fromRequest(request).build();
-        int rowsModified = transactionalPort.run((aux) -> {
-            aux.setEntityClass(Treatment.class);
-
-            return treatmentRepository.updateBy(
-                    Criteria.of(
-                            equal("id", request.getId()),
-                            equal("medicalRecord.id", medicalRecordId),
-                            equal("medicalRecord.patient.id", patientId)),
-                    FieldUpdate.set("description", updatedTreatment.getDescription()),
-                    FieldUpdate.set("order", updatedTreatment.getOrder()));
-        });
+        Treatment treatmentUpdated = treatmentMapper.fromRequest(request).build();
+        int rowsModified = treatmentRepository.updateBy(
+                Criteria.of(
+                        equal("id", request.getId()),
+                        equal("medicalRecord.id", medicalRecordId),
+                        equal("medicalRecord.patient.id", patientId)),
+                FieldUpdate.set("description", treatmentUpdated.getDescription()),
+                FieldUpdate.set("order", treatmentUpdated.getOrder()));
 
         // Verify any unexpected behavior
         if (rowsModified == 0) {
@@ -65,10 +60,10 @@ public class UpdateTreatmentUseCase implements UpdateTreatmentPort {
                                     "' has more than one row modified"));
         }
 
-        Treatment updatedTreatmentAux = treatmentRepository.findById(request.getId()).get();
+        treatmentUpdated = treatmentRepository.findById(request.getId()).get();
 
         log.info("Treatment updated");
 
-        return treatmentMapper.toDto(updatedTreatmentAux);
+        return treatmentMapper.toDto(treatmentUpdated);
     }
 }

@@ -1,6 +1,7 @@
 package com.vluepixel.vetmanager.api.patient.race.application.usecase;
 
 import org.slf4j.MDC;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.patient.race.application.dto.RaceDto;
 import com.vluepixel.vetmanager.api.patient.race.application.mapper.RaceMapper;
@@ -24,15 +25,16 @@ public class UpdateRaceUseCase implements UpdateRacePort {
     private final RaceMapper raceMapper;
 
     @Override
+    @Transactional
     public RaceDto update(UpdateRaceRequest request) {
         MDC.put("operationId", "Race id " + request.getId());
         log.info("Updating race");
 
-        Race updatedRace = raceMapper.fromRequest(request).build();
-        updatedRace = raceRepository.save(updatedRace);
+        Race raceUpdated = raceMapper.fromRequest(request).build();
+        raceUpdated = raceRepository.save(raceUpdated);
 
         log.info("Race updated");
 
-        return raceMapper.toDto(updatedRace);
+        return raceMapper.toDto(raceUpdated);
     }
 }

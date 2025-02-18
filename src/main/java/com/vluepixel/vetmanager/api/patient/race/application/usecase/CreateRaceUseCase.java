@@ -12,6 +12,7 @@ import com.vluepixel.vetmanager.api.patient.species.domain.model.Species;
 import com.vluepixel.vetmanager.api.patient.species.domain.repository.SpeciesRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +29,7 @@ public class CreateRaceUseCase implements CreateRacePort {
     private final RaceMapper raceMapper;
 
     @Override
+    @Transactional
     public RaceDto create(CreateRaceRequest request) {
         MDC.put("operationId", "Race name " + request.getName());
         log.info("Creating race");

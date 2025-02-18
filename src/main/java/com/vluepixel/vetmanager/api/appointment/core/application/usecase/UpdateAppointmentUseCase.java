@@ -3,6 +3,7 @@ package com.vluepixel.vetmanager.api.appointment.core.application.usecase;
 import java.util.stream.Stream;
 
 import org.slf4j.MDC;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.vluepixel.vetmanager.api.appointment.core.application.dto.AppointmentDto;
 import com.vluepixel.vetmanager.api.appointment.core.application.mapper.AppointmentMapper;
@@ -13,7 +14,6 @@ import com.vluepixel.vetmanager.api.appointment.core.domain.request.UpdateAppoin
 import com.vluepixel.vetmanager.api.appointment.details.domain.model.AppointmentDetails;
 import com.vluepixel.vetmanager.api.appointment.details.domain.repository.AppointmentDetailsRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
-import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InnerEntityDoNotBelongToEntity;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 
@@ -27,14 +27,13 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class UpdateAppointmentUseCase implements UpdateAppointmentPort {
-    private final TransactionalPort transactionalPort;
-
     private final AppointmentDetailsRepository appointmentDetailsRepository;
 
     private final AppointmentRepository appointmentRepository;
     private final AppointmentMapper appointmentMapper;
 
     @Override
+    @Transactional
     public AppointmentDto update(UpdateAppointmentRequest request) {
         MDC.put("operationId", "Appointment id " + request.getId());
         log.info("Updating appointment");
@@ -42,31 +41,25 @@ public class UpdateAppointmentUseCase implements UpdateAppointmentPort {
         // Verify if the appointment details are valid
         Appointment appointmentToUpdate = appointmentRepository.findById(request.getId())
                 .orElseThrow(() -> new NotFoundException(Appointment.class, request.getId()));
-        Appointment updatedAppointment = appointmentMapper.fromRequest(request).build();
+        Appointment appointmentUpdated = appointmentMapper.fromRequest(request).build();
         Stream<AppointmentDetails> streamPreviousDetails = appointmentToUpdate.getDetails().stream();
 
-        for (AppointmentDetails updatedDetails : updatedAppointment.getDetails()) {
+        for (AppointmentDetails updatedDetails : appointmentUpdated.getDetails()) {
             if (!streamPreviousDetails.anyMatch(d -> d.getId().equals(updatedDetails.getId()))) {
                 throw new InnerEntityDoNotBelongToEntity(
                         "details", "El detalle con id " + updatedDetails.getId() + " no pertenece a la cita");
             }
         }
 
-        Appointment updatedAppointmentAux = transactionalPort.run((aux) -> {
-            // Update the details
-            aux.setEntityClass(AppointmentDetails.class);
+        // Update the details
+        appointmentUpdated.getDetails().forEach(appointmentDetailsRepository::save);
 
-            updatedAppointment.getDetails().forEach(appointmentDetailsRepository::save);
+        log.info("Appointment details updated");
 
-            log.info("Appointment details updated");
-
-            aux.setEntityClass(Appointment.class);
-
-            return appointmentRepository.save(updatedAppointment);
-        });
+        appointmentUpdated = appointmentRepository.save(appointmentUpdated);
 
         log.info("Appointment updated");
 
-        return appointmentMapper.toDto(updatedAppointmentAux);
+        return appointmentMapper.toDto(appointmentUpdated);
     }
 }

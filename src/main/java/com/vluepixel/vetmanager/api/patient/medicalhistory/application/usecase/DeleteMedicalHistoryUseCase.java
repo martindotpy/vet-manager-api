@@ -9,12 +9,12 @@ import com.vluepixel.vetmanager.api.patient.medicalhistory.application.port.in.D
 import com.vluepixel.vetmanager.api.patient.medicalhistory.domain.model.MedicalHistory;
 import com.vluepixel.vetmanager.api.patient.medicalhistory.domain.repository.MedicalHistoryRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
-import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.query.FieldUpdate;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,24 +25,19 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class DeleteMedicalHistoryUseCase implements DeleteMedicalHistoryPort {
-    private final TransactionalPort transactionalPort;
-
     private final MedicalHistoryRepository medicalHistoryRepository;
 
     @Override
+    @Transactional
     public void deleteByPatientIdAndId(Long patientId, Long id) {
         MDC.put("operationId", "Medical history id " + id);
         log.info("Deleting medical history by id");
 
-        int rowsModified = transactionalPort.run((aux) -> {
-            aux.setEntityClass(MedicalHistory.class);
-
-            return medicalHistoryRepository.updateBy(
-                    Criteria.of(
-                            equal("id", id),
-                            equal("patient.id", id)),
-                    FieldUpdate.set("deleted", true));
-        });
+        int rowsModified = medicalHistoryRepository.updateBy(
+                Criteria.of(
+                        equal("id", id),
+                        equal("patient.id", id)),
+                FieldUpdate.set("deleted", true));
 
         // Verify any unexpected behavior
         if (rowsModified == 0) {

@@ -9,6 +9,7 @@ import com.vluepixel.vetmanager.api.patient.medicalhistory.domain.repository.Med
 import com.vluepixel.vetmanager.api.patient.medicalhistory.domain.request.CreateMedicalHistoryRequest;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +24,7 @@ public class CreateMedicalHistoryUseCase implements CreateMedicalHistoryPort {
     private final MedicalHistoryMapper medicalHistoryMapper;
 
     @Override
+    @Transactional
     public MedicalHistoryDto create(CreateMedicalHistoryRequest request) {
         MDC.put("operationId", "Medical history with patient id " + request.getPatientId());
         log.info("Creating medical history");

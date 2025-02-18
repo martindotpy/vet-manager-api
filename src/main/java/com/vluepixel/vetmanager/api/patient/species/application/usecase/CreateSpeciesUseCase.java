@@ -10,6 +10,7 @@ import com.vluepixel.vetmanager.api.patient.species.domain.repository.SpeciesRep
 import com.vluepixel.vetmanager.api.patient.species.domain.request.CreateSpeciesRequest;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,7 @@ public class CreateSpeciesUseCase implements CreateSpeciesPort {
     private final SpeciesMapper speciesMapper;
 
     @Override
+    @Transactional
     public SpeciesDto create(CreateSpeciesRequest request) {
         MDC.put("operationId", "Species name " + request.getName());
         log.info("Creating species");

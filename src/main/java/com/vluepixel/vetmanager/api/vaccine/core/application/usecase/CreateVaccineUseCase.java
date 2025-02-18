@@ -10,6 +10,7 @@ import com.vluepixel.vetmanager.api.vaccine.core.domain.model.Vaccine;
 import com.vluepixel.vetmanager.api.vaccine.core.domain.repository.VaccineRepository;
 import com.vluepixel.vetmanager.api.vaccine.core.domain.request.CreateVaccineRequest;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,7 @@ public class CreateVaccineUseCase implements CreateVaccinePort {
     private final VaccineMapper vaccineMapper;
 
     @Override
+    @Transactional
     public VaccineDto create(CreateVaccineRequest request) {
         MDC.put("operationId", "Vaccine name " + request.getName());
         log.info("Creating vaccine");
