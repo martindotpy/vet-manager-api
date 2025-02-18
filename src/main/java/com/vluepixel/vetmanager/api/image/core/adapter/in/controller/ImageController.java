@@ -42,7 +42,8 @@ public final class ImageController {
     public ResponseEntity<?> getByName(@PathVariable String name) {
         String extension = name.substring(name.lastIndexOf('.') + 1);
 
-        return ok((output) -> findImagePort.findByName(name, output),
+        return ok(
+                (output) -> findImagePort.findByName(name, output),
                 "Image " + name,
                 "image/" + extension,
                 "Error al encontrar la imagen");
