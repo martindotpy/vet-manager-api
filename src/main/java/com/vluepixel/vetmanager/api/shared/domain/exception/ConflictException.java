@@ -4,9 +4,6 @@ import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.getNa
 
 import lombok.Getter;
 
-/**
- * Conflict exception.
- */
 @Getter
 public final class ConflictException extends ErrorException {
     private String message = "% debe ser único(a)";
@@ -17,7 +14,7 @@ public final class ConflictException extends ErrorException {
     }
 
     public ConflictException(String entity) {
-        this.message = this.message.replace("%", getName(entity));
+        this.message = this.message.replace("%", entity);
     }
 
     public ConflictException(Class<?> entity) {
@@ -25,10 +22,10 @@ public final class ConflictException extends ErrorException {
     }
 
     public ConflictException(String entity, String field) {
-        this.message = this.message.replace("%", getName(field) + " de " + getName(entity));
+        this.message = this.message.replace("%", field + " de " + entity.toLowerCase());
     }
 
     public ConflictException(Class<?> entity, String field) {
-        this(getName(entity), getName(field));
+        this(getName(entity), getName(entity, field));
     }
 }
