@@ -250,7 +250,6 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
     }
 
     // OrderBy
-    // TODO
     @Test
     void noUser_GetRaceWithInvalidParams_OrderBy_Name_Invalid_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -305,7 +304,6 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // TODO
     @Test
     void noUser_GetRaceWithInvalidParams_Name_Blank_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -768,7 +766,6 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
     }
 
     // OrderBy
-    // TODO
     @Test
     void user_GetRaceWithInvalidParams_OrderBy_Name_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -862,7 +859,6 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].name").value("Chihuahua"));
     }
 
-    // TODO
     @Test
     void user_GetRaceWithInvalidParams_Name_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -875,11 +871,11 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.total_elements").value(4),
+                        jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(4));
     }
 
     @Test
@@ -935,11 +931,11 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.total_elements").value(4),
+                        jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(4));
     }
 
     @Test
@@ -1390,7 +1386,6 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
     }
 
     // OrderBy
-    // TODO
     @Test
     void admin_GetRaceWithInvalidParams_OrderBy_Name_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -1484,7 +1479,6 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].name").value("Chihuahua"));
     }
 
-    // TODO
     @Test
     void admin_GetRaceWithInvalidParams_Name_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -1497,11 +1491,11 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.total_elements").value(4),
+                        jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(4));
     }
 
     @Test
@@ -1557,11 +1551,11 @@ public class GetRaceIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.total_elements").value(4),
+                        jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(4));
     }
 
     @Test

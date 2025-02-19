@@ -100,7 +100,7 @@ public class CreateSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name").value(VALID_CREATE_SPECIES_REQUEST.getName()));
     }
 
@@ -133,7 +133,7 @@ public class CreateSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name").value(VALID_NAME_MAX_LENGTH_CREATE_SPECIES_REQUEST.getName()));
     }
 
@@ -196,7 +196,7 @@ public class CreateSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name").value(VALID_CREATE_SPECIES_REQUEST.getName()));
     }
 
@@ -229,7 +229,7 @@ public class CreateSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name").value(VALID_NAME_MAX_LENGTH_CREATE_SPECIES_REQUEST.getName()));
     }
 

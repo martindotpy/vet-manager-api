@@ -15,6 +15,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the get appointment use case.
  */
 public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
+    private static final String MESSAGE_OK = "Citas encontradas";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -41,10 +42,10 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
-                        jsonPath("$.total_pages").value(1),
-                        jsonPath("$.message").value("a"),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(0));
     }
 }

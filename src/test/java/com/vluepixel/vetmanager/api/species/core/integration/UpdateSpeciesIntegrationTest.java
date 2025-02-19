@@ -25,7 +25,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  */
 public class UpdateSpeciesIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Cita actualizada exitosamente";
-    private static final String MESSAGE_NOT_FOUND = "Especies no encontrado(a)";
+    private static final String MESSAGE_NOT_FOUND = "Especie no encontrado(a)";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------

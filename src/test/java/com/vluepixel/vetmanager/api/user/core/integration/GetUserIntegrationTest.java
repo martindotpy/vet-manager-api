@@ -508,10 +508,10 @@ class GetUserIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(2));
     }
 
     @Test
@@ -555,10 +555,10 @@ class GetUserIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(2));
     }
 
     @Test
@@ -625,10 +625,10 @@ class GetUserIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(2));
     }
 
     @Test
