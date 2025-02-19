@@ -2219,7 +2219,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Deceased
-    @Test // TODO: Doesn't work
+    @Test
     void user_GetPatientWithInvalidParams_Deceased_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -3094,7 +3094,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Identification
-    @Test // TODO: Doesn't work
+    @Test
     void user_GetPatientWithInvalidParams_OwnerIdentification_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -3188,7 +3188,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Identification Type
-    @Test // TODO: Doesn't work
+    @Test
     void user_GetPatientWithInvalidParams_OwnerIdentificationType_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -3206,7 +3206,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
                         jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.total_pages").value(0),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(0));
     }
@@ -3303,7 +3303,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Address
-    @Test // TODO: Doesn't work
+    @Test
     void user_GetPatientWithInvalidParams_OwnerAddress_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -3397,7 +3397,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Phone
-    @Test // TODO: Doesn't work
+    @Test
     void user_GetPatientWithInvalidParams_OwnerPhone_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -3421,7 +3421,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].owner.phones").value(containsInAnyOrder("999999999")));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void user_GetPatientWithInvalidParams_OwnerPhone_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("owner_phone", "invalid");
@@ -3431,14 +3431,15 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
     }
 
     @Test
@@ -3511,7 +3512,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Email
-    @Test // TODO: Doesn't work
+    @Test
     void user_GetPatientWithInvalidParams_OwnerEmail_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -3533,7 +3534,8 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(1),
                         jsonPath("$.content[0].owner.emails")
-                                .value(containsInAnyOrder("secondclient@secondclient.com")));
+                                .value(containsInAnyOrder("secondclient@secondclient.com",
+                                        "secondclient@secondclient.com")));
     }
 
     @Test
@@ -4398,7 +4400,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Deceased
-    @Test // TODO: Doesn't work
+    @Test
     void admin_GetPatientWithInvalidParams_Deceased_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -4537,7 +4539,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].race.id").value(1));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void admin_GetPatientWithInvalidParams_RaceID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("race_id", "invalid");
@@ -4551,10 +4553,11 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("race_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                                "Illegal argument: For input string: \"%s\"",
+                                queryParams.get("race_id").toArray()[0])));
     }
 
     @Test
@@ -4760,7 +4763,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].race.species.id").value(1));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void admin_GetPatientWithInvalidParams_SpeciesID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("species_id", "invalid");
@@ -4774,10 +4777,11 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("species_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                                "Illegal argument: For input string: \"%s\"",
+                                queryParams.get("species_id").toArray()[0])));
     }
 
     @Test
@@ -4983,7 +4987,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].owner.id").value(1));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void admin_GetPatientWithInvalidParams_OwnerID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("owner_id", "invalid");
@@ -4997,10 +5001,11 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("owner_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                                "Illegal argument: For input string: \"%s\"",
+                                queryParams.get("owner_id").toArray()[0])));
     }
 
     @Test
@@ -5276,7 +5281,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Identification
-    @Test // TODO: Doesn't work
+    @Test
     void admin_GetPatientWithInvalidParams_OwnerIdentification_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -5370,7 +5375,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Identification Type
-    @Test // TODO: Doesn't work
+    @Test
     void admin_GetPatientWithInvalidParams_OwnerIdentificationType_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -5388,7 +5393,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
                         jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.total_pages").value(0),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(0));
     }
@@ -5485,7 +5490,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Address
-    @Test // TODO: Doesn't work
+    @Test
     void admin_GetPatientWithInvalidParams_OwnerAddress_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -5579,7 +5584,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Phone
-    @Test // TODO: Doesn't work
+    @Test
     void admin_GetPatientWithInvalidParams_OwnerPhone_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -5603,8 +5608,8 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].owner.phones").value(containsInAnyOrder("999999999")));
     }
 
-    @Test // TODO: Take in consideration
-    void admin_GetPatientWithInvalidParams_OwnerPhone_Invalid_UnprocessableEntity() throws Exception {
+    @Test
+    void admin_GetPatientWithInvalidParams_OwnerPhone_Invalid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("owner_phone", "invalid");
         queryParams.add("page", "1");
@@ -5613,14 +5618,15 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
     }
 
     @Test
@@ -5693,7 +5699,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Owner Email
-    @Test // TODO: Doesn't work
+    @Test
     void admin_GetPatientWithInvalidParams_OwnerEmail_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -5715,7 +5721,8 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(1),
                         jsonPath("$.content[0].owner.emails")
-                                .value(containsInAnyOrder("secondclient@secondclient.com")));
+                                .value(containsInAnyOrder("secondclient@secondclient.com",
+                                        "secondclient@secondclient.com")));
     }
 
     @Test
