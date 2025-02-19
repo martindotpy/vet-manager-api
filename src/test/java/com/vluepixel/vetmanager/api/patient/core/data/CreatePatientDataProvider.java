@@ -1,61 +1,53 @@
 package com.vluepixel.vetmanager.api.patient.core.data;
 
-import java.time.LocalDate;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_FUTURE_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_NULL_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_GENDER_NULL_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_NAME_BLANK_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_NAME_EMPTY_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_NAME_NULL_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_NAME_TOO_LONG_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_OWNER_ID_NEGATIVE_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_OWNER_ID_NOT_FOUND_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_OWNER_ID_NULL_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_RACE_ID_NEGATIVE_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_RACE_ID_NOT_FOUND_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_RACE_ID_NULL_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.VALID_CHARACTERISTICS_BLANK_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.VALID_CHARACTERISTICS_EMPTY_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.VALID_CHARACTERISTICS_NULL_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.VALID_NAME_MAX_LENGTH_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.VALID_UPDATE_PATIENT_REQUEST;
 
-import com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender;
-import com.vluepixel.vetmanager.api.patient.core.domain.request.UpdatePatientRequest;
+import com.vluepixel.vetmanager.api.patient.core.domain.request.CreatePatientRequest;
 
 /**
- * Update patient data provider.
+ * Create patient data provider.
  */
-public class UpdatePatientDataProvider {
-    public static final UpdatePatientRequest INVALID_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
-            .builder()
-            .id(10L)
-            .name("New name")
-            .birthDate(LocalDate.now().minusYears(10))
-            .gender(PatientGender.FEMALE)
-            .characteristics("Le creció más el pelo")
-            .deceased(true)
-            .raceId(1)
-            .ownerId(2L)
-            .build();
+public class CreatePatientDataProvider {
 
-    public static final UpdatePatientRequest VALID_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest VALID_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(1L)
-            .name("New name")
-            .birthDate(LocalDate.now().minusYears(10))
-            .gender(PatientGender.FEMALE)
-            .characteristics("Le creció más el pelo")
-            .deceased(true)
-            .raceId(1)
-            .ownerId(1L)
+            .name(VALID_UPDATE_PATIENT_REQUEST.getName())
+            .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
+            .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
+            .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
+            .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
+            .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
+            .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
     // -----------------------------------------------------------------------------------------------------------------
     // Validations
     // -----------------------------------------------------------------------------------------------------
 
-    // ID
-    public static final UpdatePatientRequest INVALID_ID_NEGATIVE_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
-            .builder()
-            .id(-1L)
-            .name(VALID_UPDATE_PATIENT_REQUEST.getName())
-            .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
-            .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
-            .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
-            .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
-            .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
-            .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
-            .build();
-
     // Name
-    private static final int MAX_NAME_LENGTH = 50;
-    public static final UpdatePatientRequest INVALID_NAME_TOO_LONG_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_NAME_TOO_LONG_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
-            .name("a".repeat(MAX_NAME_LENGTH + 1))
+            .name(INVALID_NAME_TOO_LONG_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
@@ -64,10 +56,9 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest VALID_NAME_MAX_LENGTH_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest VALID_NAME_MAX_LENGTH_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
-            .name("a".repeat(MAX_NAME_LENGTH))
+            .name(VALID_NAME_MAX_LENGTH_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
@@ -76,10 +67,9 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_NAME_BLANK_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_NAME_BLANK_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
-            .name(" ")
+            .name(INVALID_NAME_BLANK_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
@@ -88,10 +78,9 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_NAME_EMPTY_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_NAME_EMPTY_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
-            .name("")
+            .name(INVALID_NAME_EMPTY_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
@@ -100,10 +89,9 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_NAME_NULL_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_NAME_NULL_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
-            .name(null)
+            .name(INVALID_NAME_NULL_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
@@ -112,12 +100,11 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    // BirthDate
-    public static final UpdatePatientRequest INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    // BirtDate
+    public static final CreatePatientRequest INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
-            .birthDate(LocalDate.now().minusYears(1))
+            .birthDate(INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
@@ -125,11 +112,10 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
-            .birthDate(LocalDate.now())
+            .birthDate(INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
@@ -137,11 +123,10 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_BIRTH_DATE_FUTURE_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_BIRTH_DATE_FUTURE_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
-            .birthDate(LocalDate.now().plusDays(1))
+            .birthDate(INVALID_BIRTH_DATE_FUTURE_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
@@ -149,11 +134,10 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_BIRTH_DATE_NULL_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_BIRTH_DATE_NULL_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
-            .birthDate(null)
+            .birthDate(INVALID_BIRTH_DATE_NULL_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
@@ -162,12 +146,11 @@ public class UpdatePatientDataProvider {
             .build();
 
     // Gender
-    public static final UpdatePatientRequest INVALID_GENDER_NULL_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_GENDER_NULL_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
-            .gender(null)
+            .gender(INVALID_GENDER_NULL_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
             .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
@@ -175,126 +158,116 @@ public class UpdatePatientDataProvider {
             .build();
 
     // Characteristics
-    public static final UpdatePatientRequest VALID_CHARACTERISTICS_BLANK_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest VALID_CHARACTERISTICS_BLANK_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
-            .characteristics(" ")
+            .characteristics(VALID_CHARACTERISTICS_BLANK_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
             .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest VALID_CHARACTERISTICS_EMPTY_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest VALID_CHARACTERISTICS_EMPTY_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
-            .characteristics("")
+            .characteristics(VALID_CHARACTERISTICS_EMPTY_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
             .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest VALID_CHARACTERISTICS_NULL_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest VALID_CHARACTERISTICS_NULL_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
-            .characteristics(null)
+            .characteristics(VALID_CHARACTERISTICS_NULL_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
             .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
     // Deceased
-    public static final UpdatePatientRequest INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_DECEASED_NULL_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
-            .deceased(Boolean.parseBoolean(null))
+            .deceased(INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST.isDeceased())
             .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
     // Race ID
-    public static final UpdatePatientRequest INVALID_RACE_ID_NOT_FOUND_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_RACE_ID_NOT_FOUND_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
-            .raceId(10)
+            .raceId(INVALID_RACE_ID_NOT_FOUND_UPDATE_PATIENT_REQUEST.getRaceId())
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_RACE_ID_NEGATIVE_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_RACE_ID_NEGATIVE_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
-            .raceId(-1)
+            .raceId(INVALID_RACE_ID_NEGATIVE_UPDATE_PATIENT_REQUEST.getRaceId())
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_RACE_ID_NULL_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_RACE_ID_NULL_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
-            .raceId(null)
+            .raceId(INVALID_RACE_ID_NULL_UPDATE_PATIENT_REQUEST.getRaceId())
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
     // Owner ID
-    public static final UpdatePatientRequest INVALID_OWNER_ID_NOT_FOUND_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_OWNER_ID_NOT_FOUND_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
             .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
-            .ownerId(10L)
+            .ownerId(INVALID_OWNER_ID_NOT_FOUND_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_OWNER_ID_NEGATIVE_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_OWNER_ID_NEGATIVE_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
             .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
-            .ownerId(-1L)
+            .ownerId(INVALID_OWNER_ID_NEGATIVE_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_OWNER_ID_NULL_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final CreatePatientRequest INVALID_OWNER_ID_NULL_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
-            .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
             .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
             .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
-            .ownerId(null)
+            .ownerId(INVALID_OWNER_ID_NULL_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 }
