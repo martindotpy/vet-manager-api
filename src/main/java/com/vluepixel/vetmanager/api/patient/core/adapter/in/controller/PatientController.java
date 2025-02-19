@@ -133,7 +133,7 @@ public final class PatientController {
                         like("client.address", clientAddress),
                         like("client.phone", clientPhone),
                         like("client.email", clientEmail)),
-                "Razas encontradas exitosamente",
+                "Pacientes encontrados exitosamente",
                 InvalidStateValidation.of(
                         id != null && id < 1,
                         "query.id",
