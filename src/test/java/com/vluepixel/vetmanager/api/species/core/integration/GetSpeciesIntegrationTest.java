@@ -192,11 +192,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -207,11 +207,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // ID
@@ -270,11 +270,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -291,11 +291,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Page
@@ -350,11 +350,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -370,11 +370,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Size
@@ -429,11 +429,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(111),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -449,11 +449,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -469,11 +469,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Order
@@ -531,11 +531,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // OrderBy
@@ -575,12 +575,13 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2),
-                        jsonPath("$.content[0].name").value("Gato"),
+                        jsonPath("$.content.length()").value(3),
+                        jsonPath("$.content[0].name").value("Hámster"),
+                        jsonPath("$.content[1].name").value("Gato"),
                         jsonPath("$.content[1].name").value("Perro"));
     }
 
@@ -639,11 +640,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.total_elements").value(3),
+                        jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -658,11 +659,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Role: ADMIN
@@ -681,11 +682,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -696,11 +697,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // ID
@@ -759,11 +760,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -780,11 +781,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Page
@@ -839,11 +840,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -859,11 +860,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Size
@@ -918,11 +919,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(111),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -938,11 +939,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -958,11 +959,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Order
@@ -1020,11 +1021,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // OrderBy
@@ -1064,11 +1065,12 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2),
+                        jsonPath("$.content.length()").value(3),
+                        jsonPath("$.content[0].name").value("Hámster"),
                         jsonPath("$.content[0].name").value("Gato"),
                         jsonPath("$.content[1].name").value("Perro"));
     }
@@ -1128,11 +1130,11 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(0),
-                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.total_elements").value(3),
+                        jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1147,10 +1149,10 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 }
