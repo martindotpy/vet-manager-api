@@ -1379,15 +1379,15 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.length()").value(2));
     }
 
-    // ClientID
+    // OwnerID
     @Test // TODO: Doesn't work
-    void admin_GetPatientWithInvalidParams_ClientID_Valid_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerID_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
-        queryParams.add("client_id", "1");
+        queryParams.add("owner_id", "1");
 
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
@@ -1405,9 +1405,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test // TODO: Take in consideration
-    void admin_GetPatientWithInvalidParams_ClientID_Invalid_UnprocessableEntity() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("client_id", "invalid");
+        queryParams.add("owner_id", "invalid");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
@@ -1425,9 +1425,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientID_NotFound_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerID_NotFound_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("client_id", "20");
+        queryParams.add("owner_id", "20");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
@@ -1446,9 +1446,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientID_Blank_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerID_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("client_id", " ");
+        queryParams.add("owner_id", " ");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
@@ -1467,9 +1467,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientID_Empty_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerID_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("client_id", "");
+        queryParams.add("owner_id", "");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
@@ -1488,9 +1488,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientID_Null_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerID_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("client_id", null);
+        queryParams.add("owner_id", null);
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
@@ -1508,15 +1508,15 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.length()").value(2));
     }
 
-    // Client First Name
+    // Owner First Name
     @Test // TODO: Doesn't work
-    void admin_GetPatientWithInvalidParams_ClientFirstName_Valid_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerFirstName_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
-        queryParams.add("client_first_name", "Admin");
+        queryParams.add("owner_first_name", "Admin");
 
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
@@ -1534,13 +1534,13 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientFirstName_Blank_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerFirstName_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
-        queryParams.add("client_first_name", " ");
+        queryParams.add("owner_first_name", " ");
 
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
@@ -1557,13 +1557,13 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientFirstName_Empty_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerFirstName_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
-        queryParams.add("client_first_name", "");
+        queryParams.add("owner_first_name", "");
 
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
@@ -1580,13 +1580,13 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientFirstName_Null_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerFirstName_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
-        queryParams.add("client_first_name", null);
+        queryParams.add("owner_first_name", null);
 
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
@@ -1602,15 +1602,15 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.length()").value(2));
     }
 
-    // Client Last Name
+    // Owner Last Name
     @Test // TODO: Doesn't work
-    void admin_GetPatientWithInvalidParams_ClientLastName_Valid_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerLastName_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
-        queryParams.add("client_last_name", "Admin");
+        queryParams.add("owner_last_name", "Admin");
 
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
@@ -1628,13 +1628,13 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientLastName_Blank_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerLastName_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
-        queryParams.add("client_last_name", " ");
+        queryParams.add("owner_last_name", " ");
 
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
@@ -1651,13 +1651,13 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientLastName_Empty_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerLastName_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
-        queryParams.add("client_last_name", "");
+        queryParams.add("owner_last_name", "");
 
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
@@ -1674,13 +1674,13 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetPatientWithInvalidParams_ClientLastName_Null_Ok() throws Exception {
+    void admin_GetPatientWithInvalidParams_OwnerLastName_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
-        queryParams.add("client_last_name", null);
+        queryParams.add("owner_last_name", null);
 
         mockMvc.perform(get("/patient")
                 .queryParams(queryParams)
