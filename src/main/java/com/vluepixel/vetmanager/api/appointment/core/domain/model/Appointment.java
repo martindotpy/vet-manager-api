@@ -3,11 +3,12 @@ package com.vluepixel.vetmanager.api.appointment.core.domain.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.vluepixel.vetmanager.api.appointment.details.domain.model.AppointmentDetails;
 import com.vluepixel.vetmanager.api.patient.core.domain.model.Patient;
@@ -16,6 +17,7 @@ import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,6 +39,7 @@ import lombok.NoArgsConstructor;
 @Audited
 @SQLDelete(sql = "UPDATE appointment SET deleted = true WHERE id = ?")
 @SQLRestriction("deleted = false")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Builder
 @NoArgsConstructor
@@ -47,7 +50,7 @@ public final class Appointment {
     @Column(columnDefinition = "bigint unsigned")
     private Long id;
 
-    @CreatedDate
+    @CreationTimestamp
     private LocalDateTime createdAt;
     @NotNull
     private LocalDateTime startAt;
