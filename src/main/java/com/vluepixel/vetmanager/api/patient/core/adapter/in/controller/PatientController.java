@@ -2,6 +2,7 @@ package com.vluepixel.vetmanager.api.patient.core.adapter.in.controller;
 
 import static com.vluepixel.vetmanager.api.shared.adapter.in.util.ResponseShortcuts.ok;
 import static com.vluepixel.vetmanager.api.shared.adapter.in.util.ResponseShortcuts.okPaginated;
+import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.equal;
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.like;
 
 import org.springframework.http.ResponseEntity;
@@ -59,27 +60,27 @@ public final class PatientController {
     /**
      * Get all patient by paginated criteria.
      *
-     * @param page                     The page number.
-     * @param size                     The page size.
-     * @param order                    The order type.
-     * @param orderBy                  The order by field.
-     * @param id                       The patient id.
-     * @param name                     The patient name.
-     * @param age                      The patient age.
-     * @param gender                   The patient gender.
-     * @param deceased                 The patient deceased status.
-     * @param raceId                   The race id.
-     * @param raceName                 The race name.
-     * @param speciesId                The species id.
-     * @param speciesName              The species name.
-     * @param clientId                 The client id.
-     * @param clientFirstName          The client first name.
-     * @param clientLastName           The client last name.
-     * @param clientIdentification     The client identification.
-     * @param clientIdentificationType The client identification type.
-     * @param clientAddress            The client address.
-     * @param clientPhone              The client phone.
-     * @param clientEmail              The client email.
+     * @param page                    The page number.
+     * @param size                    The page size.
+     * @param order                   The order type.
+     * @param orderBy                 The order by field.
+     * @param id                      The patient id.
+     * @param name                    The patient name.
+     * @param age                     The patient age.
+     * @param gender                  The patient gender.
+     * @param deceased                The patient deceased status.
+     * @param raceId                  The race id.
+     * @param raceName                The race name.
+     * @param speciesId               The species id.
+     * @param speciesName             The species name.
+     * @param ownerId                 The owner id.
+     * @param ownerFirstName          The owner first name.
+     * @param ownerLastName           The owner last name.
+     * @param ownerIdentification     The owner identification.
+     * @param ownerIdentificationType The owner identification type.
+     * @param ownerAddress            The owner address.
+     * @param ownerPhone              The owner phone.
+     * @param ownerEmail              The owner email.
      * @return paginated response with the patients found
      * @throws ValidationException If the request parameters are invalid.
      */
@@ -121,7 +122,7 @@ public final class PatientController {
                         like("name", name),
                         like("age", age),
                         like("gender", gender),
-                        like("deceased", deceased),
+                        equal("deceased", deceased),
                         like("race.id", raceId),
                         like("race.name", raceName),
                         like("race.species.id", speciesId),
@@ -132,8 +133,8 @@ public final class PatientController {
                         like("owner.identification", ownerIdentification),
                         like("owner.identificationType", ownerIdentificationType),
                         like("owner.address", ownerAddress),
-                        like("owner.phone", ownerPhone),
-                        like("owner.email", ownerEmail)),
+                        like("owner.phones", ownerPhone),
+                        like("owner.emails", ownerEmail)),
                 "Pacientes encontrados exitosamente",
                 InvalidStateValidation.of(
                         id != null && id < 1,
