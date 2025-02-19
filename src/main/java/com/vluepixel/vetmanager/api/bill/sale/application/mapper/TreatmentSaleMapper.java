@@ -3,6 +3,7 @@ package com.vluepixel.vetmanager.api.bill.sale.application.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.bill.sale.application.dto.TreatmentSaleDto;
 import com.vluepixel.vetmanager.api.bill.sale.domain.model.TreatmentSale;
 import com.vluepixel.vetmanager.api.bill.sale.domain.request.CreateTreatmentSaleRequest;
@@ -34,6 +35,7 @@ public interface TreatmentSaleMapper
      */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "bill", source = "billId")
     @Mapping(target = "treatment", source = "treatmentId")
     TreatmentSale fromRequest(CreateTreatmentSaleRequest request);
 
@@ -52,6 +54,7 @@ public interface TreatmentSaleMapper
      * @return the treatment sale builder
      */
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "bill", source = "billId")
     @Mapping(target = "treatment", source = "treatmentId")
     TreatmentSale fromRequest(UpdateTreatmentSaleRequest request);
 
@@ -63,5 +66,15 @@ public interface TreatmentSaleMapper
      */
     default Treatment mapTreatmentIdToTreatment(Long treatmentId) {
         return Treatment.builder().id(treatmentId).build();
+    }
+
+    /**
+     * Maps the bill id to an bill.
+     *
+     * @param billId the bill id.
+     * @return the bill
+     */
+    default Bill mapBillIdToBill(Long billId) {
+        return Bill.builder().id(billId).build();
     }
 }

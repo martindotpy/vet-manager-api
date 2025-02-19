@@ -38,5 +38,6 @@ public final class CreateVaccineRequest implements Request {
     @NotNull(message = "El id del vacunador es requerido")
     @Positive(message = "El id del vacunador debe ser mayor a 0")
     private Long vaccinatorId;
-    // TODO: Product sale
+    @Positive(message = "El id de la venta de producto debe ser mayor a 0")
+    private Long productSaleId;
 }

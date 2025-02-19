@@ -1,28 +1,25 @@
-package com.vluepixel.vetmanager.api.vaccine.core.domain.model;
+package com.vluepixel.vetmanager.api.bill.core.domain.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.envers.Audited;
 
-import com.vluepixel.vetmanager.api.bill.sale.domain.model.ProductSale;
-import com.vluepixel.vetmanager.api.patient.core.domain.model.Patient;
-import com.vluepixel.vetmanager.api.user.core.domain.model.User;
+import com.vluepixel.vetmanager.api.client.core.domain.model.Client;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,46 +27,47 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Vaccine.
+ * Bill.
  */
 @Entity
 @Audited
-@SQLDelete(sql = "UPDATE vaccine SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE bill SET deleted = true WHERE id = ?")
 @SQLRestriction("deleted = false")
 @Getter
 @Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public final class Vaccine {
+public final class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "bigint unsigned")
     private Long id;
 
-    @Size(max = 50)
-    @NotBlank
-    @Column(columnDefinition = "varchar(50)")
-    private String name;
-    @Max(250)
     @NotNull
     @Positive
-    @Column(columnDefinition = "tinyint unsigned")
-    private Integer doseInMilliliters;
+    @DecimalMax(value = "99999.99")
+    @Column(columnDefinition = "decimal(7, 2)")
+    private BigDecimal total;
     @NotNull
-    private LocalDateTime providedAt;
+    @Positive
+    @Max(100)
+    @Column(columnDefinition = "tinyint unsigned")
+    private Integer discount;
+    @NotNull
+    @Positive
+    @DecimalMax(value = "99999.99")
+    @Column(columnDefinition = "decimal(7, 2)")
+    private BigDecimal totalPaid;
+    @Builder.Default
+    private boolean paid = false;
+    private LocalDateTime lastPaidAt;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_vaccine_patient"))
-    private Patient patient;
-    @NotNull
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_vaccine_vaccinator"))
-    private User vaccinator;
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_vaccine_product_sale"))
-    private ProductSale productSale;
+    private Client client;
 
     @Builder.Default
     private boolean deleted = false;

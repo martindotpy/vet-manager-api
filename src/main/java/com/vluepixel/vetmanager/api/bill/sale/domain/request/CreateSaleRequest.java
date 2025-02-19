@@ -30,10 +30,14 @@ public abstract class CreateSaleRequest implements Request {
 
     @NotNull(message = "El precio es requerido")
     @Positive(message = "El precio debe ser mayor a 0")
-    @DecimalMax(value = "999999.99", message = "El precio debe ser menor a 999999.99")
+    @DecimalMax(value = "999999.99", message = "El precio no puede ser mayor a 999999.99")
     private BigDecimal price;
     @NotNull(message = "El descuento es requerido")
     @Positive(message = "El descuento debe ser mayor a 0")
-    @Max(value = 100, message = "El descuento debe ser menor a 100")
+    @Max(value = 100, message = "El descuento no puede ser mayor a 100")
     private Integer discount;
+
+    @NotNull(message = "El id de la cuenta es requerido")
+    @Positive(message = "El id de la cuenta debe ser mayor a 0")
+    private Long billId;
 }

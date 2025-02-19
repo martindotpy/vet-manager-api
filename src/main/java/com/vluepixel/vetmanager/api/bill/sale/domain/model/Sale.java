@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.data.annotation.CreatedBy;
 
+import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 
 import jakarta.persistence.Column;
@@ -51,6 +52,8 @@ public abstract class Sale {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_sale_seller"))
     @CreatedBy
     private User seller;
-    // TODO
-    // Bill
+    @NotNull
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_sale_bill"))
+    private Bill bill;
 }

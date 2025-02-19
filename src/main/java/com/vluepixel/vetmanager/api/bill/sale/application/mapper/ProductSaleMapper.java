@@ -3,6 +3,7 @@ package com.vluepixel.vetmanager.api.bill.sale.application.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.bill.sale.application.dto.ProductSaleDto;
 import com.vluepixel.vetmanager.api.bill.sale.domain.model.ProductSale;
 import com.vluepixel.vetmanager.api.bill.sale.domain.request.CreateProductSaleRequest;
@@ -34,6 +35,7 @@ public interface ProductSaleMapper
      */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "bill", source = "billId")
     @Mapping(target = "product", source = "productId")
     ProductSale fromRequest(CreateProductSaleRequest request);
 
@@ -52,6 +54,7 @@ public interface ProductSaleMapper
      * @return the product sale builder
      */
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "bill", source = "billId")
     @Mapping(target = "product", source = "productId")
     ProductSale fromRequest(UpdateProductSaleRequest request);
 
@@ -63,5 +66,15 @@ public interface ProductSaleMapper
      */
     default Product mapProductIdToProduct(Long productId) {
         return Product.builder().id(productId).build();
+    }
+
+    /**
+     * Maps the bill id to an bill.
+     *
+     * @param billId the bill id.
+     * @return the bill
+     */
+    default Bill mapBillIdToBill(Long billId) {
+        return Bill.builder().id(billId).build();
     }
 }

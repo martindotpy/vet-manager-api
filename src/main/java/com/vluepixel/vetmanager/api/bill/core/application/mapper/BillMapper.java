@@ -1,0 +1,90 @@
+package com.vluepixel.vetmanager.api.bill.core.application.mapper;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ObjectFactory;
+
+import com.vluepixel.vetmanager.api.bill.core.application.dto.BillDto;
+import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
+import com.vluepixel.vetmanager.api.bill.core.domain.request.CreateBillRequest;
+import com.vluepixel.vetmanager.api.bill.core.domain.request.UpdateBillRequest;
+import com.vluepixel.vetmanager.api.client.core.domain.model.Client;
+import com.vluepixel.vetmanager.api.shared.application.mapper.CrudMapper;
+import com.vluepixel.vetmanager.api.shared.application.mapper.StringUtilsMapper;
+
+/**
+ * Bill mapper.
+ */
+@Mapper(componentModel = "spring", uses = { StringUtilsMapper.class })
+public interface BillMapper
+        extends CrudMapper<Bill, BillDto, Bill.BillBuilder> {
+    /**
+     * Creates a new {@link Bill} builder.
+     *
+     * @return the builder
+     */
+    @ObjectFactory
+    default Bill.BillBuilder createBillBuilder() {
+        return Bill.builder();
+    }
+
+    /**
+     * Create bill from request.
+     *
+     * <ul>
+     * <li><strong>Ignores:</strong>
+     * <ul>
+     * <li><code>id</code></li>
+     * <li><code>createdAt</code></li>
+     * <li><code>deleted</code></li>
+     * <li><code>paid</code></li>
+     * <li><code>total</code></li>
+     * </ul>
+     * </li>
+     * </ul>
+     *
+     * @param request the create bill request.
+     * @return the bill builder
+     */
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "paid", ignore = true)
+    @Mapping(target = "total", ignore = true)
+    @Mapping(target = "client", source = "clientId")
+    Bill.BillBuilder fromRequest(CreateBillRequest request);
+
+    /**
+     * Update bill from request.
+     *
+     * <ul>
+     * <li><strong>Ignores:</strong>
+     * <ul>
+     * <li><code>createdAt</code></li>
+     * <li><code>deleted</code></li>
+     * <li><code>paid</code></li>
+     * <li><code>total</code></li>
+     * </ul>
+     * </li>
+     * </ul>
+     *
+     * @param request the update bill request.
+     * @return the bill builder
+     */
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "deleted", ignore = true)
+    @Mapping(target = "paid", ignore = true)
+    @Mapping(target = "total", ignore = true)
+    @Mapping(target = "client", source = "clientId")
+    Bill.BillBuilder fromRequest(UpdateBillRequest request);
+
+    /**
+     * Maps the client id to a client.
+     *
+     * @param clientId the client id
+     * @return the client
+     */
+    default Client mapClientIdToClient(Long clientId) {
+        return Client.builder().id(clientId).build();
+    }
+}

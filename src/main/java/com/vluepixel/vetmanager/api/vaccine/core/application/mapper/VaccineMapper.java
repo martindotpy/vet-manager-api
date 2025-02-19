@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ObjectFactory;
 
+import com.vluepixel.vetmanager.api.bill.sale.domain.model.ProductSale;
 import com.vluepixel.vetmanager.api.patient.core.domain.model.Patient;
 import com.vluepixel.vetmanager.api.shared.application.mapper.CrudMapper;
 import com.vluepixel.vetmanager.api.shared.application.mapper.StringUtilsMapper;
@@ -51,6 +52,7 @@ public interface VaccineMapper
     @Mapping(target = "deleted", ignore = true)
     @Mapping(target = "patient", source = "patientId")
     @Mapping(target = "vaccinator", source = "vaccinatorId")
+    @Mapping(target = "productSale", source = "productSaleId")
     Vaccine.VaccineBuilder fromRequest(CreateVaccineRequest request);
 
     /**
@@ -71,6 +73,7 @@ public interface VaccineMapper
     @Mapping(target = "deleted", ignore = true)
     @Mapping(target = "patient", ignore = true)
     @Mapping(target = "vaccinator", source = "vaccinatorId")
+    @Mapping(target = "productSale", source = "productSaleId")
     Vaccine.VaccineBuilder fromRequest(UpdateVaccineRequest request);
 
     /**
@@ -91,5 +94,15 @@ public interface VaccineMapper
      */
     default User mapVaccinatorIdToUser(Long vaccinatorId) {
         return User.builder().id(vaccinatorId).build();
+    }
+
+    /**
+     * Map product sale id to product sale.
+     *
+     * @param productSaleId the product sale id.
+     * @return the product sale
+     */
+    default ProductSale mapProductSaleIdToProductSale(Long productSaleId) {
+        return ProductSale.builder().id(productSaleId).build();
     }
 }

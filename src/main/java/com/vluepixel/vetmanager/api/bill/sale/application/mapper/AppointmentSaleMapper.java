@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.vluepixel.vetmanager.api.appointment.core.domain.model.Appointment;
+import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.bill.sale.application.dto.AppointmentSaleDto;
 import com.vluepixel.vetmanager.api.bill.sale.domain.model.AppointmentSale;
 import com.vluepixel.vetmanager.api.bill.sale.domain.request.CreateAppointmentSaleRequest;
@@ -34,6 +35,7 @@ public interface AppointmentSaleMapper
      */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "bill", source = "billId")
     @Mapping(target = "appointment", source = "appointmentId")
     AppointmentSale fromRequest(CreateAppointmentSaleRequest request);
 
@@ -52,6 +54,7 @@ public interface AppointmentSaleMapper
      * @return the appointment sale builder
      */
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "bill", source = "billId")
     @Mapping(target = "appointment", source = "appointmentId")
     AppointmentSale fromRequest(UpdateAppointmentSaleRequest request);
 
@@ -63,5 +66,15 @@ public interface AppointmentSaleMapper
      */
     default Appointment mapAppointmentIdToAppointment(Long appointmentId) {
         return Appointment.builder().id(appointmentId).build();
+    }
+
+    /**
+     * Maps the bill id to an bill.
+     *
+     * @param billId the bill id.
+     * @return the bill
+     */
+    default Bill mapBillIdToBill(Long billId) {
+        return Bill.builder().id(billId).build();
     }
 }
