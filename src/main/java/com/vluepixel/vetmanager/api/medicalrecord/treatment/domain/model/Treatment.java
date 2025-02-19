@@ -8,9 +8,11 @@ import com.vluepixel.vetmanager.api.medicalrecord.core.domain.model.MedicalRecor
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -45,6 +47,7 @@ public final class Treatment {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_treatment_medical_record"))
     private MedicalRecord medicalRecord;
 
     @Builder.Default

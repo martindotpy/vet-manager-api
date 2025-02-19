@@ -16,6 +16,7 @@ import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -57,9 +58,11 @@ public final class Appointment {
     private List<AppointmentDetails> details;
     @NotNull
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_appointment_patient"))
     private Patient patient;
     @CreatedBy
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_appointment_created_by"))
     private User createdBy;
 
     @Builder.Default

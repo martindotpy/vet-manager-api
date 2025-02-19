@@ -9,9 +9,11 @@ import com.vluepixel.vetmanager.api.appointment.type.domain.model.AppointmentTyp
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
@@ -49,6 +51,7 @@ public final class AppointmentDetails {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_appointment_details_type"))
     @NotAudited
     private AppointmentType type;
 }

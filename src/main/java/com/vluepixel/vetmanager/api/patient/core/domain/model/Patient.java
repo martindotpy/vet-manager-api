@@ -19,9 +19,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
@@ -73,9 +75,11 @@ public final class Patient {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_patient_race"))
     private Race race;
     @NotNull
     @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_patient_owner"))
     private Client owner;
 
     @Builder.Default
