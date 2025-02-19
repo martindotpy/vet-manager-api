@@ -88,6 +88,63 @@ public class UpdateProfileImageIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
+    // /user/profile-image/{id}
+    @Test
+    void noUser_UpdateCurrentUserProfileImageAsOtherUserWithValidArguments_Forbidden() throws Exception {
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "image_file",
+                "profile.jpg",
+                MediaType.IMAGE_JPEG_VALUE,
+                "fake image content".getBytes());
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/user/profile-image/{id}", ADMIN_DTO.getId())
+                .file(imageFile)
+                .with(request -> {
+                    request.setMethod("PUT");
+                    return request;
+                }))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_UpdateCurrentUserProfileImageAsOtherUserWithInValidArguments_File_NotImage_Forbidden()
+            throws Exception {
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "image_file",
+                "profile.pdf",
+                MediaType.APPLICATION_PDF_VALUE,
+                "fake image content".getBytes());
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/user/profile-image/{id}", ADMIN_DTO.getId())
+                .file(imageFile)
+                .with(request -> {
+                    request.setMethod("PUT");
+                    return request;
+                }))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_UpdateCurrentUserProfileImageAsOtherUserWithInValidArguments_File_Null_Forbidden()
+            throws Exception {
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "image_file",
+                "profile.png",
+                MediaType.IMAGE_PNG_VALUE,
+                new byte[0]);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/user/profile-image/{id}", ADMIN_DTO.getId())
+                .file(imageFile)
+                .with(request -> {
+                    request.setMethod("PUT");
+                    return request;
+                }))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // With authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -164,6 +221,66 @@ public class UpdateProfileImageIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
                                 .value("El archivo de imagen no puede estar vacío"));
+    }
+
+    // /user/profile-image/{id}
+    @Test
+    void user_UpdateCurrentUserProfileImageAsOtherUserWithValidArguments_Forbidden() throws Exception {
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "image_file",
+                "profile.jpg",
+                MediaType.IMAGE_JPEG_VALUE,
+                "fake image content".getBytes());
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/user/profile-image/{id}", ADMIN_DTO.getId())
+                .file(imageFile)
+                .with(request -> {
+                    request.setMethod("PUT");
+                    return request;
+                })
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_UpdateCurrentUserProfileImageAsOtherUserWithInValidArguments_File_NotImage_Forbidden()
+            throws Exception {
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "image_file",
+                "profile.pdf",
+                MediaType.APPLICATION_PDF_VALUE,
+                "fake image content".getBytes());
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/user/profile-image/{id}", ADMIN_DTO.getId())
+                .file(imageFile)
+                .with(request -> {
+                    request.setMethod("PUT");
+                    return request;
+                })
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_UpdateCurrentUserProfileImageAsOtherUserWithInValidArguments_File_Null_Forbidden()
+            throws Exception {
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "image_file",
+                "profile.png",
+                MediaType.IMAGE_PNG_VALUE,
+                new byte[0]);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/user/profile-image/{id}", ADMIN_DTO.getId())
+                .file(imageFile)
+                .with(request -> {
+                    request.setMethod("PUT");
+                    return request;
+                })
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     // Role: ADMIN
@@ -275,5 +392,56 @@ public class UpdateProfileImageIntegrationTest extends BaseIntegrationTest {
         mockMvc.perform(get("/image/{name}", imageName))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND.apply(imageName)));
+    }
+
+    @Test
+    void admin_UpdateCurrentUserProfileImageAsOtherUserWithInValidArguments_File_NotImage_UnprocessableEntity()
+            throws Exception {
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "image_file",
+                "profile.pdf",
+                MediaType.APPLICATION_PDF_VALUE,
+                "fake image content".getBytes());
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/user/profile-image/{id}", ADMIN_DTO.getId())
+                .file(imageFile)
+                .with(request -> {
+                    request.setMethod("PUT");
+                    return request;
+                })
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("param.image_file"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]")
+                                .value("Valid values for `param.image_file` are: PNG, JPG, JPEG, WEBP"));
+    }
+
+    @Test
+    void admin_UpdateCurrentUserProfileImageAsOtherUserWithInValidArguments_File_Null_UnprocessableEntity()
+            throws Exception {
+        MockMultipartFile imageFile = new MockMultipartFile(
+                "image_file",
+                "profile.png",
+                MediaType.IMAGE_PNG_VALUE,
+                new byte[0]);
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/user/profile-image/{id}", ADMIN_DTO.getId())
+                .file(imageFile)
+                .with(request -> {
+                    request.setMethod("PUT");
+                    return request;
+                })
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("param.image_file"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("El archivo de imagen no puede estar vacío"));
     }
 }
