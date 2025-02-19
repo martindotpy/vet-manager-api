@@ -78,7 +78,8 @@ INSERT INTO
     `species` (id, `name`)
 VALUES
     (1, 'Perro'),
-    (2, 'Gato');
+    (2, 'Gato'),
+    (3, 'Hámster');
 
 INSERT INTO
     `race` (id, species_id, `name`)
