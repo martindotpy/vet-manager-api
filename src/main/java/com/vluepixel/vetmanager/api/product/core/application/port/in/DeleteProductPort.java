@@ -9,5 +9,5 @@ public interface DeleteProductPort {
      *
      * @param id the product id.
      */
-    void deleteById(Integer id);
+    void deleteById(Long id);
 }

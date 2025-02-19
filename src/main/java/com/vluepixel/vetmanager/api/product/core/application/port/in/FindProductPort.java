@@ -22,5 +22,5 @@ public interface FindProductPort {
      * @param id the id.
      * @return product found
      */
-    ProductDto findById(Integer id);
+    ProductDto findById(Long id);
 }

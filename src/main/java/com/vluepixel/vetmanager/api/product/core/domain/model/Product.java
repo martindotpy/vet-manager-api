@@ -40,7 +40,7 @@ public final class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "tinyint unsigned")
-    private Integer id;
+    private Long id;
 
     @Size(max = 125)
     @NotBlank

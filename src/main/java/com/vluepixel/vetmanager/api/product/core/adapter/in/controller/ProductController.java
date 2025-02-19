@@ -78,7 +78,7 @@ public final class ProductController {
             @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(required = false) OrderType order,
             @RequestParam(required = false, name = "order_by") String orderBy,
-            @RequestParam(required = false) Integer id,
+            @RequestParam(required = false) Long id,
             @RequestParam(required = false) String name)
             throws ValidationException {
         return okPaginated(
@@ -110,7 +110,7 @@ public final class ProductController {
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getById(@PathVariable Integer id)
+    public ResponseEntity<ProductResponse> getById(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> findProductPort.findById(id),
                 "Categoría encontrada",
@@ -173,7 +173,7 @@ public final class ProductController {
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<BasicResponse> delete(@PathVariable Integer id)
+    public ResponseEntity<BasicResponse> delete(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> deleteProductPort.deleteById(id),
                 "Cita eliminada exitosamente",

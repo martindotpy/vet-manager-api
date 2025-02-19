@@ -43,7 +43,7 @@ public final class FindProductUseCase implements FindProductPort {
     }
 
     @Override
-    public ProductDto findById(Integer id) {
+    public ProductDto findById(Long id) {
         MDC.put("operationId", "Product id " + id);
         log.info("Finding product by id");
 

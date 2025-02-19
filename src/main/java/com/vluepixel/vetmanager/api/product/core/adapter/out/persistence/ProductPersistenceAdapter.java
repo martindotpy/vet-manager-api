@@ -11,7 +11,7 @@ import com.vluepixel.vetmanager.api.shared.application.annotation.PersistenceAda
  */
 @PersistenceAdapter
 public class ProductPersistenceAdapter
-        extends CriteriaEntityPersistenceAdapter<Product, Integer, ProductSpringRepository>
+        extends CriteriaEntityPersistenceAdapter<Product, Long, ProductSpringRepository>
         implements ProductRepository {
     public ProductPersistenceAdapter(ProductSpringRepository repository) {
         super(repository);

@@ -6,5 +6,5 @@ import com.vluepixel.vetmanager.api.shared.domain.repository.CriteriaRepository;
 /**
  * Product repository.
  */
-public interface ProductRepository extends CriteriaRepository<Product, Integer> {
+public interface ProductRepository extends CriteriaRepository<Product, Long> {
 }

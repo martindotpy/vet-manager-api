@@ -19,7 +19,7 @@ public class DeleteProductUseCase implements DeleteProductPort {
     private final ProductRepository productRepository;
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         MDC.put("operationId", "Product id " + id);
         log.info("Deleting product by id");
 

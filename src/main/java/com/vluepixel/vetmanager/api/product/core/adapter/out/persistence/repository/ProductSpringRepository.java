@@ -7,5 +7,5 @@ import com.vluepixel.vetmanager.api.product.core.domain.model.Product;
 /**
  * Spring Data JPA repository for {@link Product}.
  */
-public interface ProductSpringRepository extends JpaRepository<Product, Integer> {
+public interface ProductSpringRepository extends JpaRepository<Product, Long> {
 }

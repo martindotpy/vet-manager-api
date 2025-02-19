@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public final class UpdateProductRequest implements Request {
     @NotNull(message = "El id es requerido")
     @Positive(message = "El id debe ser mayor a 0")
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "El nombre es requerido")
     @Size(max = 125, message = "El nombre no puede tener más de 125 caracteres")
