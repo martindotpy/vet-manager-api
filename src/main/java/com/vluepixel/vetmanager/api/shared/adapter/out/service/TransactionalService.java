@@ -41,10 +41,18 @@ public final class TransactionalService implements TransactionalPort {
         } catch (Exception e) {
             log.error("Error running transactional");
 
+            if (!status.isCompleted()) {
+                transactionManager.rollback(status);
+            }
+
             if (auxiliar.getEntityClass() == null) {
                 log.error("Entity class has not been set", e);
 
                 throw e;
+            }
+
+            if (e instanceof RepositoryException repositoryException) {
+                throw repositoryException;
             }
 
             throw new RepositoryException(e, auxiliar.getEntityClass());
