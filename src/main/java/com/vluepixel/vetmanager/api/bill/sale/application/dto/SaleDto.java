@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @NoArgsConstructor
-public abstract class SaleDto {
+public abstract sealed class SaleDto permits AppointmentSaleDto, TreatmentSaleDto, ProductSaleDto {
     private Long id;
 
     private BigDecimal price;
