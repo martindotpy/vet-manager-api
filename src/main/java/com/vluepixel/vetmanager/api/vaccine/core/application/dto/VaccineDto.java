@@ -2,7 +2,7 @@ package com.vluepixel.vetmanager.api.vaccine.core.application.dto;
 
 import java.time.LocalDateTime;
 
-import com.vluepixel.vetmanager.api.user.core.domain.model.User;
+import com.vluepixel.vetmanager.api.user.core.application.dto.UserDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +23,6 @@ public final class VaccineDto {
     private Integer doseInMilliliters;
     private LocalDateTime providedAt;
 
-    private User vaccinator;
+    private UserDto vaccinator;
     // TODO: Product sale
 }
