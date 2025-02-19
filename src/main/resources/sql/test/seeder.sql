@@ -127,3 +127,33 @@ VALUES
         'Simplemente Firulays',
         'FEMALE'
     );
+
+INSERT INTO
+    appointment (
+        deleted,
+        created_at,
+        created_by_id,
+        id,
+        patient_id,
+        start_at,
+        `description`
+    )
+VALUES
+    (
+        0,
+        '2025-02-19T23:51:17.578',
+        1,
+        1,
+        1,
+        '2025-02-20T23:51:17.578',
+        'Limpieza dental'
+    ),
+    (
+        0,
+        '2025-02-17T23:51:17.578',
+        2,
+        2,
+        2,
+        '2025-02-25T23:51:17.578',
+        'Ta sucio'
+    );
