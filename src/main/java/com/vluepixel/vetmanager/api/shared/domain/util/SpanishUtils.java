@@ -42,6 +42,7 @@ public class SpanishUtils {
         values.put("age", "Edad");
         values.put("appointment", "Cita");
         values.put("appointment_details", "Detalles de la cita");
+        values.put("appointment_type", "Tipo de cita");
         values.put("birth_date", "Fecha de nacimiento");
         values.put("characteristics", "Características");
         values.put("client", "Cliente");
