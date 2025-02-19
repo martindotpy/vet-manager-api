@@ -46,7 +46,7 @@ public interface AppointmentDetailsMapper
      * @return the appointment details builder
      */
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "type", source = "appointmentTypeId")
+    @Mapping(target = "appointmentType", source = "appointmentTypeId")
     AppointmentDetails.AppointmentDetailsBuilder fromRequest(CreateAppointmentDetailsRequest request);
 
     /**
@@ -55,7 +55,7 @@ public interface AppointmentDetailsMapper
      * @param request the update appointment details request.
      * @return the appointment details builder
      */
-    @Mapping(target = "type", source = "appointmentTypeId")
+    @Mapping(target = "appointmentType", source = "appointmentTypeId")
     AppointmentDetails.AppointmentDetailsBuilder fromRequest(UpdateAppointmentDetailsRequest request);
 
     /**
@@ -64,7 +64,7 @@ public interface AppointmentDetailsMapper
      * @param appointmentTypeId the appointment type id.
      * @return the appointment type
      */
-    default AppointmentType mapAppointmentTypeIdToType(Integer appointmentTypeId) {
+    default AppointmentType mapAppointmentTypeIdToAppoitmentType(Integer appointmentTypeId) {
         return AppointmentType.builder().id(appointmentTypeId).build();
     }
 }

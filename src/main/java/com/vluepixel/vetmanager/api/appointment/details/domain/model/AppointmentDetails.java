@@ -51,7 +51,7 @@ public final class AppointmentDetails {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_appointment_details_type"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_appointment_details_appointment_type"))
     @NotAudited
-    private AppointmentType type;
+    private AppointmentType appointmentType;
 }

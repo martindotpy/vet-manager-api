@@ -22,5 +22,5 @@ public final class AppointmentDetailsDto {
     private int durationInMinutes;
     private BigDecimal price;
 
-    private AppointmentTypeDto type;
+    private AppointmentTypeDto appointmentType;
 }
