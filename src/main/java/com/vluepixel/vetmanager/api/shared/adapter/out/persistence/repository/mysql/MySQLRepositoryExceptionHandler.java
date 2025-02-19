@@ -125,7 +125,7 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
             String field = splittedConstraint[splittedConstraint.length - 1];
 
             // Remove the 'UK_' prefix, the table name and the "_" after the table name
-            field = field.substring(4 + splittedConstraint[0].length());
+            field = field.replace("uk_" + splittedConstraint[0] + "_", "");
 
             throw new ConflictException(entityClass, field);
         }
@@ -135,7 +135,7 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
             String constraint = e.getErrorMessage().split("CONSTRAINT `")[1].split("`")[0];
 
             // Remove the 'FK_' prefix, the table name and the "_" after the table name
-            String field = constraint.substring(4 + tableName.length());
+            String field = constraint.replace("fk_" + tableName + "_", "");
 
             throw new NotFoundException(field);
         }

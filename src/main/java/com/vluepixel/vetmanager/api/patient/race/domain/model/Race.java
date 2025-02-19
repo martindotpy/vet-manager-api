@@ -42,6 +42,6 @@ public final class Race {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "FK_race_species"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_race_species"))
     private Species species;
 }

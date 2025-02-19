@@ -35,7 +35,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Audited
 @Table(name = "`user`", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email", name = "UK_user_email")
+        @UniqueConstraint(columnNames = "email", name = "uk_user_email")
 })
 @SQLDelete(sql = "UPDATE `user` SET deleted = true WHERE id = ?")
 @SQLRestriction("deleted = false")
