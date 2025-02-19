@@ -485,7 +485,7 @@ public class UpdateRaceIntegrationTest extends BaseIntegrationTest {
     }
 
     // Species ID
-    @Test // TODO
+    @Test
     void admin_UpdateRaceWithInvalidArguments_SpeciesID_NotFound_NotFound() throws Exception {
         mockMvc.perform(put("/race")
                 .contentType(MediaType.APPLICATION_JSON)
