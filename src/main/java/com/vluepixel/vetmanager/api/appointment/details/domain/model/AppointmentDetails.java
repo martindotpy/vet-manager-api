@@ -44,7 +44,7 @@ public final class AppointmentDetails {
     @NotNull
     @DecimalMax(value = "9999.99")
     @Positive
-    @Column(columnDefinition = "decimal(4, 2)")
+    @Column(columnDefinition = "decimal(6, 2)")
     private BigDecimal price;
 
     @NotNull
