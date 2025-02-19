@@ -580,9 +580,9 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(3),
-                        jsonPath("$.content[0].name").value("Hámster"),
-                        jsonPath("$.content[1].name").value("Gato"),
-                        jsonPath("$.content[1].name").value("Perro"));
+                        jsonPath("$.content[0].name").value("Gato"),
+                        jsonPath("$.content[1].name").value("Hámster"),
+                        jsonPath("$.content[2].name").value("Perro"));
     }
 
     @Test
@@ -627,7 +627,6 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].name").value("Gato"));
     }
 
-    // TODO
     @Test
     void user_GetSpeciesWithInvalidParams_Name_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -1070,9 +1069,9 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(3),
-                        jsonPath("$.content[0].name").value("Hámster"),
                         jsonPath("$.content[0].name").value("Gato"),
-                        jsonPath("$.content[1].name").value("Perro"));
+                        jsonPath("$.content[1].name").value("Hámster"),
+                        jsonPath("$.content[2].name").value("Perro"));
     }
 
     @Test
@@ -1117,7 +1116,6 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].name").value("Gato"));
     }
 
-    // TODO
     @Test
     void admin_GetSpeciesWithInvalidParams_Name_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
