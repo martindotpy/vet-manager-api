@@ -7,7 +7,7 @@ INSERT INTO
         last_name,
         email,
         profile_image_url,
-        `password`,
+        password,
         roles,
         deleted
     )
