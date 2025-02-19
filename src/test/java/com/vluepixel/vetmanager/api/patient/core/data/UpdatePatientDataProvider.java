@@ -1,7 +1,6 @@
 package com.vluepixel.vetmanager.api.patient.core.data;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender;
 import com.vluepixel.vetmanager.api.patient.core.domain.request.UpdatePatientRequest;
@@ -21,5 +20,4 @@ public class UpdatePatientDataProvider {
             .raceId(2)
             .ownerId(2L)
             .build();
-
 }
