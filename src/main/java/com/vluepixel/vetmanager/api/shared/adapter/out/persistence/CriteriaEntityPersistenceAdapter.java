@@ -226,11 +226,27 @@ public abstract class CriteriaEntityPersistenceAdapter<E, ID, R extends JpaRepos
                 .anyMatch(f -> f.isAnnotationPresent(ElementCollection.class));
     }
 
+    private Join<Object, String> resolveJoin(Root<E> root, String attribute) {
+        String[] splittedAttribute = attribute.split("\\.");
+        Join<Object, String> join = null;
+
+        for (String attr : splittedAttribute) {
+            if (join == null) {
+                join = root.join(attr);
+                continue;
+            }
+
+            join = join.join(attr);
+        }
+
+        return join;
+    }
+
     private Predicate createPredicate(ValueFilter filter, CriteriaBuilder cb, Path<?> path, Root<E> root) {
         Join<Object, String> join = null;
 
         if (isElementCollection(path, filter.getField())) {
-            join = root.join(filter.getField());
+            join = resolveJoin(root, filter.getField());
         }
 
         return switch (filter.getFilterOperator()) {
