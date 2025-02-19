@@ -1,13 +1,11 @@
 package com.vluepixel.vetmanager.api.shared.domain.criteria;
 
 import lombok.Getter;
-import lombok.ToString;
 
 /**
  * Filter class.
  */
 @Getter
-@ToString
 public abstract sealed class Filter permits ValueFilter, LogicalFilter {
     /**
      * Filter operator.

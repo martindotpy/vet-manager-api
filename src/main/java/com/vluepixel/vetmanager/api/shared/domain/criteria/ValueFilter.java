@@ -7,8 +7,13 @@ import java.util.Objects;
 import com.vluepixel.vetmanager.api.shared.application.mapper.StringUtilsMapper;
 
 import lombok.Getter;
+import lombok.ToString;
 
+/**
+ * Value filter.
+ */
 @Getter
+@ToString
 public final class ValueFilter extends Filter {
     private final String field;
     private final FilterOperator filterOperator;

@@ -3,8 +3,13 @@ package com.vluepixel.vetmanager.api.shared.domain.criteria;
 import java.util.Collection;
 
 import lombok.Getter;
+import lombok.ToString;
 
+/**
+ * Logical filter class.
+ */
 @Getter
+@ToString
 public final class LogicalFilter extends Filter {
     private final LogicalOperator logicalOperator;
     private final Filter[] filters;
