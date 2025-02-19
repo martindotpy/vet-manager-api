@@ -338,7 +338,7 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetSpeciesWithInvalidParams_Page_Blank_UnprocessableEntity() throws Exception {
+    void user_GetSpeciesWithInvalidParams_Page_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", " ");
         queryParams.add("size", "10");
@@ -539,7 +539,6 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
     }
 
     // OrderBy
-    // TODO
     @Test
     void user_GetSpeciesWithInvalidParams_OrderBy_Name_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -558,7 +557,7 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("???"));
+                                .value("Solo los siguientes campos son válidos: id, name"));
     }
 
     @Test
@@ -828,7 +827,7 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetSpeciesWithInvalidParams_Page_Blank_UnprocessableEntity() throws Exception {
+    void admin_GetSpeciesWithInvalidParams_Page_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", " ");
         queryParams.add("size", "10");
@@ -1029,7 +1028,6 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
     }
 
     // OrderBy
-    // TODO
     @Test
     void admin_GetSpeciesWithInvalidParams_OrderBy_Name_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
@@ -1048,7 +1046,7 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("???"));
+                                .value("Solo los siguientes campos son válidos: id, name"));
     }
 
     @Test
