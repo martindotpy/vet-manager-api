@@ -16,7 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Filter;
-import com.vluepixel.vetmanager.api.shared.domain.criteria.FilterOperator;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.LogicalFilter;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderedCriteria;
@@ -164,8 +163,7 @@ public abstract class CriteriaEntityPersistenceAdapter<E, ID, R extends JpaRepos
             boolean echo) {
         switch (filter) {
             case LogicalFilter lf -> handleLogicalFilter(lf, cb, root, predicates, echo);
-            case ValueFilter vf -> handleValueFilter(vf, cb, root, predicates, echo);
-            default -> throw new UnsupportedOperationException("Unsupported filter type: " + filter.getClass());
+            case ValueFilter vf -> handleValueFilter(vf, cb, root, predicates);
         }
     }
 
@@ -192,24 +190,7 @@ public abstract class CriteriaEntityPersistenceAdapter<E, ID, R extends JpaRepos
         predicates.add(combined);
     }
 
-    private void handleValueFilter(ValueFilter filter, CriteriaBuilder cb, Root<E> root, List<Predicate> predicates,
-            boolean echo) {
-        if (filter.getValue() == null && filter.getFilterOperator() != FilterOperator.IS_NULL) {
-            if (echo)
-                log.warn("Null value for filter: {} - {}",
-                        fgBrightYellow(filter.getField()),
-                        fgBrightYellow(filter.getFilterOperator()));
-            return;
-        }
-
-        if (filter.getValue() instanceof Object[] array && array.length == 0) {
-            if (echo)
-                log.warn("Empty array for filter: {} - {}",
-                        fgBrightYellow(filter.getField()),
-                        fgBrightYellow(filter.getFilterOperator()));
-            return;
-        }
-
+    private void handleValueFilter(ValueFilter filter, CriteriaBuilder cb, Root<E> root, List<Predicate> predicates) {
         Path<?> path = resolvePath(root, filter.getField());
         predicates.add(createPredicate(filter, cb, path, root));
     }
