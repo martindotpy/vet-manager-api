@@ -3,7 +3,6 @@ package com.vluepixel.vetmanager.api.auth.core.adapter.in.controller;
 import static com.vluepixel.vetmanager.api.shared.adapter.in.util.ResponseShortcuts.ok;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -98,7 +97,6 @@ public class AuthController {
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class))),
     })
     @PostMapping("/register")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponse> register(@RequestBody RegisterUserRequest request)
             throws ValidationException, ConflictException {
         return ok(() -> registerUserPort.register(request),

@@ -53,7 +53,7 @@ security:
     - Accept-Encoding
     - Accept-Language
 
-  allowed-public-routes:
+  public-routes:
     # Api
     - /health
     - /image/**
@@ -63,6 +63,35 @@ security:
     - /docs
     - /swagger-ui*/**
     - /v3/api-docs*/**
+
+  admin-routes:
+    - methods:
+        - GET
+        - POST
+        - DELETE
+      routes:
+        - /auth/register
+        - /user
+        - /user/{id}
+        - /user/email
+
+    - methods:
+        - PUT
+      routes:
+        - /user
+        - /user/profile-image/{id}
+
+    - methods:
+        - DELETE
+      routes:
+        - /client/{id}
+
+  no-admin-operation-to-self-routes:
+    - methods:
+        - PUT
+      routes:
+        - /user/{id:^(?!profile-image$).*$}
+        - /user/{id}/email
 
   allowed-origins:
     - "*"

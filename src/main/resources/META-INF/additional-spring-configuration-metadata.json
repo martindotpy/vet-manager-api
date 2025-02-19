@@ -16,9 +16,24 @@
       "description": "Secret key for JWT"
     },
     {
-      "name": "security.allowed-public-routes",
+      "name": "security.public-routes",
       "type": "java.util.List<java.lang.String>",
       "description": "Public routes that are allowed to be accessed without authentication."
+    },
+    {
+      "name": "security.admin-routes",
+      "type": "java.util.List<com.vluepixel.vetmanager.api.shared.domain.config.Route>",
+      "description": "Routes that are allowed to be accessed only by the admin user."
+    },
+    {
+      "name": "security.no-authenticated-routes",
+      "type": "java.util.List<com.vluepixel.vetmanager.api.shared.domain.config.Route>",
+      "description": "Routes that are allowed to be accessed only without authentication."
+    },
+    {
+      "name": "security.no-admin-operation-to-self-routes",
+      "type": "java.util.List<com.vluepixel.vetmanager.api.shared.domain.config.Route>",
+      "description": "Routes can be accessed with an admin role and no operation to self. To compare with the user id, it's necessary to specify '{id}' in the route."
     },
     {
       "name": "security.allowed-origins",

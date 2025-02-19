@@ -6,7 +6,6 @@ import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.in;
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.like;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +52,6 @@ import lombok.RequiredArgsConstructor;
 @RestControllerAdapter
 @RequestMapping("/user")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
     private final GetCurrentUserPort getCurrentUserPort;
 
@@ -152,7 +150,6 @@ public class UserController {
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') and #id != principal.id")
     public ResponseEntity<UserResponse> update(@RequestBody UpdateUserRequest request, @PathVariable Long id)
             throws ValidationException {
         return ok(() -> updateCurrentUserPort.update(request),
@@ -224,7 +221,6 @@ public class UserController {
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @PutMapping("/{id}/email")
-    @PreAuthorize("hasRole('ADMIN') and #id != principal.id")
     public ResponseEntity<UserResponse> updateUserEmail(
             @RequestBody UpdateUserEmailRequest request,
             @PathVariable Long id)
