@@ -26,6 +26,14 @@ class GetUserIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
+    void noUser_GetUserWithoutParams_Forbidden() throws Exception {
+        mockMvc.perform(get("/user"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // ID
+    @Test
     void noUser_getUserWithInvalidArgument_ID_Invalid_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "invalid");
@@ -33,7 +41,407 @@ class GetUserIntegrationTest extends BaseIntegrationTest {
         queryParams.add("size", "10");
 
         mockMvc.perform(get("/user")
-                .queryParams(queryParams))
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_ID_NotFound_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("id", "20");
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_ID_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("id", " ");
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_ID_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("id", null);
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Page
+    @Test
+    void noUser_getUserWithInvalidArgument_Page_NotNumber_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "abcd");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Page_Negative_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "-1");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Page_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", " ");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Page_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", null);
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Size
+    @Test
+    void noUser_getUserWithInvalidArgument_Size_NotNumber_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "abcd");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Size_Negative_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "-1");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Size_Largest_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "111");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Size_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", " ");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Size_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", null);
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Order
+    @Test
+    void noUser_getUserWithInvalidArgument_Order_Without_OrderBy_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Order_Invalid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "abcd");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Order_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", null);
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // OrderBy
+    @Test
+    void noUser_getUserWithInvalidArgument_OrderBy_Name_Invalid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_OrderBy_Name_Valid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_OrderBy_Name_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", null);
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // FirstName
+    @Test
+    void noUser_getUserWithInvalidArgument_FirstName_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("first_name", " ");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_FirstName_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("first_name", null);
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // LastName
+    @Test
+    void noUser_getUserWithInvalidArgument_LastName_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("last_name", " ");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_LastName_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("first_name", null);
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Email
+    @Test
+    void noUser_getUserWithInvalidArgument_Email_Invalid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("email", "invalid");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Email_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("email", " ");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Email_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("email", null);
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Role
+    @Test
+    void noUser_getUserWithInvalidArgument_Role_Invalid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("role", "abcd");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Role_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("role", " ");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_getUserWithInvalidArgument_Role_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("role", null);
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetUsersByFields_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("first_name", "Admin");
+        queryParams.add("last_name", "Admin");
+        queryParams.add("email", "admin@admin.com");
+
+        mockMvc.perform(get("/user")
+                .params(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
@@ -52,6 +460,15 @@ class GetUserIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
+    void user_GetUserWithoutParams_Forbidden() throws Exception {
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // ID
+    @Test
     void user_getUserWithInvalidArgument_ID_Invalid_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "invalid");
@@ -59,8 +476,437 @@ class GetUserIntegrationTest extends BaseIntegrationTest {
         queryParams.add("size", "10");
 
         mockMvc.perform(get("/user")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_USER_JWT))
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_ID_NotFound_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("id", "20");
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_ID_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("id", " ");
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_ID_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("id", null);
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Page
+    @Test
+    void user_getUserWithInvalidArgument_Page_NotNumber_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "abcd");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Page_Negative_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "-1");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Page_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", " ");
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Page_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", null);
+        queryParams.add("size", "10");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Size
+    @Test
+    void user_getUserWithInvalidArgument_Size_NotNumber_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "abcd");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Size_Negative_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "-1");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Size_Largest_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "111");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Size_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", " ");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Size_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", null);
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Order
+    @Test
+    void user_getUserWithInvalidArgument_Order_Without_OrderBy_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Order_Invalid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "abcd");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Order_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", null);
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // OrderBy
+    @Test
+    void user_getUserWithInvalidArgument_OrderBy_Name_Invalid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_OrderBy_Name_Valid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_OrderBy_Name_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", null);
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // FirstName
+    @Test
+    void user_getUserWithInvalidArgument_FirstName_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("first_name", " ");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_FirstName_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("first_name", null);
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // LastName
+    @Test
+    void user_getUserWithInvalidArgument_LastName_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("last_name", " ");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_LastName_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("first_name", null);
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Email
+    @Test
+    void user_getUserWithInvalidArgument_Email_Invalid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("email", "invalid");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Email_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("email", " ");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Email_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("email", null);
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Role
+    @Test
+    void user_getUserWithInvalidArgument_Role_Invalid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("role", "abcd");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Role_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("role", " ");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_getUserWithInvalidArgument_Role_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "first_name");
+        queryParams.add("role", null);
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_GetUsersByFields_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("first_name", "Admin");
+        queryParams.add("last_name", "Admin");
+        queryParams.add("email", "admin@admin.com");
+
+        mockMvc.perform(get("/user")
+                .header("Authorization", BEARER_USER_JWT)
+                .params(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
