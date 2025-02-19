@@ -3250,10 +3250,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("gender"),
+                        jsonPath("$.details[0].field").value("owner_identification_type"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: No enum constant com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender.abcd"));
+                                .value("Illegal argument: No enum constant com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType.abcd"));
     }
 
     @Test
@@ -5437,10 +5437,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("gender"),
+                        jsonPath("$.details[0].field").value("owner_identification_type"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: No enum constant com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender.abcd"));
+                                .value("Illegal argument: No enum constant com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType.abcd"));
     }
 
     @Test
