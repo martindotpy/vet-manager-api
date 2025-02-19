@@ -33,6 +33,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Patient.
@@ -43,6 +44,7 @@ import lombok.NoArgsConstructor;
 @SQLRestriction("deleted = false")
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public final class Patient {

@@ -28,6 +28,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * User.
@@ -41,6 +42,7 @@ import lombok.NoArgsConstructor;
 @SQLRestriction("deleted = false")
 @Getter
 @Builder
+@ToString(exclude = "password")
 @NoArgsConstructor
 @AllArgsConstructor
 public final class User implements UserDetails {
