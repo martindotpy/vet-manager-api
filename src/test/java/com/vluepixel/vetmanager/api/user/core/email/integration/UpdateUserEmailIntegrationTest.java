@@ -142,6 +142,15 @@ public class UpdateUserEmailIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
+    @Test
+    void noUser_UpdateEmailOtherUser_Invalid() throws Exception {
+        mockMvc.perform(put("/user/{id}/email", "invalid")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_UPDATE_USER_EMAIL_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // With authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -263,6 +272,16 @@ public class UpdateUserEmailIntegrationTest extends BaseIntegrationTest {
     @Test
     void user_UpdateEmailOtherUserEmail_Forbidden() throws Exception {
         mockMvc.perform(put("/user/{id}/email", 10)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_UPDATE_USER_EMAIL_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_UpdateEmailOtherUser_Invalid() throws Exception {
+        mockMvc.perform(put("/user/{id}/email", "invalid")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_UPDATE_USER_EMAIL_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
@@ -431,6 +450,21 @@ public class UpdateUserEmailIntegrationTest extends BaseIntegrationTest {
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND.apply("10")));
+    }
+
+    @Test
+    void admin_UpdateEmailOtherUser_Invalid() throws Exception {
+        mockMvc.perform(put("/user/{id}/email", "invalid")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_UPDATE_USER_EMAIL_REQUEST))
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("path.id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
     }
 
     @Test
