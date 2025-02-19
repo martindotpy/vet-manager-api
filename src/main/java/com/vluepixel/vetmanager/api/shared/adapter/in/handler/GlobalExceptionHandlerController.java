@@ -155,7 +155,7 @@ public class GlobalExceptionHandlerController {
         }
 
         else if (e.getMostSpecificCause() instanceof InvalidTypeIdException invalidTypeIdException) {
-            String originalMessage = invalidTypeIdException.getOriginalMessage();
+            String originalMessage = invalidTypeIdException.getLocalizedMessage();
             String information = originalMessage.substring(
                     originalMessage.indexOf("[") + 1,
                     originalMessage.indexOf("]"));
