@@ -618,7 +618,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void noUser_GetPatientWithInvalidParams_RaceID_Invalid_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("race_id", "invalid");
@@ -2358,7 +2358,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].race.id").value(1));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void user_GetPatientWithInvalidParams_RaceID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("race_id", "invalid");
@@ -2372,10 +2372,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("race_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
     }
 
     @Test
@@ -2581,7 +2580,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].race.species.id").value(1));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void user_GetPatientWithInvalidParams_SpeciesID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("species_id", "invalid");
@@ -2595,10 +2594,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("species_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
     }
 
     @Test
@@ -2804,7 +2802,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content[0].owner.id").value(1));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void user_GetPatientWithInvalidParams_OwnerID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("owner_id", "invalid");
@@ -2818,10 +2816,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("owner_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
     }
 
     @Test
