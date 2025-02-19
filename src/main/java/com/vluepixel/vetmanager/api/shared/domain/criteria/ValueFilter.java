@@ -4,18 +4,28 @@ import static com.vluepixel.vetmanager.api.shared.domain.util.CaseConverterUtils
 
 import java.util.Objects;
 
+import com.vluepixel.vetmanager.api.shared.application.mapper.StringUtilsMapper;
+
 import lombok.Getter;
 
 @Getter
 public final class ValueFilter extends Filter {
     private final String field;
     private final FilterOperator filterOperator;
-    private Object value;
+    private final Object value;
 
     protected ValueFilter(String field, FilterOperator operator, Object value) {
         super();
         Objects.requireNonNull(field, "Field is required");
         Objects.requireNonNull(operator, "Operator is required");
+
+        if (value instanceof String stringValue) {
+            if (stringValue.isBlank()) {
+                value = null;
+            } else {
+                value = StringUtilsMapper.trimString(stringValue);
+            }
+        }
 
         this.field = toCamelCase(field);
         this.filterOperator = operator;
@@ -29,5 +39,6 @@ public final class ValueFilter extends Filter {
 
         this.field = toCamelCase(field);
         this.filterOperator = operator;
+        this.value = null;
     }
 }
