@@ -38,7 +38,7 @@ public final class UpdateUserDataProvider {
 
     // Role: USER
     public static final UpdateUserRequest VALID_UPDATE_USER_REQUEST = UpdateUserRequest.builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName("New first name")
             .lastName("New last name")
             .build();
@@ -55,35 +55,35 @@ public final class UpdateUserDataProvider {
     // - First name
     public static final UpdateUserRequest INVALID_FIRSTNAME_TOO_LONG_UPDATE_USER_REQUEST = UpdateUserRequest
             .builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName(INVALID_FIRSTNAME_TOO_LONG_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest VALID_FIRSTNAME_MAX_LENGTH_UPDATE_USER_REQUEST = UpdateUserRequest
             .builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName(VALID_FIRSTNAME_MAX_LENGTH_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_FIRSTNAME_BLANK_UPDATE_USER_REQUEST = UpdateUserRequest
             .builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName(INVALID_FIRSTNAME_BLANK_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_FIRSTNAME_EMPTY_UPDATE_USER_REQUEST = UpdateUserRequest
             .builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName(INVALID_FIRSTNAME_EMPTY_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_FIRSTNAME_NULL_UPDATE_USER_REQUEST = UpdateUserRequest
             .builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName(INVALID_FIRSTNAME_NULL_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
@@ -91,28 +91,28 @@ public final class UpdateUserDataProvider {
     // - Last name
     public static final UpdateUserRequest INVALID_LASTNAME_TOO_LONG_UPDATE_USER_REQUEST = UpdateUserRequest
             .builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName(VALID_REGISTER_USER_REQUEST.getFirstName())
             .lastName(INVALID_LASTNAME_TOO_LONG_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest VALID_LASTNAME_MAX_LENGTH_UPDATE_USER_REQUEST = UpdateUserRequest
             .builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName(VALID_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_LASTNAME_MAX_LENGTH_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_LASTNAME_BLANK_UPDATE_USER_REQUEST = UpdateUserRequest
             .builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName(VALID_REGISTER_USER_REQUEST.getFirstName())
             .lastName(INVALID_LASTNAME_BLANK_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_LASTNAME_EMPTY_UPDATE_USER_REQUEST = UpdateUserRequest
             .builder()
-            .id(2L)
+            .id(USER_DTO.getId())
             .firstName(VALID_REGISTER_USER_REQUEST.getFirstName())
             .lastName(INVALID_LASTNAME_EMPTY_REGISTER_USER_REQUEST.getLastName())
             .build();
@@ -143,35 +143,35 @@ public final class UpdateUserDataProvider {
     // - First name
     public static final UpdateUserRequest INVALID_FIRSTNAME_TOO_LONG_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(INVALID_FIRSTNAME_TOO_LONG_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest VALID_FIRSTNAME_MAX_LENGTH_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(VALID_FIRSTNAME_MAX_LENGTH_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_FIRSTNAME_BLANK_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(INVALID_FIRSTNAME_BLANK_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_FIRSTNAME_EMPTY_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(INVALID_FIRSTNAME_EMPTY_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_FIRSTNAME_NULL_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(INVALID_FIRSTNAME_NULL_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_REGISTER_USER_REQUEST.getLastName())
             .build();
@@ -179,35 +179,35 @@ public final class UpdateUserDataProvider {
     // - Last name
     public static final UpdateUserRequest INVALID_LASTNAME_TOO_LONG_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(VALID_REGISTER_USER_REQUEST.getFirstName())
             .lastName(INVALID_LASTNAME_TOO_LONG_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest VALID_LASTNAME_MAX_LENGTH_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(VALID_REGISTER_USER_REQUEST.getFirstName())
             .lastName(VALID_LASTNAME_MAX_LENGTH_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_LASTNAME_BLANK_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(VALID_REGISTER_USER_REQUEST.getFirstName())
             .lastName(INVALID_LASTNAME_BLANK_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_LASTNAME_EMPTY_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(VALID_REGISTER_USER_REQUEST.getFirstName())
             .lastName(INVALID_LASTNAME_EMPTY_REGISTER_USER_REQUEST.getLastName())
             .build();
 
     public static final UpdateUserRequest INVALID_LASTNAME_NULL_UPDATE_ADMIN_REQUEST = UpdateUserRequest
             .builder()
-            .id(1L)
+            .id(ADMIN_DTO.getId())
             .firstName(VALID_REGISTER_USER_REQUEST.getFirstName())
             .lastName(INVALID_LASTNAME_NULL_REGISTER_USER_REQUEST.getLastName())
             .build();
