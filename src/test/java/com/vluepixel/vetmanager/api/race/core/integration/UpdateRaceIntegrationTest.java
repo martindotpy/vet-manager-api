@@ -298,14 +298,14 @@ public class UpdateRaceIntegrationTest extends BaseIntegrationTest {
     }
 
     // Species ID
-    @Test // TODO
+    @Test
     void user_UpdateRaceWithInvalidArguments_SpeciesID_NotFound_NotFound() throws Exception {
         mockMvc.perform(put("/race")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_SPECIES_ID_NOT_FOUND_UPDATE_RACE_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND));
+                .andExpect(jsonPath("$.message").value("Especie no encontrado(a)"));
     }
 
     @Test
@@ -492,7 +492,7 @@ public class UpdateRaceIntegrationTest extends BaseIntegrationTest {
                 .content(objectMapper.writeValueAsString(INVALID_SPECIES_ID_NOT_FOUND_UPDATE_RACE_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND));
+                .andExpect(jsonPath("$.message").value("Especie no encontrado(a)"));
     }
 
     @Test
