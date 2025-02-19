@@ -15,7 +15,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the get patient use case.
  */
 public class GetPatientIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Razas encontradas exitosamente"; // TODO
+    private static final String MESSAGE_OK = "Pacientes encontrados exitosamente";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
