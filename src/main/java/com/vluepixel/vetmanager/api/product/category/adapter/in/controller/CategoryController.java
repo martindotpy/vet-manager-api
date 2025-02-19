@@ -156,7 +156,7 @@ public final class CategoryController {
     public ResponseEntity<CategoryResponse> update(@RequestBody UpdateCategoryRequest request)
             throws ValidationException, NotFoundException {
         return ok(() -> updateCategoryPort.update(request),
-                "Cita actualizada exitosamente",
+                "Categoría actualizada exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -176,7 +176,7 @@ public final class CategoryController {
     public ResponseEntity<BasicResponse> delete(@PathVariable Integer id)
             throws ValidationException, NotFoundException {
         return ok(() -> deleteCategoryPort.deleteById(id),
-                "Cita eliminada exitosamente",
+                "Categoría eliminada exitosamente",
                 InvalidStateValidation.of(
                         id < 1,
                         "query.id",
