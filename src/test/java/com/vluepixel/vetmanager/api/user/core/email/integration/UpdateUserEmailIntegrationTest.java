@@ -158,27 +158,6 @@ public class UpdateUserEmailIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // /user/{id}/email
-    @Test
-    void user_UpdateEmailOtherUser_Forbidden() throws Exception {
-        mockMvc.perform(put("/user/{id}/email", ADMIN_DTO.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(VALID_UPDATE_ADMIN_EMAIL_REQUEST))
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    @Test
-    void user_UpdateEmailCurrentUserAsOtherUser_Forbidden() throws Exception {
-        mockMvc.perform(put("/user/{id}/email", USER_DTO.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(VALID_UPDATE_USER_EMAIL_REQUEST))
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
     @Test
     void user_UpdateEmailCurrentUserWithAnotherWithValidArguments_Forbidden() throws Exception {
         mockMvc.perform(put("/user/email")
@@ -251,6 +230,26 @@ public class UpdateUserEmailIntegrationTest extends BaseIntegrationTest {
     }
 
     // /user/{id}/email
+    @Test
+    void user_UpdateEmailOtherUser_Forbidden() throws Exception {
+        mockMvc.perform(put("/user/{id}/email", ADMIN_DTO.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(VALID_UPDATE_ADMIN_EMAIL_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_UpdateEmailCurrentUserAsOtherUser_Forbidden() throws Exception {
+        mockMvc.perform(put("/user/{id}/email", USER_DTO.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(VALID_UPDATE_USER_EMAIL_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
     @Test
     void user_UpdateEmailOtherUserID_Forbidden() throws Exception {
         mockMvc.perform(put("/user/{id}/email", ADMIN_DTO.getId())
