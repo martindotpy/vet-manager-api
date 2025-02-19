@@ -1695,4 +1695,214 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(2));
     }
+
+    // Client Identification
+    @Test // TODO: Doesn't work
+    void admin_GetPatientWithInvalidParams_ClientIdentification_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("client_identification", "12345678");
+
+        mockMvc.perform(get("/patient")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2),
+                        jsonPath("$.content[0].owner.first_name").value("Admin"));
+    }
+
+    @Test
+    void admin_GetPatientWithInvalidParams_ClientIdentification_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("client_identification", " ");
+
+        mockMvc.perform(get("/patient")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetPatientWithInvalidParams_ClientIdentification_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("client_identification", "");
+
+        mockMvc.perform(get("/patient")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetPatientWithInvalidParams_ClientIdentification_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("client_identification", null);
+
+        mockMvc.perform(get("/patient")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Client Identification Type
+    @Test // TODO: Doesn't work
+    void admin_GetPatientWithInvalidParams_ClientIdentificationType_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("client_identification_type", "DNI");
+
+        mockMvc.perform(get("/patient")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].name").value("Firulays"));
+    }
+
+    @Test
+    void admin_GetPatientWithInvalidParams_ClientIdentificationType_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("client_identification_type", " ");
+
+        mockMvc.perform(get("/patient")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetPatientWithInvalidParams_ClientIdentificationType_Invalid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("client_identification_type", "abcd");
+
+        mockMvc.perform(get("/patient")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("gender"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]")
+                                .value("Illegal argument: No enum constant com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender.abcd"));
+    }
+
+    @Test
+    void admin_GetPatientWithInvalidParams_ClientIdentificationType_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("client_identification_type", "");
+
+        mockMvc.perform(get("/patient")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetPatientWithInvalidParams_ClientIdentificationType_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("client_identification_type", null);
+
+        mockMvc.perform(get("/patient")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
 }
