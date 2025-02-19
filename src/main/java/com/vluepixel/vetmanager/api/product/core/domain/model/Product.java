@@ -41,7 +41,7 @@ import lombok.ToString;
 public final class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "tinyint unsigned")
+    @Column(columnDefinition = "bigint unsigned")
     private Long id;
 
     @Size(max = 125)
