@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType;
 import com.vluepixel.vetmanager.api.patient.core.adapter.in.response.PaginatedPatientResponse;
 import com.vluepixel.vetmanager.api.patient.core.adapter.in.response.PatientResponse;
 import com.vluepixel.vetmanager.api.patient.core.application.port.in.CreatePatientPort;
@@ -97,15 +98,15 @@ public final class PatientController {
             @RequestParam(required = false) Integer age,
             @RequestParam(required = false) PatientGender gender,
             @RequestParam(required = false) Boolean deceased,
-            @RequestParam(required = false, name = "race_id") String raceId,
+            @RequestParam(required = false, name = "race_id") Integer raceId,
             @RequestParam(required = false, name = "race_name") String raceName,
-            @RequestParam(required = false, name = "species_id") String speciesId,
+            @RequestParam(required = false, name = "species_id") Integer speciesId,
             @RequestParam(required = false, name = "species_name") String speciesName,
-            @RequestParam(required = false, name = "owner_id") String ownerId,
+            @RequestParam(required = false, name = "owner_id") Long ownerId,
             @RequestParam(required = false, name = "owner_first_name") String ownerFirstName,
             @RequestParam(required = false, name = "owner_last_name") String ownerLastName,
             @RequestParam(required = false, name = "owner_identification") String ownerIdentification,
-            @RequestParam(required = false, name = "owner_identification_type") String ownerIdentificationType,
+            @RequestParam(required = false, name = "owner_identification_type") IdentificationType ownerIdentificationType,
             @RequestParam(required = false, name = "owner_address") String ownerAddress,
             @RequestParam(required = false, name = "owner_phone") String ownerPhone,
             @RequestParam(required = false, name = "owner_email") String ownerEmail)
