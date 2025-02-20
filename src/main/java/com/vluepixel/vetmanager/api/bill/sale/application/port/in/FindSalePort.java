@@ -12,5 +12,5 @@ public interface FindSalePort {
      * @param id the id.
      * @return sale found
      */
-    SaleDto findById(Integer id);
+    SaleDto findById(Long id);
 }

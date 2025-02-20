@@ -24,7 +24,7 @@ public final class FindSaleUseCase implements FindSalePort {
     private final SaleMapper saleMapper;
 
     @Override
-    public SaleDto findById(Integer id) {
+    public SaleDto findById(Long id) {
         MDC.put("operationId", "Sale id " + id);
         log.info("Finding sale by id");
 

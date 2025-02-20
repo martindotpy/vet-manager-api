@@ -61,7 +61,7 @@ public final class SaleController {
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @GetMapping("/{id}")
-    public ResponseEntity<SaleResponse> getById(@PathVariable Integer id)
+    public ResponseEntity<SaleResponse> getById(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> findSalePort.findById(id),
                 "Categoría encontrada",
@@ -124,7 +124,7 @@ public final class SaleController {
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<BasicResponse> delete(@PathVariable Integer id)
+    public ResponseEntity<BasicResponse> delete(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> deleteSalePort.deleteById(id),
                 "Cita eliminada exitosamente",

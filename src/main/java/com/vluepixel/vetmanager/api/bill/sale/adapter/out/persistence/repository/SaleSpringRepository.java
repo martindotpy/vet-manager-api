@@ -7,5 +7,5 @@ import com.vluepixel.vetmanager.api.bill.sale.domain.model.Sale;
 /**
  * Spring Data JPA repository for {@link Sale}.
  */
-public interface SaleSpringRepository extends JpaRepository<Sale, Integer> {
+public interface SaleSpringRepository extends JpaRepository<Sale, Long> {
 }

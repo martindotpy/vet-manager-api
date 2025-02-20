@@ -19,7 +19,7 @@ public class DeleteSaleUseCase implements DeleteSalePort {
     private final SaleRepository saleRepository;
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         MDC.put("operationId", "Sale id " + id);
         log.info("Deleting sale by id");
 
