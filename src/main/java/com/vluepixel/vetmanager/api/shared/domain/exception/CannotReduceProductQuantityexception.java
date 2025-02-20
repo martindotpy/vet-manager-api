@@ -7,6 +7,6 @@ import lombok.Getter;
  */
 @Getter
 public final class CannotReduceProductQuantityexception extends ErrorException {
-    private String message = "No se puede reducir a negativo la cantidad de un producto";
+    private final String message = "No se puede reducir a negativo la cantidad de un producto";
     private final int status = 409;
 }
