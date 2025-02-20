@@ -100,7 +100,7 @@ public class CreatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    // BirtDate
+    // BirthDate
     public static final CreatePatientRequest INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())

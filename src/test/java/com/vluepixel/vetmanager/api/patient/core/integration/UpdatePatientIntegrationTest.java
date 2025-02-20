@@ -398,20 +398,32 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Deceased
-    @Test // TODO: Maybe deceased has default value
-    void admin_UpdateRaceWithInvalidArguments_Deceased_Null_UnprocessableEntity() throws Exception {
+    @Test
+    void admin_UpdateRaceWithInvalidArguments_Deceased_Null_Ok() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details").isArray(),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El nombre es requerido"));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.name").value(INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST.getName()),
+                        jsonPath("$.content.birth_date")
+                                .value(INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST.getBirthDate().toString()),
+                        jsonPath("$.content.age").value(10),
+                        jsonPath("$.content.gender")
+                                .value(INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST.getGender().toString()),
+                        jsonPath("$.content.characteristics")
+                                .value(INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST.getCharacteristics()),
+                        jsonPath("$.content.deceased")
+                                .value(INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST.isDeceased()),
+                        jsonPath("$.content.medical_histories").isArray(),
+                        jsonPath("$.content.medical_records").isArray(),
+                        jsonPath("$.content.vaccines").isArray(),
+                        jsonPath("$.content.race.id")
+                                .value(INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST.getRaceId()),
+                        jsonPath("$.content.owner.id")
+                                .value(INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST.getOwnerId()));
     }
 
     // Race ID
