@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.format.DateTimeFormatterBuilder;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
@@ -37,12 +39,13 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value("Paciente eliminado exitosamente"), // TODO ???
+                        jsonPath("$.message").value("Paciente actualizado exitosamente"),
                         jsonPath("$.content.id").value(VALID_UPDATE_PATIENT_REQUEST.getId()),
                         jsonPath("$.content.name").value(VALID_UPDATE_PATIENT_REQUEST.getName()),
-                        jsonPath("$.content.birth_date").value(VALID_UPDATE_PATIENT_REQUEST.getBirthDate().toString()),
+                        jsonPath("$.content.birth_date").value(VALID_UPDATE_PATIENT_REQUEST.getBirthDate()
+                                .format(new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd").toFormatter())),
                         jsonPath("$.content.age").value(10),
-                        jsonPath("$.content.gender").value(VALID_UPDATE_PATIENT_REQUEST.getGender().toString()),
+                        jsonPath("$.content.gender").value(VALID_UPDATE_PATIENT_REQUEST.getGender().name()),
                         jsonPath("$.content.characteristics").value(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics()),
                         jsonPath("$.content.deceased").value(VALID_UPDATE_PATIENT_REQUEST.isDeceased()),
                         jsonPath("$.content.medical_histories").isArray(),
