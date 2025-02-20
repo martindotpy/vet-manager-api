@@ -125,7 +125,7 @@ public class UpdatePatientDataProvider {
             .build();
 
     // Birth Date
-    public static final UpdatePatientRequest INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final UpdatePatientRequest VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
             .builder()
             .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
@@ -137,7 +137,7 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    public static final UpdatePatientRequest INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+    public static final UpdatePatientRequest VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
             .builder()
             .id(VALID_UPDATE_PATIENT_REQUEST.getId())
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())

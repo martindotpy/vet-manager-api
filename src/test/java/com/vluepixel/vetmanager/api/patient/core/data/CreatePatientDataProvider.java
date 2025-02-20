@@ -1,9 +1,9 @@
 package com.vluepixel.vetmanager.api.patient.core.data;
 
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_FUTURE_UPDATE_PATIENT_REQUEST;
-import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_NULL_UPDATE_PATIENT_REQUEST;
-import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_GENDER_NULL_UPDATE_PATIENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_NAME_BLANK_UPDATE_PATIENT_REQUEST;
@@ -104,7 +104,7 @@ public class CreatePatientDataProvider {
     public static final CreatePatientRequest INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
-            .birthDate(INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getBirthDate())
+            .birthDate(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
@@ -115,7 +115,7 @@ public class CreatePatientDataProvider {
     public static final CreatePatientRequest INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST = CreatePatientRequest
             .builder()
             .name(VALID_UPDATE_PATIENT_REQUEST.getName())
-            .birthDate(INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getBirthDate())
+            .birthDate(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getBirthDate())
             .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
             .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
             .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())

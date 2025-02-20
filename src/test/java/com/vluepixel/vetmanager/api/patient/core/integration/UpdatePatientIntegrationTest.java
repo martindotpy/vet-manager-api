@@ -3,9 +3,9 @@ package com.vluepixel.vetmanager.api.patient.core.integration;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_USER_JWT;
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_FUTURE_UPDATE_PATIENT_REQUEST;
-import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_NULL_UPDATE_PATIENT_REQUEST;
-import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_DECEASED_NULL_UPDATE_PATIENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_GENDER_NULL_UPDATE_PATIENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.data.UpdatePatientDataProvider.INVALID_ID_NEGATIVE_UPDATE_PATIENT_REQUEST;
@@ -138,7 +138,7 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
     void noUser_UpdatePatientWithInvalidArguments_BirthDate_MinusYear_Forbidden() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST)))
+                .content(objectMapper.writeValueAsString(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST)))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
@@ -147,7 +147,7 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
     void noUser_UpdatePatientWithInvalidArguments_BirthDate_Today_Forbidden() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST)))
+                .content(objectMapper.writeValueAsString(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST)))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
@@ -448,18 +448,62 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
     void user_UpdatePatientWithInvalidArguments_BirthDate_MinusYear_Ok() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST))
+                .content(objectMapper.writeValueAsString(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getId()),
+                        jsonPath("$.content.name").value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getName()),
+                        jsonPath("$.content.birth_date")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getBirthDate()
+                                        .format(new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd")
+                                                .toFormatter())),
+                        jsonPath("$.content.age").value(1),
+                        jsonPath("$.content.gender")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getGender().name()),
+                        jsonPath("$.content.characteristics")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getCharacteristics()),
+                        jsonPath("$.content.deceased")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.isDeceased()),
+                        jsonPath("$.content.medical_histories").isArray(),
+                        jsonPath("$.content.medical_records").isArray(),
+                        jsonPath("$.content.vaccines").isArray(),
+                        jsonPath("$.content.race.id")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getRaceId()),
+                        jsonPath("$.content.owner.id")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getOwnerId()));
     }
 
     @Test
     void user_UpdatePatientWithInvalidArguments_BirthDate_Today_Ok() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST))
+                .content(objectMapper.writeValueAsString(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getId()),
+                        jsonPath("$.content.name").value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getName()),
+                        jsonPath("$.content.birth_date")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getBirthDate()
+                                        .format(new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd")
+                                                .toFormatter())),
+                        jsonPath("$.content.age").value(0),
+                        jsonPath("$.content.gender")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getGender().name()),
+                        jsonPath("$.content.characteristics")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getCharacteristics()),
+                        jsonPath("$.content.deceased")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.isDeceased()),
+                        jsonPath("$.content.medical_histories").isArray(),
+                        jsonPath("$.content.medical_records").isArray(),
+                        jsonPath("$.content.vaccines").isArray(),
+                        jsonPath("$.content.race.id").value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getRaceId()),
+                        jsonPath("$.content.owner.id")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getOwnerId()));
     }
 
     @Test
@@ -894,18 +938,64 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
     void admin_UpdatePatientWithInvalidArguments_BirthDate_MinusYear_Ok() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST))
+                .content(objectMapper.writeValueAsString(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getId()),
+                        jsonPath("$.content.name")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getName()),
+                        jsonPath("$.content.birth_date")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getBirthDate()
+                                        .format(new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd")
+                                                .toFormatter())),
+                        jsonPath("$.content.age").value(1),
+                        jsonPath("$.content.gender")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getGender().name()),
+                        jsonPath("$.content.characteristics")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getCharacteristics()),
+                        jsonPath("$.content.deceased")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.isDeceased()),
+                        jsonPath("$.content.medical_histories").isArray(),
+                        jsonPath("$.content.medical_records").isArray(),
+                        jsonPath("$.content.vaccines").isArray(),
+                        jsonPath("$.content.race.id")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getRaceId()),
+                        jsonPath("$.content.owner.id")
+                                .value(VALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST.getOwnerId()));
     }
 
     @Test
     void admin_UpdatePatientWithInvalidArguments_BirthDate_Today_Ok() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST))
+                .content(objectMapper.writeValueAsString(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getId()),
+                        jsonPath("$.content.name")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getName()),
+                        jsonPath("$.content.birth_date")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getBirthDate()
+                                        .format(new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd")
+                                                .toFormatter())),
+                        jsonPath("$.content.age").value(0),
+                        jsonPath("$.content.gender")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getGender().name()),
+                        jsonPath("$.content.characteristics")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getCharacteristics()),
+                        jsonPath("$.content.deceased")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.isDeceased()),
+                        jsonPath("$.content.medical_histories").isArray(),
+                        jsonPath("$.content.medical_records").isArray(),
+                        jsonPath("$.content.vaccines").isArray(),
+                        jsonPath("$.content.race.id")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getRaceId()),
+                        jsonPath("$.content.owner.id")
+                                .value(VALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST.getOwnerId()));
     }
 
     @Test
