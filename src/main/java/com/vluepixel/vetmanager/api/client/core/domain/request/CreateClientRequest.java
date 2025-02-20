@@ -6,6 +6,7 @@ import com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType;
 import com.vluepixel.vetmanager.api.shared.adapter.in.util.RegexConstants;
 import com.vluepixel.vetmanager.api.shared.domain.request.Request;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -41,4 +42,22 @@ public final class CreateClientRequest implements Request {
 
     private List<@NotBlank(message = "El correo es requerido") @Size(max = 50, message = "El correo no puede tener más de 50 caracteres") @Email(message = "El correo no es válido") String> emails;
     private List<@Pattern(regexp = RegexConstants.PHONE, message = "El teléfono no es válido") @NotBlank(message = "El teléfono es requerido") String> phones;
+
+    /**
+     * Validate identification.
+     *
+     * @return true if the identification is valid, false otherwise
+     */
+    @AssertTrue(message = "La identificación no es válida")
+    public boolean isIdentification() {
+        if (identificationType == null || identification == null) {
+            return true;
+        }
+
+        return identification.matches(switch (identificationType) {
+            case DNI -> RegexConstants.DNI;
+            case RUC -> RegexConstants.RUC;
+            case FOREIGNER_CARNET -> RegexConstants.FOREIGNER_CARNET;
+        });
+    }
 }

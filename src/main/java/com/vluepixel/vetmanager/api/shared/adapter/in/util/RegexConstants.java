@@ -39,4 +39,19 @@ public final class RegexConstants {
      * Phone regex. It matches a peruvian phone number in the format "9xxxxxxxx".
      */
     public static final String PHONE = "^9[0-9]{8}$";
+
+    /**
+     * DNI regex. It matches a peruvian DNI in the format "xxxxxxxx".
+     */
+    public static final String DNI = "^\\d{8}$";
+
+    /**
+     * RUC regex. It matches a peruvian RUC in the format "xxxxxxxxxxx".
+     */
+    public static final String RUC = "^\\d{11}$";
+
+    /**
+     * Foreigner carnet. It matches a foreigner carnet in the format "xxxxxxxx".
+     */
+    public static final String FOREIGNER_CARNET = "^[a-zA-Z0-9]{12}$";
 }

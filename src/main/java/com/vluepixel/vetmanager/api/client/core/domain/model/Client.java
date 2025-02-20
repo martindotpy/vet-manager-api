@@ -18,6 +18,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -74,4 +75,22 @@ public final class Client {
 
     @Builder.Default
     private boolean deleted = false;
+
+    /**
+     * Validate identification.
+     *
+     * @return true if the identification is valid, false otherwise
+     */
+    @AssertTrue(message = "La identificación no es válida")
+    public boolean isIdentification() {
+        if (identificationType == null || identification == null) {
+            return true;
+        }
+
+        return identification.matches(switch (identificationType) {
+            case DNI -> RegexConstants.DNI;
+            case RUC -> RegexConstants.RUC;
+            case FOREIGNER_CARNET -> RegexConstants.FOREIGNER_CARNET;
+        });
+    }
 }
