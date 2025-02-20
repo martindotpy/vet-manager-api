@@ -10,6 +10,7 @@ import static com.vluepixel.vetmanager.api.shared.domain.util.CaseConverterUtils
 
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -146,12 +148,12 @@ public class GlobalExceptionHandlerController {
         if (e.getMostSpecificCause() instanceof JsonParseException jsonParseException) {
             JsonLocation jsonLocation = jsonParseException.getLocation();
 
-            return badRequest("JSON parse error at row " + jsonLocation.getLineNr() +
-                    ", column " + jsonLocation.getColumnNr() + ": " + jsonParseException.getOriginalMessage());
+            return badRequest("Error al convertir el JSON en la fila " + jsonLocation.getLineNr() +
+                    ", columna " + jsonLocation.getColumnNr());
         }
 
         else if (e.getMostSpecificCause() instanceof DateTimeParseException dateTimeParseException) {
-            return badRequest("Cannot parse datetime: " + dateTimeParseException.getMessage());
+            return badRequest("No se puede convertir a fecha: " + dateTimeParseException.getMessage());
         }
 
         else if (e.getMostSpecificCause() instanceof InvalidTypeIdException invalidTypeIdException) {
@@ -160,7 +162,7 @@ public class GlobalExceptionHandlerController {
                     originalMessage.indexOf("[") + 1,
                     originalMessage.indexOf("]"));
 
-            return badRequest("Only the following values are allowed: " + information);
+            return badRequest("Solo los siguientes valores son permitidos: " + information);
         }
 
         log.error("Http message not readable: ", e);
@@ -174,18 +176,23 @@ public class GlobalExceptionHandlerController {
      * @param e The exception thrown by the application.
      * @return Bad request response
      */
+    @SuppressWarnings("unchecked")
     @ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> handleMethodArgumentTypeMismatchException(
             org.springframework.web.method.annotation.MethodArgumentTypeMismatchException e) {
         if (e.getMostSpecificCause() instanceof InvalidEnumValueException invalidEnumValueException) {
 
-            String field = e.getPropertyName();
-            String message = String.join(
-                    ", ",
-                    Stream.of(invalidEnumValueException.getEnumType().getEnumConstants())
-                            .map(Enum::name)
-                            .map(String::toLowerCase)
-                            .toList());
+            String prefix = "";
+
+            if (e.getParameter().hasParameterAnnotation(PathVariable.class)) {
+                prefix = "path.";
+            } else if (e.getParameter().hasParameterAnnotation(RequestParam.class)) {
+                prefix = "query.";
+            }
+
+            String field = prefix + e.getPropertyName();
+            String message = "Solo se permite: "
+                    + enumValues(invalidEnumValueException.getEnumType(), String::toLowerCase);
 
             return validationError(List.of(new ValidationError(field, message)));
         }
@@ -195,13 +202,29 @@ public class GlobalExceptionHandlerController {
 
             if (e.getParameter().hasParameterAnnotation(PathVariable.class)) {
                 fieldBuilder.append("path.");
+            } else if (e.getParameter().hasParameterAnnotation(RequestParam.class)) {
+                fieldBuilder.append("query.");
             }
 
             fieldBuilder.append(e.getPropertyName());
 
+            String message = null;
+            String exceptionMessage = illegalArgumentException.getMessage();
+
+            if (exceptionMessage.contains("No enum constant")) {
+                message = "Solo se permite: "
+                        + enumValues((Class<? extends Enum<?>>) e.getRequiredType(), String::toLowerCase);
+            } else if (exceptionMessage.contains("Invalid boolean value")) {
+                message = "Valor booleano inválido";
+            } else if (exceptionMessage.contains("For input string")) {
+                message = "Valor numérico inválido";
+            } else {
+                message = "Argumentos inválidos";
+                log.error("Method argument type mismatch: ", e);
+            }
+
             return validationError(List.of(
-                    new ValidationError(toSnakeCase(fieldBuilder.toString()),
-                            "Illegal argument: " + illegalArgumentException.getMessage())));
+                    new ValidationError(toSnakeCase(fieldBuilder.toString()), message)));
         }
 
         log.error("Method argument type mismatch: ", e);
@@ -236,5 +259,21 @@ public class GlobalExceptionHandlerController {
 
         return validationError(
                 List.of(new ValidationError("param." + e.getRequestPartName(), name + " es requerido(a)")));
+    }
+
+    /**
+     * Return the enum values with mapper.
+     *
+     * @param enumType The enum type.
+     * @param mapper   The mapper function.
+     * @return The enum values
+     */
+    private String enumValues(Class<? extends Enum<?>> enumType, Function<String, String> mapper) {
+        return String.join(
+                ", ",
+                Stream.of(enumType.getEnumConstants())
+                        .map(Enum::name)
+                        .map(mapper)
+                        .toList());
     }
 }
