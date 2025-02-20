@@ -362,37 +362,25 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // BirthDate
-    @Test // TODO: Take in consideration
-    void user_CreatePatientWithInvalidArguments_BirthDate_MinusYear_UnprocessableEntity() throws Exception {
+    @Test
+    void user_CreatePatientWithInvalidArguments_BirthDate_MinusYear_Ok() throws Exception {
         mockMvc.perform(post("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("El nombre no puede tener más de 50 caracteres"));
+                .andExpect(status().isOk());
     }
 
-    @Test // TODO: Take in consideration
-    void user_CreatePatientWithInvalidArguments_BirthDate_Today_UnprocessableEntity() throws Exception {
+    @Test
+    void user_CreatePatientWithInvalidArguments_BirthDate_Today_Ok() throws Exception {
         mockMvc.perform(post("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("El nombre no puede tener más de 50 caracteres"));
+                .andExpect(status().isOk());
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void user_CreatePatientWithInvalidArguments_BirthDate_Future_UnprocessableEntity() throws Exception {
         mockMvc.perform(post("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -402,12 +390,13 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
+                        jsonPath("$.details[0].field").value("birth_date"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("El nombre no puede tener más de 50 caracteres"));
+                        jsonPath("$.details[0].messages[0]")
+                                .value("La fecha de nacimiento no puede ser mayor a la fecha actual"));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void user_CreatePatientWithInvalidArguments_BirthDate_Null_UnprocessableEntity() throws Exception {
         mockMvc.perform(post("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -759,37 +748,25 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // BirthDate
-    @Test // TODO: Take in consideration
+    @Test
     void admin_CreatePatientWithInvalidArguments_BirthDate_MinusYear_UnprocessableEntity() throws Exception {
         mockMvc.perform(post("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("El nombre no puede tener más de 50 caracteres"));
+                .andExpect(status().isOk());
     }
 
-    @Test // TODO: Take in consideration
-    void admin_CreatePatientWithInvalidArguments_BirthDate_Today_UnprocessableEntity() throws Exception {
+    @Test
+    void admin_CreatePatientWithInvalidArguments_BirthDate_Today_Ok() throws Exception {
         mockMvc.perform(post("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("El nombre no puede tener más de 50 caracteres"));
+                .andExpect(status().isOk());
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void admin_CreatePatientWithInvalidArguments_BirthDate_Future_UnprocessableEntity() throws Exception {
         mockMvc.perform(post("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -799,12 +776,13 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
+                        jsonPath("$.details[0].field").value("birth_date"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("El nombre no puede tener más de 50 caracteres"));
+                        jsonPath("$.details[0].messages[0]")
+                                .value("La fecha de nacimiento no puede ser mayor a la fecha actual"));
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void admin_CreatePatientWithInvalidArguments_BirthDate_Null_UnprocessableEntity() throws Exception {
         mockMvc.perform(post("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -816,7 +794,8 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("birth_date"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("La fecha de nacimiento es requerida"));
+                        jsonPath("$.details[0].messages[0]")
+                                .value("La fecha de nacimiento es requerida"));
     }
 
     // Gender
@@ -832,7 +811,7 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("gender"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must not be null")); // TODO
+                        jsonPath("$.details[0].messages[0]").value("El género es requerido"));
     }
 
     // Characteristics

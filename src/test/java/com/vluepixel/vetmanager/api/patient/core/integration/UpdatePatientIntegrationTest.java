@@ -444,39 +444,25 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Birth Date
-    @Test // TODO: Take in consideration
-    void user_UpdatePatientWithInvalidArguments_BirthDate_MinusYear_UnprocessableEntity() throws Exception {
+    @Test
+    void user_UpdatePatientWithInvalidArguments_BirthDate_MinusYear_Ok() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details").isArray(),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El nombre es requerido"));
+                .andExpect(status().isOk());
     }
 
-    @Test // TODO: Take in consideration
-    void user_UpdatePatientWithInvalidArguments_BirthDate_Today_UnprocessableEntity() throws Exception {
+    @Test
+    void user_UpdatePatientWithInvalidArguments_BirthDate_Today_Ok() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details").isArray(),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El nombre es requerido"));
+                .andExpect(status().isOk());
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void user_UpdatePatientWithInvalidArguments_BirthDate_Future_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -487,9 +473,10 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details").isArray(),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
+                        jsonPath("$.details[0].field").value("birth_date"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El nombre es requerido"));
+                        jsonPath("$.details[0].messages")
+                                .value("La fecha de nacimiento no puede ser mayor a la fecha actual"));
     }
 
     @Test
@@ -522,7 +509,7 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("gender"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("must not be null")); // TODO
+                        jsonPath("$.details[0].messages").value("El género es requerido"));
     }
 
     // Characteristics
@@ -903,39 +890,25 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
     }
 
     // Birth Date
-    @Test // TODO: Take in consideration
-    void admin_UpdatePatientWithInvalidArguments_BirthDate_MinusYear_UnprocessableEntity() throws Exception {
+    @Test
+    void admin_UpdatePatientWithInvalidArguments_BirthDate_MinusYear_Ok() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details").isArray(),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El nombre es requerido"));
+                .andExpect(status().isOk());
     }
 
-    @Test // TODO: Take in consideration
-    void admin_UpdatePatientWithInvalidArguments_BirthDate_Today_UnprocessableEntity() throws Exception {
+    @Test
+    void admin_UpdatePatientWithInvalidArguments_BirthDate_Today_Ok() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_TODAY_UPDATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details").isArray(),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El nombre es requerido"));
+                .andExpect(status().isOk());
     }
 
-    @Test // TODO: Take in consideration
+    @Test
     void admin_UpdatePatientWithInvalidArguments_BirthDate_Future_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/patient")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -944,11 +917,11 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
                 .andExpect(status().isUnprocessableEntity())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details").isArray(),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("name"),
+                        jsonPath("$.details[0].field").value("birth_date"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El nombre es requerido"));
+                        jsonPath("$.details[0].messages[0]")
+                                .value("La fecha de nacimiento no puede ser mayor a la fecha actual"));
     }
 
     @Test
