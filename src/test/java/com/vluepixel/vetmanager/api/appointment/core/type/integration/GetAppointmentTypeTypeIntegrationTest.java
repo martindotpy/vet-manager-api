@@ -1,4 +1,4 @@
-package com.vluepixel.vetmanager.api.appointment.core.integration;
+package com.vluepixel.vetmanager.api.appointment.core.type.integration;
 
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_USER_JWT;
@@ -13,94 +13,95 @@ import org.springframework.util.MultiValueMap;
 import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 
 /**
- * Integration tests for the get appointment use case.
+ * Integration tests for the get appointment type use case.
  */
-public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Citas encontradas";
+public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
+    private static final String MESSAGE_OK = "Tipos de cita encontradas";
+
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
 
     @Test
-    void noUser_GetAppointmentWithValidParams_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithValidParams_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithoutParams_Forbidden() throws Exception {
-        mockMvc.perform(get("/appointment"))
+    void noUser_GetAppointmentTypeWithoutParams_Forbidden() throws Exception {
+        mockMvc.perform(get("/appointment/type"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     // ID
     @Test
-    void noUser_GetAppointmentWithInvalidParams_ID_Invalid_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_ID_Invalid_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "invalid");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_ID_NotFound_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_ID_NotFound_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "20");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_ID_Blank_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_ID_Blank_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", " ");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_ID_Empty_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_ID_Empty_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_ID_Null_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_ID_Null_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", null);
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -108,48 +109,48 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Page
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Page_NotNumber_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Page_NotNumber_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "abcd");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Page_Negative_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Page_Negative_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "-1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Page_Blank_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Page_Blank_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", " ");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Page_Null_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Page_Null_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", null);
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -157,60 +158,60 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Size
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Size_NotNumber_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Size_NotNumber_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "abcd");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Size_Negative_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Size_Negative_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "-1");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Size_Largest_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Size_Largest_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "111");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Size_Blank_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Size_Blank_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Size_Null_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Size_Null_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -218,65 +219,65 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Order
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Order_Without_OrderBy_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Order_Without_OrderBy_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Order_Invalid_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Order_Invalid_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "abcd");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Order_Blank_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Order_Blank_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Order_Empty_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Order_Empty_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_Order_Null_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_Order_Null_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -284,103 +285,103 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // OrderBy
     @Test
-    void noUser_GetAppointmentWithInvalidParams_OrderBy_Name_Invalid_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_OrderBy_Name_Invalid_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "abcd");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_OrderBy_Name_Valid_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_OrderBy_Name_Valid_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
+        queryParams.add("order_by", "name");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_OrderBy_Name_Null_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_OrderBy_Name_Null_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Appointment Type Name
+    // Name
     @Test
-    void noUser_GetAppointmentWithInvalidParams_AppointmentTypeName_Valid_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Valid_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", "Limpieza");
+        queryParams.add("order_by", "name");
+        queryParams.add("name", "Limpieza");
 
-        mockMvc.perform(get("/appointment")
-                .queryParams(queryParams))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    @Test
-    void noUser_GetAppointmentWithInvalidParams_AppointmentTypeName_Blank_Forbidden() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", " ");
-
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_AppointmentTypeName_Empty_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Blank_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", "");
+        queryParams.add("order_by", "name");
+        queryParams.add("name", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
-    void noUser_GetAppointmentWithInvalidParams_AppointmentTypeName_Null_Forbidden() throws Exception {
+    void noUser_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Empty_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", null);
+        queryParams.add("order_by", "name");
+        queryParams.add("name", "");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "name");
+        queryParams.add("name", null);
+
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -392,12 +393,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Role: USER
     @Test
-    void user_GetAppointmentWithValidParams_Ok() throws Exception {
+    void user_GetAppointmentTypeWithValidParams_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -412,8 +413,8 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithoutParams_Ok() throws Exception {
-        mockMvc.perform(get("/appointment")
+    void user_GetAppointmentTypeWithoutParams_Ok() throws Exception {
+        mockMvc.perform(get("/appointment/type")
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
                 .andExpectAll(
@@ -428,13 +429,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // ID
     @Test
-    void user_GetAppointmentWithInvalidParams_ID_Invalid_UnprocessableEntity() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_ID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "invalid");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -447,13 +448,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_ID_NotFound_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_ID_NotFound_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "20");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -468,13 +469,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_ID_Blank_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_ID_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", " ");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -489,13 +490,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_ID_Empty_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_ID_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -510,13 +511,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_ID_Null_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_ID_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", null);
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -532,12 +533,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Page
     @Test
-    void user_GetAppointmentWithInvalidParams_Page_NotNumber_UnprocessableEntity() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Page_NotNumber_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "abcd");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -550,12 +551,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Page_Negative_UnprocessableEntity() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Page_Negative_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "-1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -568,12 +569,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Page_NotNumber_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Page_NotNumber_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", " ");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -588,12 +589,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Page_Null_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Page_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", null);
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -609,12 +610,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Size
     @Test
-    void user_GetAppointmentWithInvalidParams_Size_NotNumber_UnprocessableEntity() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Size_NotNumber_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "abcd");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -627,12 +628,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Size_Negative_UnprocessableEntity() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Size_Negative_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "-1");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -645,12 +646,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Size_Largest_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Size_Largest_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "111");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -665,12 +666,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Size_Blank_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Size_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -685,12 +686,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Size_Null_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Size_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -706,13 +707,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Order
     @Test
-    void user_GetAppointmentWithInvalidParams_Order_Without_OrderBy_UnprocessableEntity() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Order_Without_OrderBy_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -726,13 +727,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Order_Invalid_UnprocessableEntity() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Order_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "abcd");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -746,13 +747,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Order_Blank_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Order_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -767,13 +768,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Order_Empty_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Order_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -788,13 +789,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_Order_Null_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_Order_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -810,14 +811,14 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // OrderBy
     @Test
-    void user_GetAppointmentWithInvalidParams_OrderBy_Name_Invalid_UnprocessableEntity() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_OrderBy_Name_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "abcd");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -827,18 +828,18 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, created_at, start_at, description"));
+                                .value("Solo los siguientes campos son válidos: id, name, duration_in_minutes"));
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_OrderBy_Name_Valid_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_OrderBy_Name_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
+        queryParams.add("order_by", "name");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -853,14 +854,14 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_OrderBy_Name_Null_UnprocessableEntity() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_OrderBy_Name_Null_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -873,17 +874,17 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                                 .value("El campo para ordenar es requerido cuando se ha definido un orden"));
     }
 
-    // Appointment Type Name
+    // Name
     @Test
-    void user_GetAppointmentWithInvalidParams_AppointmentTypeName_Valid_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", "Limpieza");
+        queryParams.add("order_by", "name");
+        queryParams.add("name", "Limpieza");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -895,19 +896,19 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(1),
-                        jsonPath("$.content[0].name").value("Firulays"));
+                        jsonPath("$.content[0].name").value("Limpieza"));
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_AppointmentTypeName_Blank_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", " ");
+        queryParams.add("order_by", "name");
+        queryParams.add("name", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -922,15 +923,15 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_AppointmentTypeName_Empty_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", "");
+        queryParams.add("order_by", "name");
+        queryParams.add("name", "");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -945,15 +946,15 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetAppointmentWithInvalidParams_AppointmentTypeName_Null_Ok() throws Exception {
+    void user_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", null);
+        queryParams.add("order_by", "name");
+        queryParams.add("name", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
@@ -969,12 +970,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Role: ADMIN
     @Test
-    void admin_GetAppointmentWithValidParams_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithValidParams_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -989,8 +990,8 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithoutParams_Ok() throws Exception {
-        mockMvc.perform(get("/appointment")
+    void admin_GetAppointmentTypeWithoutParams_Ok() throws Exception {
+        mockMvc.perform(get("/appointment/type")
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
                 .andExpectAll(
@@ -1005,13 +1006,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // ID
     @Test
-    void admin_GetAppointmentWithInvalidParams_ID_Invalid_UnprocessableEntity() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_ID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "invalid");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -1024,13 +1025,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_ID_NotFound_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_ID_NotFound_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "20");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1045,13 +1046,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_ID_Blank_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_ID_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", " ");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1066,13 +1067,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_ID_Empty_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_ID_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", "");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1087,13 +1088,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_ID_Null_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_ID_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", null);
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1109,12 +1110,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Page
     @Test
-    void admin_GetAppointmentWithInvalidParams_Page_NotNumber_UnprocessableEntity() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Page_NotNumber_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "abcd");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -1127,12 +1128,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Page_Negative_UnprocessableEntity() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Page_Negative_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "-1");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -1145,12 +1146,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Page_NotNumber_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Page_NotNumber_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", " ");
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1165,12 +1166,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Page_Null_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Page_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", null);
         queryParams.add("size", "10");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1186,12 +1187,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Size
     @Test
-    void admin_GetAppointmentWithInvalidParams_Size_NotNumber_UnprocessableEntity() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Size_NotNumber_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "abcd");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -1204,12 +1205,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Size_Negative_UnprocessableEntity() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Size_Negative_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "-1");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -1222,12 +1223,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Size_Largest_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Size_Largest_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "111");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1242,12 +1243,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Size_Blank_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Size_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1262,12 +1263,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Size_Null_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Size_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1283,13 +1284,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Order
     @Test
-    void admin_GetAppointmentWithInvalidParams_Order_Without_OrderBy_UnprocessableEntity() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Order_Without_OrderBy_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -1303,13 +1304,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Order_Invalid_UnprocessableEntity() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Order_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "abcd");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -1323,13 +1324,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Order_Blank_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Order_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1344,13 +1345,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Order_Empty_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Order_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1365,13 +1366,13 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_Order_Null_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_Order_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1387,14 +1388,14 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // OrderBy
     @Test
-    void admin_GetAppointmentWithInvalidParams_OrderBy_Name_Invalid_UnprocessableEntity() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_OrderBy_Name_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "abcd");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -1404,18 +1405,18 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, created_at, start_at, description"));
+                                .value("Solo los siguientes campos son válidos: id, name, duration_in_minutes"));
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_OrderBy_Name_Valid_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_OrderBy_Name_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
+        queryParams.add("order_by", "name");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1430,14 +1431,14 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_OrderBy_Name_Null_UnprocessableEntity() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_OrderBy_Name_Null_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
@@ -1450,17 +1451,17 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                                 .value("El campo para ordenar es requerido cuando se ha definido un orden"));
     }
 
-    // Appointment Type Name
+    // Name
     @Test
-    void admin_GetAppointmentWithInvalidParams_AppointmentTypeName_Valid_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", "Limpieza");
+        queryParams.add("order_by", "name");
+        queryParams.add("name", "Limpieza");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1472,19 +1473,19 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(1),
-                        jsonPath("$.content[0].name").value("Firulays"));
+                        jsonPath("$.content[0].name").value("Limpieza"));
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_AppointmentTypeName_Blank_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Blank_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", " ");
+        queryParams.add("order_by", "name");
+        queryParams.add("name", " ");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1499,15 +1500,15 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_AppointmentTypeName_Empty_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", "");
+        queryParams.add("order_by", "name");
+        queryParams.add("name", "");
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
@@ -1522,15 +1523,15 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetAppointmentWithInvalidParams_AppointmentTypeName_Null_Ok() throws Exception {
+    void admin_GetAppointmentTypeWithInvalidParams_AppointmentTypeName_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
-        queryParams.add("order_by", "description");
-        queryParams.add("appointment_type_name", null);
+        queryParams.add("order_by", "name");
+        queryParams.add("name", null);
 
-        mockMvc.perform(get("/appointment")
+        mockMvc.perform(get("/appointment/type")
                 .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())

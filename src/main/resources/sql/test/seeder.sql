@@ -154,3 +154,24 @@ VALUES
         '2025-02-25T23:51:17.578',
         'Ta sucio'
     );
+
+INSERT INTO
+    appointment_type (
+        duration_in_minutes,
+        id,
+        price,
+        `name`
+    )
+VALUES 
+    (
+        30,
+        1,
+        100,
+        'Limpieza'
+    ),
+    (
+        20,
+        2,
+        150,
+        'Operación'
+    );
