@@ -1,7 +1,9 @@
 package com.vluepixel.vetmanager.api.appointment.core.application.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.vluepixel.vetmanager.api.appointment.details.application.dto.AppointmentDetailsDto;
 import com.vluepixel.vetmanager.api.patient.core.application.dto.PatientDto;
 import com.vluepixel.vetmanager.api.user.core.application.dto.UserDto;
 
@@ -23,6 +25,8 @@ public final class AppointmentDto {
     private LocalDateTime createdAt;
     private LocalDateTime startAt;
     private String description;
+
+    private List<AppointmentDetailsDto> details;
     private PatientDto patient;
     private UserDto createdBy;
 }
