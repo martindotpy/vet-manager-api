@@ -44,6 +44,11 @@ public final class UpdatePatientRequest implements Request {
     @Positive(message = "El id del dueño debe ser mayor a 0")
     private Long ownerId;
 
+    /**
+     * Validate birth date.
+     *
+     * @return true if the birth date is valid, false otherwise
+     */
     @AssertTrue(message = "La fecha de nacimiento no puede ser mayor a la fecha actual")
     public boolean isBirthDate() {
         if (birthDate == null) {

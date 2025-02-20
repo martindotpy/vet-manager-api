@@ -26,6 +26,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -92,5 +93,19 @@ public final class Patient {
      */
     public Integer calculateAge() {
         return LocalDate.now().getYear() - birthDate.getYear();
+    }
+
+    /**
+     * Validate birth date.
+     *
+     * @return true if the birth date is valid, false otherwise
+     */
+    @AssertTrue(message = "La fecha de nacimiento no puede ser mayor a la fecha actual")
+    public boolean isBirthDate() {
+        if (birthDate == null) {
+            return true;
+        }
+
+        return !birthDate.isAfter(LocalDate.now());
     }
 }
