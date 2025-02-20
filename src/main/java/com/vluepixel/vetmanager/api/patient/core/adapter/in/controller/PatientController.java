@@ -200,7 +200,7 @@ public final class PatientController {
     public ResponseEntity<PatientResponse> update(@RequestBody UpdatePatientRequest request)
             throws ValidationException, NotFoundException {
         return ok(() -> updatePatientPort.update(request),
-                "Paciente eliminado exitosamente",
+                "Paciente actualizado exitosamente",
                 ValidationRequest.of(request));
     }
 
