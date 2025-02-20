@@ -30,6 +30,7 @@ public class CreatePatientUseCase implements CreatePatientPort {
 
         Patient newPatient = patientMapper.fromRequest(request).build();
         newPatient = patientRepository.save(newPatient);
+        newPatient = patientRepository.findById(newPatient.getId()).get();
 
         log.info("Patient created");
 
