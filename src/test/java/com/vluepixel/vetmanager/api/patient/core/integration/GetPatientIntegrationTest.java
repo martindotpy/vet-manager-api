@@ -374,82 +374,6 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Age
-    @Test
-    void noUser_GetPatientWithInvalidParams_Age_Valid_Forbidden() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "4");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    @Test
-    void noUser_GetPatientWithInvalidParams_Age_Blank_Forbidden() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", " ");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    @Test
-    void noUser_GetPatientWithInvalidParams_Age_NotNumber_Forbidden() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "abcd");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    @Test
-    void noUser_GetPatientWithInvalidParams_Age_Empty_Forbidden() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
-    @Test
-    void noUser_GetPatientWithInvalidParams_Age_Null_Forbidden() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
-    }
-
     // Gender
     @Test
     void noUser_GetPatientWithInvalidParams_Gender_Valid_Forbidden() throws Exception {
@@ -1477,10 +1401,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("query.id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -1560,11 +1483,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("page"),
+                        jsonPath("$.details[0].field").value("query.page"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("page").toArray()[0])));
+                                "Valor numérico inválido"));
     }
 
     @Test
@@ -1639,11 +1561,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("size"),
+                        jsonPath("$.details[0].field").value("query.size"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("size").toArray()[0])));
+                                "Valor numérico inválido"));
     }
 
     @Test
@@ -1759,10 +1680,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("order"),
+                        jsonPath("$.details[0].field").value("query.order"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("asc, desc, none"));
+                                .value("Solo se permite: asc, desc, none"));
     }
 
     @Test
@@ -1847,7 +1768,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, name, birth_date, age, gender, characteristics, deceased"));
+                                .value("Solo los siguientes campos son válidos: id, name, birth_date, gender, characteristics, deceased"));
     }
 
     @Test
@@ -1987,121 +1908,6 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.length()").value(2));
     }
 
-    // Age
-    @Test
-    void user_GetPatientWithInvalidParams_Age_Valid_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "4");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.page").value(1),
-                        jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
-                        jsonPath("$.total_pages").value(1),
-                        jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
-    }
-
-    @Test
-    void user_GetPatientWithInvalidParams_Age_Blank_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", " ");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.page").value(1),
-                        jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
-                        jsonPath("$.total_pages").value(1),
-                        jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
-    }
-
-    @Test
-    void user_GetPatientWithInvalidParams_Age_NotNumber_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "abcd");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("age"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: For input string: \"abcd\""));
-    }
-
-    @Test
-    void user_GetPatientWithInvalidParams_Age_Empty_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.page").value(1),
-                        jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
-                        jsonPath("$.total_pages").value(1),
-                        jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
-    }
-
-    @Test
-    void user_GetPatientWithInvalidParams_Age_Null_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.page").value(1),
-                        jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
-                        jsonPath("$.total_pages").value(1),
-                        jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
-    }
-
     // Gender
     @Test
     void user_GetPatientWithInvalidParams_Gender_Valid_Ok() throws Exception {
@@ -2166,10 +1972,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("gender"),
+                        jsonPath("$.details[0].field").value("query.gender"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: No enum constant com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender.abcd"));
+                                .value("Solo se permite: female, male, not_specified"));
     }
 
     @Test
@@ -2281,10 +2087,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("deceased"),
+                        jsonPath("$.details[0].field").value("query.deceased"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: Invalid boolean value [abcd]"));
+                                .value("Valor booleano inválido"));
     }
 
     @Test
@@ -2372,9 +2178,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("race_id"),
+                        jsonPath("$.details[0].field").value("query.race_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -2594,9 +2400,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("species_id"),
+                        jsonPath("$.details[0].field").value("query.species_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -2816,9 +2622,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("owner_id"),
+                        jsonPath("$.details[0].field").value("query.owner_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -3250,10 +3056,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("owner_identification_type"),
+                        jsonPath("$.details[0].field").value("query.owner_identification_type"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: No enum constant com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType.abcd"));
+                                .value("Solo se permite: dni, ruc, foreigner_carnet"));
     }
 
     @Test
@@ -3658,10 +3464,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("query.id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -3741,11 +3546,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("page"),
+                        jsonPath("$.details[0].field").value("query.page"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("page").toArray()[0])));
+                                "Valor numérico inválido"));
     }
 
     @Test
@@ -3820,11 +3624,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("size"),
+                        jsonPath("$.details[0].field").value("query.size"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("size").toArray()[0])));
+                                "Valor numérico inválido"));
     }
 
     @Test
@@ -3940,10 +3743,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("order"),
+                        jsonPath("$.details[0].field").value("query.order"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("asc, desc, none"));
+                                .value("Solo se permite: asc, desc, none"));
     }
 
     @Test
@@ -4028,7 +3831,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, name, birth_date, age, gender, characteristics, deceased"));
+                                .value("Solo los siguientes campos son válidos: id, name, birth_date, gender, characteristics, deceased"));
     }
 
     @Test
@@ -4168,121 +3971,6 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.length()").value(2));
     }
 
-    // Age
-    @Test
-    void admin_GetPatientWithInvalidParams_Age_Valid_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "4");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.page").value(1),
-                        jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
-                        jsonPath("$.total_pages").value(1),
-                        jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
-    }
-
-    @Test
-    void admin_GetPatientWithInvalidParams_Age_Blank_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", " ");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.page").value(1),
-                        jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
-                        jsonPath("$.total_pages").value(1),
-                        jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
-    }
-
-    @Test
-    void admin_GetPatientWithInvalidParams_Age_NotNumber_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "abcd");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("age"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: For input string: \"abcd\""));
-    }
-
-    @Test
-    void admin_GetPatientWithInvalidParams_Age_Empty_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.page").value(1),
-                        jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
-                        jsonPath("$.total_pages").value(1),
-                        jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
-    }
-
-    @Test
-    void admin_GetPatientWithInvalidParams_Age_Null_Ok() throws Exception {
-        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("page", "1");
-        queryParams.add("size", "10");
-        queryParams.add("order", "asc");
-        queryParams.add("order_by", "name");
-        queryParams.add("age", "");
-
-        mockMvc.perform(get("/patient")
-                .queryParams(queryParams)
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.page").value(1),
-                        jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
-                        jsonPath("$.total_pages").value(1),
-                        jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
-    }
-
     // Gender
     @Test
     void admin_GetPatientWithInvalidParams_Gender_Valid_Ok() throws Exception {
@@ -4347,10 +4035,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("gender"),
+                        jsonPath("$.details[0].field").value("query.gender"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: No enum constant com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender.abcd"));
+                                .value("Solo se permite: female, male, not_specified"));
     }
 
     @Test
@@ -4462,10 +4150,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("deceased"),
+                        jsonPath("$.details[0].field").value("query.deceased"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: Invalid boolean value [abcd]"));
+                                .value("Valor booleano inválido"));
     }
 
     @Test
@@ -4553,11 +4241,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("race_id"),
+                        jsonPath("$.details[0].field").value("query.race_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"",
-                                queryParams.get("race_id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -4777,11 +4463,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("species_id"),
+                        jsonPath("$.details[0].field").value("query.species_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"",
-                                queryParams.get("species_id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -5001,11 +4685,9 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("owner_id"),
+                        jsonPath("$.details[0].field").value("query.owner_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"",
-                                queryParams.get("owner_id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -5437,10 +5119,10 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("owner_identification_type"),
+                        jsonPath("$.details[0].field").value("query.owner_identification_type"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Illegal argument: No enum constant com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType.abcd"));
+                                .value("Solo se permite: dni, ruc, foreigner_carnet"));
     }
 
     @Test

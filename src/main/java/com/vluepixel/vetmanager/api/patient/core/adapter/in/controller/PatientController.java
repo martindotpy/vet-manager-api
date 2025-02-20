@@ -96,7 +96,6 @@ public final class PatientController {
             @RequestParam(required = false, name = "order_by") String orderBy,
             @RequestParam(required = false) Integer id,
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) Integer age,
             @RequestParam(required = false) PatientGender gender,
             @RequestParam(required = false) Boolean deceased,
             @RequestParam(required = false, name = "race_id") Integer raceId,
@@ -120,7 +119,6 @@ public final class PatientController {
                 Criteria.of(
                         like("id", id),
                         like("name", name),
-                        like("age", age),
                         like("gender", gender),
                         equal("deceased", deceased),
                         like("race.id", raceId),
