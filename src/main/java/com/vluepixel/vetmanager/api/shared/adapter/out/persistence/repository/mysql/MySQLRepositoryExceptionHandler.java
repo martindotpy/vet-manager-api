@@ -19,6 +19,7 @@ import org.springframework.transaction.TransactionSystemException;
 import com.vluepixel.vetmanager.api.shared.adapter.in.validation.JakartaValidator;
 import com.vluepixel.vetmanager.api.shared.domain.exception.CannotDeleteReferencedEntity;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ConflictException;
+import com.vluepixel.vetmanager.api.shared.domain.exception.ErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.RepositoryException;
@@ -104,6 +105,10 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
 
         else if (e instanceof StaleObjectStateException childException) {
             handle(childException, entityClass);
+        }
+
+        else if (e instanceof ErrorException childException) {
+            throw childException;
         }
 
         log.error("Unexpected MySQL error", e);
