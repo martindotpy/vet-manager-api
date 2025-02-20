@@ -3228,7 +3228,7 @@ public class GetPatientIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetPatientWithInvalidParams_OwnerPhone_Invalid_UnprocessableEntity() throws Exception {
+    void user_GetPatientWithInvalidParams_OwnerPhone_Invalid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("owner_phone", "invalid");
         queryParams.add("page", "1");
