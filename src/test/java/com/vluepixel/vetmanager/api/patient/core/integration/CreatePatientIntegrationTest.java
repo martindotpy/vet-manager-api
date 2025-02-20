@@ -368,7 +368,27 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.name")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getName()),
+                        jsonPath("$.content.birth_date")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getBirthDate().toString()),
+                        jsonPath("$.content.age").value(1),
+                        jsonPath("$.content.gender")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getGender().toString()),
+                        jsonPath("$.content.characteristics")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getCharacteristics()),
+                        jsonPath("$.content.deceased")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.isDeceased()),
+                        jsonPath("$.content.medical_histories").isArray(),
+                        jsonPath("$.content.medical_records").isArray(),
+                        jsonPath("$.content.vaccines").isArray(),
+                        jsonPath("$.content.race.id")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getRaceId()),
+                        jsonPath("$.content.owner.id")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getOwnerId()));
     }
 
     @Test
@@ -377,7 +397,27 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.name")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getName()),
+                        jsonPath("$.content.birth_date")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getBirthDate().toString()),
+                        jsonPath("$.content.age").value(0),
+                        jsonPath("$.content.gender")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getGender().toString()),
+                        jsonPath("$.content.characteristics")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getCharacteristics()),
+                        jsonPath("$.content.deceased")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.isDeceased()),
+                        jsonPath("$.content.medical_histories").isArray(),
+                        jsonPath("$.content.medical_records").isArray(),
+                        jsonPath("$.content.vaccines").isArray(),
+                        jsonPath("$.content.race.id")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getRaceId()),
+                        jsonPath("$.content.owner.id")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getOwnerId()));
     }
 
     @Test
@@ -754,7 +794,27 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.name")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getName()),
+                        jsonPath("$.content.birth_date")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getBirthDate().toString()),
+                        jsonPath("$.content.age").value(1),
+                        jsonPath("$.content.gender")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getGender().toString()),
+                        jsonPath("$.content.characteristics")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getCharacteristics()),
+                        jsonPath("$.content.deceased")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.isDeceased()),
+                        jsonPath("$.content.medical_histories").isArray(),
+                        jsonPath("$.content.medical_records").isArray(),
+                        jsonPath("$.content.vaccines").isArray(),
+                        jsonPath("$.content.race.id")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getRaceId()),
+                        jsonPath("$.content.owner.id")
+                                .value(INVALID_BIRTH_DATE_MINUS_YEAR_CREATE_PATIENT_REQUEST.getOwnerId()));
     }
 
     @Test
@@ -763,7 +823,27 @@ public class CreatePatientIntegrationTest extends BaseIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.name")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getName()),
+                        jsonPath("$.content.birth_date")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getBirthDate().toString()),
+                        jsonPath("$.content.age").value(0),
+                        jsonPath("$.content.gender")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getGender().toString()),
+                        jsonPath("$.content.characteristics")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getCharacteristics()),
+                        jsonPath("$.content.deceased")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.isDeceased()),
+                        jsonPath("$.content.medical_histories").isArray(),
+                        jsonPath("$.content.medical_records").isArray(),
+                        jsonPath("$.content.vaccines").isArray(),
+                        jsonPath("$.content.race.id")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getRaceId()),
+                        jsonPath("$.content.owner.id")
+                                .value(INVALID_BIRTH_DATE_TODAY_CREATE_PATIENT_REQUEST.getOwnerId()));
     }
 
     @Test
