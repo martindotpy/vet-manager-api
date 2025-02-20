@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 
 import com.vluepixel.vetmanager.api.product.category.domain.model.Category;
+import com.vluepixel.vetmanager.api.shared.domain.exception.CannotReduceProductQuantityexception;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -65,4 +66,12 @@ public final class Product {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Category> categories;
+
+    public void reduceQuantity(Integer quantity) {
+        if (this.quantity - quantity < 0) {
+            throw new CannotReduceProductQuantityexception();
+        }
+
+        this.quantity -= quantity;
+    }
 }
