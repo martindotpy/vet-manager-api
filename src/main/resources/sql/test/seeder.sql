@@ -175,3 +175,18 @@ VALUES
         150,
         'Operación'
     );
+
+INSERT INTO
+    category (
+        id,
+        `name`
+    )
+VALUES 
+    (
+        1,
+        'Salud'
+    ),
+    (
+        2,
+        'Higiene'
+    );
