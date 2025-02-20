@@ -59,8 +59,6 @@ public final class Patient {
     private String name;
     @NotNull
     private LocalDate birthDate;
-    @Column(columnDefinition = "tinyint unsigned")
-    private Integer age;
     @NotNull
     @Enumerated(EnumType.STRING)
     private PatientGender gender;
@@ -86,4 +84,13 @@ public final class Patient {
 
     @Builder.Default
     private boolean deleted = false;
+
+    /**
+     * Calculate age.
+     *
+     * @return the age
+     */
+    public Integer calculateAge() {
+        return LocalDate.now().getYear() - birthDate.getYear();
+    }
 }

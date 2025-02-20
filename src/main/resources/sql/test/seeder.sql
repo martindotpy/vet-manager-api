@@ -91,7 +91,6 @@ VALUES
 
 INSERT INTO
     patient (
-        age,
         birth_date,
         deceased,
         deleted,
@@ -104,7 +103,6 @@ INSERT INTO
     )
 VALUES
     (
-        4,
         '2025-02-16',
         0,
         0,
@@ -116,7 +114,6 @@ VALUES
         'MALE'
     ),
     (
-        4,
         '2025-02-16',
         0,
         0,

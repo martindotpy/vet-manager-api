@@ -19,6 +19,11 @@ import com.vluepixel.vetmanager.api.shared.application.mapper.StringUtilsMapper;
 @Mapper(componentModel = "spring", uses = { StringUtilsMapper.class })
 public interface PatientMapper
         extends CrudMapper<Patient, PatientDto, Patient.PatientBuilder> {
+
+    @Override
+    @Mapping(target = "age", expression = "java(domain.calculateAge())")
+    PatientDto toDto(Patient domain);
+
     /**
      * Creates a new {@link Patient} builder.
      *
@@ -49,7 +54,6 @@ public interface PatientMapper
      * @return the patient builder
      */
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "age", ignore = true)
     @Mapping(target = "deleted", ignore = true)
     @Mapping(target = "medicalHistories", ignore = true)
     @Mapping(target = "medicalRecords", ignore = true)
@@ -64,7 +68,6 @@ public interface PatientMapper
      * <ul>
      * <li><strong>Ignores:</strong>
      * <ul>
-     * <li><code>age</code></li>
      * <li><code>deleted</code></li>
      * <li><code>medicalHistories</code></li>
      * <li><code>medicalRecords</code></li>
@@ -76,7 +79,6 @@ public interface PatientMapper
      * @param request the update patient request.
      * @return the patient builder
      */
-    @Mapping(target = "age", ignore = true)
     @Mapping(target = "deleted", ignore = true)
     @Mapping(target = "medicalHistories", ignore = true)
     @Mapping(target = "medicalRecords", ignore = true)
