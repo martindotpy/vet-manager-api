@@ -37,6 +37,7 @@ import static com.vluepixel.vetmanager.api.client.core.data.UpdateClientDataProv
 import static com.vluepixel.vetmanager.api.client.core.data.UpdateClientDataProvider.VALID_PHONES_MAXLENGTH_UPDATE_CLIENT_REQUEST;
 import static com.vluepixel.vetmanager.api.client.core.data.UpdateClientDataProvider.VALID_UPDATE_CLIENT_REQUEST;
 
+import com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType;
 import com.vluepixel.vetmanager.api.client.core.domain.request.CreateClientRequest;
 
 /**
@@ -187,7 +188,7 @@ public class CreateClientDataProvider {
             .firstName(VALID_UPDATE_CLIENT_REQUEST.getFirstName())
             .lastName(VALID_UPDATE_CLIENT_REQUEST.getLastName())
             .identification(VALID_IDENTIFICATION_MAXLENGTH_UPDATE_CLIENT_REQUEST.getIdentification())
-            .identificationType(VALID_UPDATE_CLIENT_REQUEST.getIdentificationType())
+            .identificationType(IdentificationType.FOREIGNER_CARNET)
             .address(VALID_UPDATE_CLIENT_REQUEST.getAddress())
             .emails(VALID_UPDATE_CLIENT_REQUEST.getEmails())
             .phones(VALID_UPDATE_CLIENT_REQUEST.getPhones())

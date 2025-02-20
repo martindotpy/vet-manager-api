@@ -634,9 +634,10 @@ public class UpdateClientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details").isArray(),
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("identification"),
-                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages.length()").value(2),
                         jsonPath("$.details[0].messages")
-                                .value("La identificación no puede tener más de 12 caracteres"));
+                                .value(containsInAnyOrder("La identificación no puede tener más de 12 caracteres",
+                                        "La identificación no es válida")));
     }
 
     @Test
@@ -681,9 +682,10 @@ public class UpdateClientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details").isArray(),
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("identification"),
-                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages.length()").value(2),
                         jsonPath("$.details[0].messages")
-                                .value("La identificación es requerida"));
+                                .value(containsInAnyOrder("La identificación es requerida",
+                                        "La identificación no es válida")));
     }
 
     @Test
@@ -698,9 +700,10 @@ public class UpdateClientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details").isArray(),
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("identification"),
-                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages.length()").value(2),
                         jsonPath("$.details[0].messages")
-                                .value("La identificación es requerida"));
+                                .value(containsInAnyOrder("La identificación es requerida",
+                                        "La identificación no es válida")));
     }
 
     @Test
@@ -1378,9 +1381,10 @@ public class UpdateClientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details").isArray(),
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("identification"),
-                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages.length()").value(2),
                         jsonPath("$.details[0].messages")
-                                .value("La identificación no puede tener más de 12 caracteres"));
+                                .value(containsInAnyOrder("La identificación no puede tener más de 12 caracteres",
+                                        "La identificación no es válida")));
     }
 
     @Test
@@ -1425,9 +1429,10 @@ public class UpdateClientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details").isArray(),
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("identification"),
-                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages.length()").value(2),
                         jsonPath("$.details[0].messages")
-                                .value("La identificación es requerida"));
+                                .value(containsInAnyOrder("La identificación es requerida",
+                                        "La identificación no es válida")));
     }
 
     @Test
@@ -1442,9 +1447,10 @@ public class UpdateClientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details").isArray(),
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("identification"),
-                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages.length()").value(2),
                         jsonPath("$.details[0].messages")
-                                .value("La identificación es requerida"));
+                                .value(containsInAnyOrder("La identificación es requerida",
+                                        "La identificación no es válida")));
     }
 
     @Test
