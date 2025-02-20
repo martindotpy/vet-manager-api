@@ -50,6 +50,18 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
+    public static final UpdatePatientRequest INVALID_ID_NULL_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
+            .builder()
+            .id(null)
+            .name(VALID_UPDATE_PATIENT_REQUEST.getName())
+            .birthDate(VALID_UPDATE_PATIENT_REQUEST.getBirthDate())
+            .gender(VALID_UPDATE_PATIENT_REQUEST.getGender())
+            .characteristics(VALID_UPDATE_PATIENT_REQUEST.getCharacteristics())
+            .deceased(VALID_UPDATE_PATIENT_REQUEST.isDeceased())
+            .raceId(VALID_UPDATE_PATIENT_REQUEST.getRaceId())
+            .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
+            .build();
+
     // Name
     private static final int MAX_NAME_LENGTH = 50;
     public static final UpdatePatientRequest INVALID_NAME_TOO_LONG_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
@@ -112,7 +124,7 @@ public class UpdatePatientDataProvider {
             .ownerId(VALID_UPDATE_PATIENT_REQUEST.getOwnerId())
             .build();
 
-    // BirthDate
+    // Birth Date
     public static final UpdatePatientRequest INVALID_BIRTH_DATE_MINUS_YEAR_UPDATE_PATIENT_REQUEST = UpdatePatientRequest
             .builder()
             .id(VALID_UPDATE_PATIENT_REQUEST.getId())
