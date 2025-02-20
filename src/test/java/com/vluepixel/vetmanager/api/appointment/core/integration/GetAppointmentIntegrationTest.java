@@ -435,6 +435,7 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
         queryParams.add("size", "10");
 
         mockMvc.perform(get("/appointment")
+                .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpectAll(
@@ -1011,6 +1012,7 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
         queryParams.add("size", "10");
 
         mockMvc.perform(get("/appointment")
+                .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpectAll(

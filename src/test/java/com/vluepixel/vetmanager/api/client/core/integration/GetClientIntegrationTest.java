@@ -253,9 +253,7 @@ public class GetClientIntegrationTest extends BaseIntegrationTest {
         queryParams.add("order_by", "invalid");
 
         mockMvc.perform(get("/client")
-                .queryParams(queryParams)
-
-        )
+                .queryParams(queryParams))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
