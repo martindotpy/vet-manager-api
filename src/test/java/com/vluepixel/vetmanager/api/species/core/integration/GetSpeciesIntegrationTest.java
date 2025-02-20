@@ -263,10 +263,9 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("query.id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -346,11 +345,9 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("page"),
+                        jsonPath("$.details[0].field").value("query.page"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("page").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -425,11 +422,9 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("size"),
+                        jsonPath("$.details[0].field").value("query.size"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("size").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -545,10 +540,10 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("order"),
+                        jsonPath("$.details[0].field").value("query.order"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("asc, desc, none"));
+                                .value("Solo se permite: asc, desc, none"));
     }
 
     @Test
@@ -752,10 +747,9 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("id"),
+                        jsonPath("$.details[0].field").value("query.id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -835,11 +829,9 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("page"),
+                        jsonPath("$.details[0].field").value("query.page"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("page").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -914,11 +906,9 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("size"),
+                        jsonPath("$.details[0].field").value("query.size"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("size").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -1034,10 +1024,10 @@ public class GetSpeciesIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("order"),
+                        jsonPath("$.details[0].field").value("query.order"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("asc, desc, none"));
+                                .value("Solo se permite: asc, desc, none"));
     }
 
     @Test

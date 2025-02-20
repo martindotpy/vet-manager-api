@@ -16,7 +16,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 
 /**
- * Integration tests for the delete patient funcionality.
+ * Integration tests for the delete patient functionality.
  */
 public class DeletePatientIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Paciente eliminado exitosamente";
@@ -103,7 +103,7 @@ public class DeletePatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("path.id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("Illegal argument: For input string: \"abcde\""));
+                        jsonPath("$.details[0].messages").value("Valor numérico inválido"));
     }
 
     // Role: ADMIN
@@ -151,6 +151,6 @@ public class DeletePatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("path.id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("Illegal argument: For input string: \"abcde\""));
+                        jsonPath("$.details[0].messages").value("Valor numérico inválido"));
     }
 }

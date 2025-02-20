@@ -88,7 +88,7 @@ public final class AppointmentController {
                 Order.of(order, orderBy),
                 Criteria.of(
                         like("id", id),
-                        like("type.name", appointmentTypeName)),
+                        like("details.appointmentType.name", appointmentTypeName)),
                 "Citas encontradas",
                 InvalidStateValidation.of(
                         id != null && id < 1,

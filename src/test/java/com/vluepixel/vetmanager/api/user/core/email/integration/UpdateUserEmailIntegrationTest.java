@@ -464,7 +464,7 @@ public class UpdateUserEmailIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("path.id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("Illegal argument: For input string: \"invalid\""));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test

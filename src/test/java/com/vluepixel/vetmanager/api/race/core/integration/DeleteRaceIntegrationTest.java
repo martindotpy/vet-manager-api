@@ -104,7 +104,7 @@ public class DeleteRaceIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("path.id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("Illegal argument: For input string: \"abcde\""));
+                        jsonPath("$.details[0].messages").value("Valor numérico inválido"));
     }
 
     // Role: ADMIN
@@ -153,6 +153,6 @@ public class DeleteRaceIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("path.id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("Illegal argument: For input string: \"abcde\""));
+                        jsonPath("$.details[0].messages").value("Valor numérico inválido"));
     }
 }

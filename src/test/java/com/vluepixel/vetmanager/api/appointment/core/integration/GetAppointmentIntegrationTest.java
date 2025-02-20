@@ -393,12 +393,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     // Role: USER
     @Test
     void user_GetAppointmentWithValidParams_Ok() throws Exception {
-        MultiValueMap<String, String> queryparams = new LinkedMultiValueMap<>();
-        queryparams.add("page", "1");
-        queryparams.add("size", "10");
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
 
         mockMvc.perform(get("/appointment")
-                .queryParams(queryparams)
+                .queryParams(queryParams)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
                 .andExpectAll(
@@ -442,8 +442,7 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -544,11 +543,9 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("page"),
+                        jsonPath("$.details[0].field").value("query.page"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("page").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -623,11 +620,9 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("size"),
+                        jsonPath("$.details[0].field").value("query.size"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("size").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -743,10 +738,10 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("order"),
+                        jsonPath("$.details[0].field").value("query.order"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("asc, desc, none"));
+                                .value("Solo se permite: asc, desc, none"));
     }
 
     @Test
@@ -974,12 +969,12 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
     // Role: ADMIN
     @Test
     void admin_GetAppointmentWithValidParams_Ok() throws Exception {
-        MultiValueMap<String, String> queryparams = new LinkedMultiValueMap<>();
-        queryparams.add("page", "1");
-        queryparams.add("size", "10");
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
 
         mockMvc.perform(get("/appointment")
-                .queryParams(queryparams)
+                .queryParams(queryParams)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
                 .andExpectAll(
@@ -1023,8 +1018,7 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "Illegal argument: For input string: \"%s\"", queryParams.get("id").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -1125,11 +1119,9 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("page"),
+                        jsonPath("$.details[0].field").value("query.page"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("page").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -1204,11 +1196,9 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("size"),
+                        jsonPath("$.details[0].field").value("query.size"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(
-                                String.format("Illegal argument: For input string: \"%s\"",
-                                        queryParams.get("size").toArray()[0])));
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
     @Test
@@ -1324,10 +1314,10 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("order"),
+                        jsonPath("$.details[0].field").value("query.order"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("asc, desc, none"));
+                                .value("Solo se permite: asc, desc, none"));
     }
 
     @Test
