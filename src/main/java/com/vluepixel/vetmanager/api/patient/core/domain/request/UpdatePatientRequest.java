@@ -31,6 +31,7 @@ public final class UpdatePatientRequest implements Request {
     private String name;
     @NotNull(message = "La fecha de nacimiento es requerida")
     private LocalDate birthDate;
+    @NotNull(message = "El género es requerido")
     private PatientGender gender;
     private String characteristics;
     private boolean deceased;

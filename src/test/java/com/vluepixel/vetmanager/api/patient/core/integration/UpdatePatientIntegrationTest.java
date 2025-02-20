@@ -297,7 +297,7 @@ public class UpdatePatientIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("gender"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("must not be null")); // TODO
+                        jsonPath("$.details[0].messages").value("El género es requerido"));
     }
 
     // Characteristics
