@@ -225,6 +225,7 @@ public class SecurityConfig {
         String id = context.getVariables().get("id");
 
         if (id == null) {
+            log.warn("No id provided: {}", context.getRequest().getRequestURI());
             return false;
         }
 
