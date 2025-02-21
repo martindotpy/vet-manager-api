@@ -895,7 +895,7 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(1),
-                        jsonPath("$.content[0].name").value("Firulays"));
+                        jsonPath("$.content[0].details[0].appointment_type.name").value("Limpieza"));
     }
 
     @Test
@@ -1472,7 +1472,7 @@ public class GetAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(1),
-                        jsonPath("$.content[0].name").value("Firulays"));
+                        jsonPath("$.content[0].details[0].appointment_type.name").value("Limpieza"));
     }
 
     @Test

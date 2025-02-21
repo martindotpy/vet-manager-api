@@ -264,3 +264,39 @@ VALUES
         1,
         2
     );
+
+INSERT INTO
+    appointment_details (
+        appointment_type_id,
+        duration_in_minutes,
+        price,
+        id
+    )
+VALUES 
+    (
+        1,
+        120,
+        200,
+        1
+    ),
+    (
+        2,
+        60,
+        100,
+        2
+    );
+
+INSERT INTO
+    appointment_appointment_details (
+        appointment_id,
+        details_id
+    )
+VALUES 
+    (
+        1,
+        1
+    ),
+    (
+        2,
+        2
+    );
