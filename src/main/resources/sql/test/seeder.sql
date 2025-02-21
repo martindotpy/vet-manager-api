@@ -244,3 +244,18 @@ VALUES
         'Collar',
         'Collares para mascotas del hogar'
     );
+
+INSERT INTO
+    product_categories (
+        categories_id,
+        product_id
+    )
+VALUES 
+    (
+        1,
+        1
+    ),
+    (
+        1,
+        2
+    );
