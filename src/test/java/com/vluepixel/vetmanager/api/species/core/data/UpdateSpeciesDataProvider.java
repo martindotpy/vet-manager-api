@@ -57,6 +57,6 @@ public class UpdateSpeciesDataProvider {
     public static final UpdateSpeciesRequest INVALID_NAME_NULL_UPDATE_SPECIES_REQUEST = UpdateSpeciesRequest
             .builder()
             .id(1)
-            .name("")
+            .name(null)
             .build();
 }
