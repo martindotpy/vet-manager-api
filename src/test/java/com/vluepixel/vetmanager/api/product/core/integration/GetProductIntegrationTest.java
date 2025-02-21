@@ -18,10 +18,10 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the get product use case.
  */
 public class GetProductIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Categorías encontradas"; // TODO
+    private static final String MESSAGE_OK = "Productos encontrados";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
             .format("Product con id %s no encontrado(a)", parameter);
-    private static final String MESSAGE_ID_OK = "Categoría encontrada"; // TODO
+    private static final String MESSAGE_ID_OK = "Producto encontrado";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:

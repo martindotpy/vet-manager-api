@@ -25,7 +25,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  */
 public class UpdateCategoryIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Categoría actualizada exitosamente";
-    private static final String MESSAGE_NOT_FOUND = "Category no encontrado(a)"; // TODO
+    private static final String MESSAGE_NOT_FOUND = "Categoría no encontrado(a)";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------

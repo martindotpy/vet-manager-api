@@ -41,8 +41,8 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the create product use case.
  */
 public class CreateProductIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Categoría creada exitosamente";
-    private static final String MESSAGE_CATEGORY_NOT_FOUND = "Category no encontrado(a)";
+    private static final String MESSAGE_OK = "Producto creado exitosamente";
+    private static final String MESSAGE_CATEGORY_NOT_FOUND = "Categoría no encontrado(a)";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -671,25 +671,31 @@ public class CreateProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.categories").isArray());
     }
 
-    @Test // TODO: Return Unprocessable Entity or Ok
-    void user_CreateProductWithInvalidArguments_CategoryIDs_Null_UnprocessableEntity() throws Exception {
+    @Test
+    @Order(6)
+    @DirtiesContext
+    void user_CreateProductWithInvalidArguments_CategoryIDs_Null_Ok() throws Exception {
         mockMvc.perform(post("/product")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_CATEGORY_IDS_NULL_CREATE_PRODUCT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("categories"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("Las categorías son requeridas"));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.name").value(INVALID_CATEGORY_IDS_NULL_CREATE_PRODUCT_REQUEST.getName()),
+                        jsonPath("$.content.description")
+                                .value(INVALID_CATEGORY_IDS_NULL_CREATE_PRODUCT_REQUEST.getDescription()),
+                        jsonPath("$.content.price")
+                                .value(INVALID_CATEGORY_IDS_NULL_CREATE_PRODUCT_REQUEST.getPrice().toString()),
+                        jsonPath("$.content.quantity")
+                                .value(INVALID_CATEGORY_IDS_NULL_CREATE_PRODUCT_REQUEST.getQuantity()),
+                        jsonPath("$.content.categories").isArray());
     }
 
     // Role: ADMIN
     @Test
-    @Order(6)
+    @Order(7)
     @DirtiesContext
     void admin_CreateProductWithValidArguments_Ok() throws Exception {
         mockMvc.perform(post("/product")
@@ -727,7 +733,7 @@ public class CreateProductIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     @DirtiesContext
     void admin_CreateProductWithValidArguments_Name_MaxLength_Ok() throws Exception {
         mockMvc.perform(post("/product")
@@ -863,7 +869,7 @@ public class CreateProductIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     @DirtiesContext
     void admin_CreateProductWithValidArguments_Price_MaxValue_Ok() throws Exception {
         mockMvc.perform(post("/product")
@@ -950,7 +956,7 @@ public class CreateProductIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     @DirtiesContext
     void admin_CreateProductWithValidArguments_Quantity_MaxValue_Ok() throws Exception {
         mockMvc.perform(post("/product")
@@ -1063,7 +1069,7 @@ public class CreateProductIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     @DirtiesContext
     void admin_CreateProductWithValidArguments_CategoryIDs_Empty_Ok() throws Exception {
         mockMvc.perform(post("/product")
@@ -1084,19 +1090,25 @@ public class CreateProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.categories").isArray());
     }
 
-    @Test // TODO: Return Unprocessable Entity or Ok
-    void admin_CreateProductWithInvalidArguments_CategoryIDs_Null_UnprocessableEntity() throws Exception {
+    @Test
+    @Order(12)
+    @DirtiesContext
+    void admin_CreateProductWithInvalidArguments_CategoryIDs_Null_Ok() throws Exception {
         mockMvc.perform(post("/product")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_CATEGORY_IDS_NULL_CREATE_PRODUCT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("categories"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("Las categorías son requeridas"));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.name").value(INVALID_CATEGORY_IDS_EMPTY_CREATE_PRODUCT_REQUEST.getName()),
+                        jsonPath("$.content.description")
+                                .value(INVALID_CATEGORY_IDS_EMPTY_CREATE_PRODUCT_REQUEST.getDescription()),
+                        jsonPath("$.content.price")
+                                .value(INVALID_CATEGORY_IDS_EMPTY_CREATE_PRODUCT_REQUEST.getPrice().toString()),
+                        jsonPath("$.content.quantity")
+                                .value(INVALID_CATEGORY_IDS_EMPTY_CREATE_PRODUCT_REQUEST.getQuantity()),
+                        jsonPath("$.content.categories").isArray());
     }
 }

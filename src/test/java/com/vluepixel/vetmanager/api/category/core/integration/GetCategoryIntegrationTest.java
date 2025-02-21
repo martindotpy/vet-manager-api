@@ -21,7 +21,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 public class GetCategoryIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Categorías encontradas";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
-            .format("Category con id %s no encontrado(a)", parameter);
+            .format("Categoría con id %s no encontrado(a)", parameter);
     private static final String MESSAGE_ID_OK = "Categoría encontrada";
 
     // -----------------------------------------------------------------------------------------------------------------

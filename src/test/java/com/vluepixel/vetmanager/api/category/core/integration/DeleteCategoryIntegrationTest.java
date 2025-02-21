@@ -19,9 +19,9 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  */
 public class DeleteCategoryIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Categoría eliminada exitosamente";
-    private static final String MESSAGE_CONFLICT = "No se puede eliminar el/la category porque está en uso en otros registros";
+    private static final String MESSAGE_CONFLICT = "No se puede eliminar el/la categoría porque está en uso en otros registros";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
-            .format("Category con id %s no encontrado(a)", parameter);
+            .format("Categoría con id %s no encontrado(a)", parameter);
 
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:

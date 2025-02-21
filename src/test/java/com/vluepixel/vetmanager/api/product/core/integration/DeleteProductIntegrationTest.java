@@ -17,7 +17,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the delete product functionality.
  */
 public class DeleteProductIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Cita eliminada exitosamente"; // TODO
+    private static final String MESSAGE_OK = "Producto eliminado exitosamente";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
             .format("Product con id %s no encontrado(a)", parameter);
 

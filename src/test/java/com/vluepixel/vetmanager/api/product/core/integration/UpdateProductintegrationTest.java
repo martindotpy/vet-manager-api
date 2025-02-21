@@ -42,9 +42,9 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the update product use case.
  */
 public class UpdateProductintegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Cita actualizada exitosamente"; // TODO
+    private static final String MESSAGE_OK = "Producto actualizado exitosamente";
     private static final String MESSAGE_NOT_FOUND = "Product no encontrado(a)";
-    private static final String MESSAGE_CATEGORY_NOT_FOUND = "Category no encontrado(a)";
+    private static final String MESSAGE_CATEGORY_NOT_FOUND = "Categoría no encontrado(a)";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -716,20 +716,25 @@ public class UpdateProductintegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.categories").isArray());
     }
 
-    @Test // TODO: Return Unprocessable Entity or Ok
-    void user_UpdateProductWithInvalidArguments_CategoryIDs_Null_UnprocessableEntity() throws Exception {
+    @Test
+    @DirtiesContext
+    void user_UpdateProductWithInvalidArguments_CategoryIDs_Null_Ok() throws Exception {
         mockMvc.perform(put("/product")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("categories"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("Las categorías son requeridas"));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getId()),
+                        jsonPath("$.content.name").value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getName()),
+                        jsonPath("$.content.description")
+                                .value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getDescription()),
+                        jsonPath("$.content.price")
+                                .value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getPrice().toString()),
+                        jsonPath("$.content.quantity")
+                                .value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getQuantity()),
+                        jsonPath("$.content.categories").isArray());
     }
 
     // Role: ADMIN
@@ -1151,19 +1156,24 @@ public class UpdateProductintegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.categories").isArray());
     }
 
-    @Test // TODO: Return Unprocessable Entity or Ok
-    void admin_UpdateProductWithInvalidArguments_CategoryIDs_Null_UnprocessableEntity() throws Exception {
+    @Test
+    @DirtiesContext
+    void admin_UpdateProductWithInvalidArguments_CategoryIDs_Null_Ok() throws Exception {
         mockMvc.perform(put("/product")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("categories"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("Las categorías son requeridas"));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getId()),
+                        jsonPath("$.content.name").value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getName()),
+                        jsonPath("$.content.description")
+                                .value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getDescription()),
+                        jsonPath("$.content.price")
+                                .value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getPrice().toString()),
+                        jsonPath("$.content.quantity")
+                                .value(INVALID_CATEGORY_IDS_NULL_UPDATE_PRODUCT_REQUEST.getQuantity()),
+                        jsonPath("$.content.categories").isArray());
     }
 }
