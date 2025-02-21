@@ -190,3 +190,33 @@ VALUES
         2,
         'Higiene'
     );
+
+INSERT INTO
+    bill (
+        deleted,
+        discount,
+        paid,
+        total,
+        total_paid,
+        client_id,
+        id
+    )
+VALUES 
+    (
+        0,
+        0.2,
+        0,
+        200.0,
+        100.0,
+        1,
+        1
+    ),
+    (
+        0,
+        0.2,
+        0,
+        200.0,
+        100.0,
+        2,
+        2
+    );
