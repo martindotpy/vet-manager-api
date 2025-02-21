@@ -1,7 +1,6 @@
 package com.vluepixel.vetmanager.api.bill.core.data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import com.vluepixel.vetmanager.api.bill.core.domain.request.UpdateBillRequest;
 
@@ -14,7 +13,6 @@ public class UpdateBillDataProvider {
             .id(10L)
             .discount(100)
             .totalPaid(BigDecimal.valueOf(10))
-            .lastPaidAt(LocalDateTime.now())
             .clientId(1L)
             .build();
 
@@ -23,7 +21,6 @@ public class UpdateBillDataProvider {
             .id(-10L)
             .discount(100)
             .totalPaid(BigDecimal.valueOf(10))
-            .lastPaidAt(LocalDateTime.now())
             .clientId(1L)
             .build();
 
@@ -32,7 +29,6 @@ public class UpdateBillDataProvider {
             .id(1L)
             .discount(100)
             .totalPaid(BigDecimal.valueOf(10))
-            .lastPaidAt(LocalDateTime.now())
             .clientId(1L)
             .build();
 
@@ -47,7 +43,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(MAX_DISCOUNT_VALUE + 1)
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -56,7 +51,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(MAX_DISCOUNT_VALUE)
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -65,7 +59,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(0)
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -74,7 +67,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(-1)
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -83,7 +75,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(null)
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -93,7 +84,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(BigDecimal.valueOf(0))
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -102,7 +92,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(BigDecimal.valueOf(-1))
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -111,7 +100,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(null)
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -121,7 +109,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(LocalDateTime.now().minusYears(1))
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -130,7 +117,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(LocalDateTime.now())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -139,7 +125,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(LocalDateTime.now().plusDays(1))
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -148,7 +133,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(null)
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
@@ -158,7 +142,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(10L)
             .build();
 
@@ -167,7 +150,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(-1L)
             .build();
 
@@ -176,7 +158,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .lastPaidAt(VALID_UPDATE_BILL_REQUEST.getLastPaidAt())
             .clientId(null)
             .build();
 }
