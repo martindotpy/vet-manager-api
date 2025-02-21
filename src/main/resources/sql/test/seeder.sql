@@ -252,7 +252,7 @@ VALUES
 
 INSERT INTO
     product_categories (
-        categories_id,
+        category_id,
         product_id
     )
 VALUES 
