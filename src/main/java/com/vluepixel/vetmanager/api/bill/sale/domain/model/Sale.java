@@ -3,12 +3,15 @@ package com.vluepixel.vetmanager.api.bill.sale.domain.model;
 import java.math.BigDecimal;
 
 import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,8 +32,9 @@ import lombok.experimental.SuperBuilder;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Getter
+@EntityListeners(AuditingEntityListener.class)
 @Audited
+@Getter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -51,7 +55,10 @@ public abstract class Sale {
     @Column(columnDefinition = "tinyint unsigned")
     private Integer discount;
 
-    public abstract User getSeller();
+    @NotNull
+    @ManyToOne
+    @CreatedBy
+    private User seller;
 
     @NotNull
     @ManyToOne

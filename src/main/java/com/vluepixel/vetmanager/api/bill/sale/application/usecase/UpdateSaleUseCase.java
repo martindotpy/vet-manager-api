@@ -118,13 +118,11 @@ public class UpdateSaleUseCase implements UpdateSalePort {
                 default -> throw new RegisterNotInstanceOfSubclassException(Sale.class);
             }
 
-            sale = saleRepository.save(sale);
-
             // Update bill total
             aux.setEntityClass(Bill.class);
             updateBillTotalUsecase.updateTotal(sale.getBill().getId(), sale);
 
-            return sale;
+            return saleRepository.save(sale);
         });
 
         log.info("Sale updated");

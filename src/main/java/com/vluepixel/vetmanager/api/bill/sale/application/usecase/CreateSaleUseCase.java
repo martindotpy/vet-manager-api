@@ -6,7 +6,6 @@ import org.slf4j.MDC;
 
 import com.vluepixel.vetmanager.api.appointment.core.domain.model.Appointment;
 import com.vluepixel.vetmanager.api.appointment.core.domain.repository.AppointmentRepository;
-import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.bill.sale.application.dto.SaleDto;
 import com.vluepixel.vetmanager.api.bill.sale.application.mapper.SaleMapper;
 import com.vluepixel.vetmanager.api.bill.sale.application.port.in.CreateSalePort;
@@ -108,13 +107,10 @@ public class CreateSaleUseCase implements CreateSalePort {
                 default -> throw new RegisterNotInstanceOfSubclassException(sale.getClass());
             }
 
-            sale = saleRepository.save(sale);
-
             // Update bill total
-            aux.setEntityClass(Bill.class);
             updateBillTotalUsecase.updateTotal(sale.getBill().getId(), sale);
 
-            return sale;
+            return saleRepository.save(sale);
         });
 
         log.info("Sale created");

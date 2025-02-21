@@ -1,12 +1,12 @@
 package com.vluepixel.vetmanager.api.bill.sale.domain.model;
 
 import org.hibernate.envers.Audited;
-import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.model.Treatment;
-import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,6 +21,7 @@ import lombok.experimental.SuperBuilder;
  */
 @Entity
 @Audited
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @SuperBuilder
 @NoArgsConstructor
@@ -30,8 +31,4 @@ public final class TreatmentSale extends Sale {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_treatment_sale_treatment"))
     private Treatment treatment;
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_treatment_sale_seller"))
-    @CreatedBy
-    private User seller;
 }
