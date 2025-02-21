@@ -9,13 +9,14 @@ import com.vluepixel.vetmanager.api.bill.sale.application.dto.AppointmentSaleDto
 import com.vluepixel.vetmanager.api.bill.sale.domain.model.AppointmentSale;
 import com.vluepixel.vetmanager.api.bill.sale.domain.request.CreateAppointmentSaleRequest;
 import com.vluepixel.vetmanager.api.bill.sale.domain.request.UpdateAppointmentSaleRequest;
+import com.vluepixel.vetmanager.api.patient.core.application.mapper.PatientMapper;
 import com.vluepixel.vetmanager.api.shared.application.mapper.BasicMapper;
 import com.vluepixel.vetmanager.api.shared.application.mapper.StringUtilsMapper;
 
 /**
  * Appointment sale mapper.
  */
-@Mapper(componentModel = "spring", uses = { StringUtilsMapper.class })
+@Mapper(componentModel = "spring", uses = { StringUtilsMapper.class, PatientMapper.class })
 public interface AppointmentSaleMapper
         extends BasicMapper<AppointmentSale, AppointmentSaleDto> {
     /**

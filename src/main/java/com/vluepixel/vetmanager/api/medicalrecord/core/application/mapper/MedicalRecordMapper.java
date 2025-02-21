@@ -8,6 +8,7 @@ import com.vluepixel.vetmanager.api.medicalrecord.core.application.dto.MedicalRe
 import com.vluepixel.vetmanager.api.medicalrecord.core.domain.model.MedicalRecord;
 import com.vluepixel.vetmanager.api.medicalrecord.core.domain.request.CreateMedicalRecordRequest;
 import com.vluepixel.vetmanager.api.medicalrecord.core.domain.request.UpdateMedicalRecordRequest;
+import com.vluepixel.vetmanager.api.patient.core.application.mapper.PatientMapper;
 import com.vluepixel.vetmanager.api.patient.core.domain.model.Patient;
 import com.vluepixel.vetmanager.api.shared.application.mapper.CrudMapper;
 import com.vluepixel.vetmanager.api.shared.application.mapper.StringUtilsMapper;
@@ -16,7 +17,7 @@ import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 /**
  * Medical record mapper.
  */
-@Mapper(componentModel = "spring", uses = { StringUtilsMapper.class })
+@Mapper(componentModel = "spring", uses = { StringUtilsMapper.class, PatientMapper.class })
 public interface MedicalRecordMapper
         extends CrudMapper<MedicalRecord, MedicalRecordDto, MedicalRecord.MedicalRecordBuilder> {
     /**
