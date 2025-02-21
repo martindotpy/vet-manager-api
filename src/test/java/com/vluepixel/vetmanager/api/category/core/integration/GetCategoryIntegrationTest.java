@@ -2,9 +2,12 @@ package com.vluepixel.vetmanager.api.category.core.integration;
 
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_USER_JWT;
+import static com.vluepixel.vetmanager.api.category.core.data.UpdateCategoryDataProvider.VALID_UPDATE_CATEGORY_REQUEST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.function.Function;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.util.LinkedMultiValueMap;
@@ -17,6 +20,10 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  */
 public class GetCategoryIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Categorías encontradas";
+    private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
+            .format("Category con id %s no encontrado(a)", parameter);
+    private static final String MESSAGE_ID_OK = "Categoría encontrada";
+
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -382,6 +389,34 @@ public class GetCategoryIntegrationTest extends BaseIntegrationTest {
 
         mockMvc.perform(get("/category")
                 .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // category/{id}
+    @Test
+    void noUser_GetCategoryByIDWithValidParams_Forbidden() throws Exception {
+        mockMvc.perform(get("/category/{id}", VALID_UPDATE_CATEGORY_REQUEST.getId()))
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetCategoryByIDWithInvalidParams_ID_NotFound_Forbidden() throws Exception {
+        mockMvc.perform(get("/category/{id}", 10))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetCategoryByIDWithInvalidParams_ID_Invalid_Forbidden() throws Exception {
+        mockMvc.perform(get("/category/{id}", "invalid"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetCategoryByIDWithInvalidParams_ID_Negative_Forbidden() throws Exception {
+        mockMvc.perform(get("/category/{id}", -1))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
@@ -967,6 +1002,52 @@ public class GetCategoryIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.length()").value(2));
     }
 
+    // category/{id}
+    @Test
+    void user_GetCategoryByIDWithValidParams_Ok() throws Exception {
+        mockMvc.perform(get("/category/{id}", VALID_UPDATE_CATEGORY_REQUEST.getId())
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_ID_OK),
+                        jsonPath("$.content.id").value(VALID_UPDATE_CATEGORY_REQUEST.getId()),
+                        jsonPath("$.content.name").value("Salud"));
+    }
+
+    @Test
+    void user_GetCategoryByIDWithInvalidParams_ID_NotFound_NotFound() throws Exception {
+        mockMvc.perform(get("/category/{id}", 10)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND.apply("10")));
+    }
+
+    @Test
+    void user_GetCategoryByIDWithInvalidParams_ID_Invalid_UnprocessableEntity() throws Exception {
+        mockMvc.perform(get("/category/{id}", "invalid")
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("path.id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
+    }
+
+    @Test
+    void user_GetCategoryByIDWithInvalidParams_ID_Negative_UnprocessableEntity() throws Exception {
+        mockMvc.perform(get("/category/{id}", -1)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("query.id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("El id debe ser mayor a 0"));
+    }
+
     // Role: ADMIN
     @Test
     void admin_GetCategoryWithValidParams_Ok() throws Exception {
@@ -1544,4 +1625,49 @@ public class GetCategoryIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.length()").value(2));
     }
 
+    // category/{id}
+    @Test
+    void admin_GetCategoryByIDWithValidParams_Ok() throws Exception {
+        mockMvc.perform(get("/category/{id}", VALID_UPDATE_CATEGORY_REQUEST.getId())
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_ID_OK),
+                        jsonPath("$.content.id").value(VALID_UPDATE_CATEGORY_REQUEST.getId()),
+                        jsonPath("$.content.name").value("Salud"));
+    }
+
+    @Test
+    void admin_GetCategoryByIDWithInvalidParams_ID_NotFound_NotFound() throws Exception {
+        mockMvc.perform(get("/category/{id}", 10)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND.apply("10")));
+    }
+
+    @Test
+    void admin_GetCategoryByIDWithInvalidParams_ID_Invalid_UnprocessableEntity() throws Exception {
+        mockMvc.perform(get("/category/{id}", "invalid")
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("path.id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
+    }
+
+    @Test
+    void admin_GetCategoryByIDWithInvalidParams_ID_Negative_UnprocessableEntity() throws Exception {
+        mockMvc.perform(get("/category/{id}", -1)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("query.id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("El id debe ser mayor a 0"));
+    }
 }
