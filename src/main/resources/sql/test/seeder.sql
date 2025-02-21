@@ -300,3 +300,30 @@ VALUES
         2,
         2
     );
+
+INSERT INTO
+    appointment_sale (
+        discount,
+        price,
+        appointment_id,
+        bill_id,
+        id,
+        seller_id
+    )
+VALUES 
+    (
+        20,
+        300,
+        1,
+        1,
+        1,
+        1
+    ),
+    (
+        10,
+        400,
+        2,
+        2,
+        2,
+        2
+    );
