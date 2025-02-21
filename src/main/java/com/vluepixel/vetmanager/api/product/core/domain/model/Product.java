@@ -71,6 +71,12 @@ public final class Product {
     @JoinTable(name = "product_categories", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"), foreignKey = @ForeignKey(name = "fk_product_categories_product"), inverseForeignKey = @ForeignKey(name = "fk_product_categories_category"))
     private List<Category> categories;
 
+    /**
+     * Reduce product quantity.
+     *
+     * @param quantity the quantity to reduce
+     * @throws CannotReduceProductQuantityexception if the quantity is less than 0.
+     */
     public void reduceQuantity(Integer quantity) {
         if (this.quantity - quantity < 0) {
             throw new CannotReduceProductQuantityexception();

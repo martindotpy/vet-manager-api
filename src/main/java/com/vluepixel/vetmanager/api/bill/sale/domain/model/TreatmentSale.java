@@ -3,17 +3,17 @@ package com.vluepixel.vetmanager.api.bill.sale.domain.model;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
 
-import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.model.Treatment;
 import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Inheritance;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -21,9 +21,10 @@ import lombok.experimental.SuperBuilder;
  */
 @Entity
 @Audited
-@Inheritance
 @Getter
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public final class TreatmentSale extends Sale {
     @NotNull
     @ManyToOne
@@ -33,8 +34,4 @@ public final class TreatmentSale extends Sale {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_treatment_sale_seller"))
     @CreatedBy
     private User seller;
-    @NotNull
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_treatment_sale_bill"))
-    private Bill bill;
 }

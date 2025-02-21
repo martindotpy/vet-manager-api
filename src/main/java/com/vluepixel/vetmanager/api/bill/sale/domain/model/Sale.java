@@ -2,14 +2,19 @@ package com.vluepixel.vetmanager.api.bill.sale.domain.model;
 
 import java.math.BigDecimal;
 
+import org.hibernate.envers.Audited;
+
 import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
@@ -22,14 +27,16 @@ import lombok.experimental.SuperBuilder;
 /**
  * Sale.
  */
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
+@Audited
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract sealed class Sale permits AppointmentSale, TreatmentSale, ProductSale {
+public abstract class Sale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "bigint unsigned")
     private Long id;
 
@@ -46,5 +53,7 @@ public abstract sealed class Sale permits AppointmentSale, TreatmentSale, Produc
 
     public abstract User getSeller();
 
-    public abstract Bill getBill();
+    @NotNull
+    @ManyToOne
+    private Bill bill;
 }

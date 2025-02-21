@@ -1,16 +1,16 @@
 package com.vluepixel.vetmanager.api.bill.sale.domain.request;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.vluepixel.vetmanager.api.bill.sale.domain.model.enums.SaleType;
 import com.vluepixel.vetmanager.api.shared.domain.request.Request;
 
-import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -18,21 +18,21 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @SuperBuilder
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = UpdateAppointmentSaleRequest.class, name = "appointment"),
-        @JsonSubTypes.Type(value = UpdateTreatmentSaleRequest.class, name = "treatment"),
-        @JsonSubTypes.Type(value = UpdateProductSaleRequest.class, name = "product"),
+        @JsonSubTypes.Type(value = UpdateAppointmentSaleRequest.class, name = "APPOINTMENT"),
+        @JsonSubTypes.Type(value = UpdateTreatmentSaleRequest.class, name = "TREATMENT"),
+        @JsonSubTypes.Type(value = UpdateProductSaleRequest.class, name = "PRODUCT"),
 })
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class UpdateSaleRequest implements Request {
+    public abstract SaleType getType();
+
     @NotNull(message = "El id es requerido")
     @Positive(message = "El id debe ser mayor a 0")
     private Integer id;
 
-    @NotNull(message = "El precio es requerido")
-    @Positive(message = "El precio debe ser mayor a 0")
-    @DecimalMax(value = "999999.99", message = "El precio no puede ser mayor a 999999.99")
-    private BigDecimal price;
     @NotNull(message = "El descuento es requerido")
     @Positive(message = "El descuento debe ser mayor a 0")
     @Max(value = 100, message = "El descuento no puede ser mayor a 100")

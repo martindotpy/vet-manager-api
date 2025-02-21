@@ -5,7 +5,9 @@ import com.vluepixel.vetmanager.api.bill.sale.domain.model.enums.SaleType;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -13,6 +15,8 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public final class CreateProductSaleRequest extends CreateSaleRequest {
     private final SaleType type = SaleType.PRODUCT;
 
@@ -21,7 +25,7 @@ public final class CreateProductSaleRequest extends CreateSaleRequest {
     @Max(value = 999, message = "La cantidad no puede ser mayor a 999")
     private Integer quantity;
 
-    @NotNull(message = "El id de la cita es requerido")
-    @Positive(message = "El id de la cita debe ser mayor a 0")
+    @NotNull(message = "El id del product es requerido")
+    @Positive(message = "El id del product debe ser mayor a 0")
     private Long productId;
 }
