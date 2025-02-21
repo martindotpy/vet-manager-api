@@ -220,3 +220,27 @@ VALUES
         2,
         2
     );
+
+INSERT INTO
+    product (
+        price,
+        quantity,
+        id,
+        `name`,
+        `description`
+    )
+VALUES 
+    (
+        199.0,
+        10,
+        1,
+        'Anti Pulgas',
+        'Anti Pulgas para mascotas del hogar'
+    ),
+    (
+        50.0,
+        10,
+        2,
+        'Collar',
+        'Collares para mascotas del hogar'
+    );
