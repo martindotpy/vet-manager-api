@@ -60,11 +60,7 @@ INSERT INTO
     client_emails (client_id, emails)
 VALUES
     (1, 'firstclient@firstclient.com'),
-    (2, 'secondclient@secondclient.com');
-
-INSERT INTO
-    client_emails (client_id, emails)
-VALUES
+    (2, 'secondclient@secondclient.com'),
     (1, 'firstclient@firstclient.com'),
     (2, 'secondclient@secondclient.com');
 
@@ -199,7 +195,9 @@ INSERT INTO
         total,
         total_paid,
         client_id,
-        id
+        id,
+        created_at,
+        last_paid_at
     )
 VALUES 
     (
@@ -209,7 +207,9 @@ VALUES
         200.0,
         100.0,
         1,
-        1
+        1,
+        '2025-02-19T23:51:17.578',
+        '2025-02-19T23:51:17.578'
     ),
     (
         0,
@@ -218,7 +218,9 @@ VALUES
         200.0,
         100.0,
         2,
-        2
+        2,
+        '2025-02-19T23:51:17.578',
+        '2025-02-19T23:51:17.578'
     );
 
 INSERT INTO
@@ -227,7 +229,8 @@ INSERT INTO
         quantity,
         id,
         `name`,
-        `description`
+        `description`,
+        updated_at
     )
 VALUES 
     (
@@ -235,14 +238,16 @@ VALUES
         10,
         1,
         'Anti Pulgas',
-        'Anti Pulgas para mascotas del hogar'
+        'Anti Pulgas para mascotas del hogar',
+        '2025-02-19T23:51:17.578'
     ),
     (
         50.0,
         10,
         2,
         'Collar',
-        'Collares para mascotas del hogar'
+        'Collares para mascotas del hogar',
+        '2025-02-19T23:51:17.578'
     );
 
 INSERT INTO
