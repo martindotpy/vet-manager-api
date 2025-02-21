@@ -2,6 +2,7 @@ package com.vluepixel.vetmanager.api.bill.core.integration;
 
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_USER_JWT;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -385,6 +386,446 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
         queryParams.add("order", "asc");
         queryParams.add("order_by", "name");
         queryParams.add("name", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Client ID
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientID_Valid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", "1");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientID_Invalid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", "invalid");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientID_Negative_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", "-1");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientID_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientID_Empty_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientID_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Client First Name
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientFirstName_Valid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", "Juan");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientFirstName_NotFound_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientFirstName_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientFirstName_Empty_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientFirstName_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Client Last Name
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientLastName_Valid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", "Pérez");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientLastName_NotFound_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientLastName_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientLastName_Empty_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientLastName_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Identification
+    @Test
+    void noUser_GetBillWithInvalidParams_Identification_Valid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", "12345678");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_Identification_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_Identification_Empty_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_Identification_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Client Email
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientEmail_Valid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", "firstclient@firstclient.com");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientEmail_NotFound_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientEmail_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientEmail_Empty_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientEmail_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Client Phone
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientPhone_Valid_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", "999999999");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientPhone_NotFound_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientPhone_Blank_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientPhone_Empty_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_GetBillWithInvalidParams_ClientPhone_Null_Forbidden() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", null);
 
         mockMvc.perform(get("/bill")
                 .queryParams(queryParams))
@@ -907,15 +1348,15 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                                 .value("El campo para ordenar es requerido cuando se ha definido un orden"));
     }
 
-    // Name
+    // Client ID
     @Test
-    void user_GetBillWithInvalidParams_Name_Valid_Ok() throws Exception {
+    void user_GetBillWithInvalidParams_ClientID_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "total");
-        queryParams.add("name", "Salud");
+        queryParams.add("client_id", "1");
 
         mockMvc.perform(get("/bill")
                 .queryParams(queryParams)
@@ -929,17 +1370,59 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(1),
-                        jsonPath("$.content[0].name").value("Salud"));
+                        jsonPath("$.content[0].client.id").value(1));
     }
 
     @Test
-    void user_GetBillWithInvalidParams_Name_Blank_Ok() throws Exception {
+    void user_GetBillWithInvalidParams_ClientID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "total");
-        queryParams.add("name", " ");
+        queryParams.add("client_id", "invalid");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("query.client_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
+    }
+
+    @Test // TODO: Returns Invalid Client ID
+    void user_GetBillWithInvalidParams_ClientID_Negative_UnprocessableEntity() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", "-1");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("query.client_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientID_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", " ");
 
         mockMvc.perform(get("/bill")
                 .queryParams(queryParams)
@@ -956,13 +1439,13 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetBillWithInvalidParams_Name_Empty_Ok() throws Exception {
+    void user_GetBillWithInvalidParams_ClientID_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "total");
-        queryParams.add("name", "");
+        queryParams.add("client_id", "");
 
         mockMvc.perform(get("/bill")
                 .queryParams(queryParams)
@@ -979,13 +1462,560 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_GetBillWithInvalidParams_Name_Null_Ok() throws Exception {
+    void user_GetBillWithInvalidParams_ClientID_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "total");
-        queryParams.add("name", null);
+        queryParams.add("client_id", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Client First Name
+    @Test
+    void user_GetBillWithInvalidParams_ClientFirstName_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", "Juan");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.first_name").value("Juan"));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientFirstName_NotFound_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientFirstName_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientFirstName_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientFirstName_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Client Last Name
+    @Test
+    void user_GetBillWithInvalidParams_ClientLastName_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", "Pérez");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.last_name").value("Pérez"));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientLastName_NotFound_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientLastName_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientLastName_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientLastName_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Identification
+    @Test
+    void user_GetBillWithInvalidParams_Identification_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", "12345678");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.identification").value("12345678"));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_Identification_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_Identification_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_Identification_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Client Email
+    @Test
+    void user_GetBillWithInvalidParams_ClientEmail_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", "firstclient@firstclient.com");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.emails").value(
+                                containsInAnyOrder("firstclient@firstclient.com", "firstclient@firstclient.com")));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientEmail_NotFound_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientEmail_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientEmail_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientEmail_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Client Phone
+    @Test
+    void user_GetBillWithInvalidParams_ClientPhone_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", "999999999");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.phones").value("999999999"));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientPhone_NotFound_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientPhone_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientPhone_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void user_GetBillWithInvalidParams_ClientPhone_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", null);
 
         mockMvc.perform(get("/bill")
                 .queryParams(queryParams)
@@ -1530,15 +2560,15 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                                 .value("El campo para ordenar es requerido cuando se ha definido un orden"));
     }
 
-    // Name
+    // Client ID
     @Test
-    void admin_GetBillWithInvalidParams_Name_Valid_Ok() throws Exception {
+    void admin_GetBillWithInvalidParams_ClientID_Valid_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "total");
-        queryParams.add("name", "Salud");
+        queryParams.add("client_id", "1");
 
         mockMvc.perform(get("/bill")
                 .queryParams(queryParams)
@@ -1552,17 +2582,59 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
                         jsonPath("$.content.length()").value(1),
-                        jsonPath("$.content[0].name").value("Salud"));
+                        jsonPath("$.content[0].client.id").value(1));
     }
 
     @Test
-    void admin_GetBillWithInvalidParams_Name_Blank_Ok() throws Exception {
+    void admin_GetBillWithInvalidParams_ClientID_Invalid_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "total");
-        queryParams.add("name", " ");
+        queryParams.add("client_id", "invalid");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("query.client_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
+    }
+
+    @Test // TODO: Returns Invalid Client ID
+    void admin_GetBillWithInvalidParams_ClientID_Negative_UnprocessableEntity() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", "-1");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("query.client_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientID_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_id", " ");
 
         mockMvc.perform(get("/bill")
                 .queryParams(queryParams)
@@ -1579,13 +2651,13 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetBillWithInvalidParams_Name_Empty_Ok() throws Exception {
+    void admin_GetBillWithInvalidParams_ClientID_Empty_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "total");
-        queryParams.add("name", "");
+        queryParams.add("client_id", "");
 
         mockMvc.perform(get("/bill")
                 .queryParams(queryParams)
@@ -1602,13 +2674,560 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_GetBillWithInvalidParams_Name_Null_Ok() throws Exception {
+    void admin_GetBillWithInvalidParams_ClientID_Null_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
         queryParams.add("size", "10");
         queryParams.add("order", "asc");
         queryParams.add("order_by", "total");
-        queryParams.add("name", null);
+        queryParams.add("client_id", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Client First Name
+    @Test
+    void admin_GetBillWithInvalidParams_ClientFirstName_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", "Juan");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.first_name").value("Juan"));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientFirstName_NotFound_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientFirstName_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientFirstName_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientFirstName_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_first_name", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Client Last Name
+    @Test
+    void admin_GetBillWithInvalidParams_ClientLastName_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", "Pérez");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.last_name").value("Pérez"));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientLastName_NotFound_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientLastName_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientLastName_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientLastName_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_last_name", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Identification
+    @Test
+    void admin_GetBillWithInvalidParams_Identification_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", "12345678");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.identification").value("12345678"));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_Identification_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_Identification_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_Identification_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("client_identification", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Client Email
+    @Test
+    void admin_GetBillWithInvalidParams_ClientEmail_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", "firstclient@firstclient.com");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.emails").value(
+                                containsInAnyOrder("firstclient@firstclient.com", "firstclient@firstclient.com")));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientEmail_NotFound_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientEmail_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientEmail_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientEmail_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_email", null);
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    // Client Phone
+    @Test
+    void admin_GetBillWithInvalidParams_ClientPhone_Valid_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", "999999999");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(1),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(1),
+                        jsonPath("$.content[0].client.phones").value("999999999"));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientPhone_NotFound_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", "NotFound");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(0),
+                        jsonPath("$.total_pages").value(0),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(0));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientPhone_Blank_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", " ");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientPhone_Empty_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", "");
+
+        mockMvc.perform(get("/bill")
+                .queryParams(queryParams)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.page").value(1),
+                        jsonPath("$.size").value(10),
+                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_pages").value(1),
+                        jsonPath("$.content").isArray(),
+                        jsonPath("$.content.length()").value(2));
+    }
+
+    @Test
+    void admin_GetBillWithInvalidParams_ClientPhone_Null_Ok() throws Exception {
+        MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        queryParams.add("page", "1");
+        queryParams.add("size", "10");
+        queryParams.add("order", "asc");
+        queryParams.add("order_by", "total");
+        queryParams.add("client_phone", null);
 
         mockMvc.perform(get("/bill")
                 .queryParams(queryParams)
