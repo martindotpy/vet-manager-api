@@ -2,6 +2,7 @@ package com.vluepixel.vetmanager.api.shared.domain.exception;
 
 import static com.vluepixel.vetmanager.api.shared.domain.util.CaseConverterUtils.toSnakeCase;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,6 +31,7 @@ public final class InvalidOrderByException extends ValidationException {
                                             type.equals(Double.class) ||
                                             type.equals(Float.class) ||
                                             type.equals(Boolean.class) ||
+                                            type.equals(BigDecimal.class) ||
                                             type.equals(LocalDate.class) ||
                                             type.equals(LocalDateTime.class) ||
                                             type.equals(int.class) ||
