@@ -22,6 +22,7 @@ import com.vluepixel.vetmanager.api.bill.core.application.port.in.FindBillPort;
 import com.vluepixel.vetmanager.api.bill.core.application.port.in.UpdateBillPort;
 import com.vluepixel.vetmanager.api.bill.core.domain.request.CreateBillRequest;
 import com.vluepixel.vetmanager.api.bill.core.domain.request.UpdateBillRequest;
+import com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType;
 import com.vluepixel.vetmanager.api.shared.adapter.in.response.BasicResponse;
 import com.vluepixel.vetmanager.api.shared.adapter.in.response.DetailedFailureResponse;
 import com.vluepixel.vetmanager.api.shared.adapter.in.response.FailureResponse;
@@ -57,12 +58,12 @@ public final class BillController {
     /**
      * Get all bill by paginated criteria.
      *
-     * @param page    The page number.
-     * @param size    The page size.
-     * @param order   The order.
-     * @param orderBy The order by field.
-     * @param id      The bill id.
-     * @param name    The bill name.
+     * @param page            The page number.
+     * @param size            The page size.
+     * @param order           The order.
+     * @param orderBy         The order by field.
+     * @param id              The bill id.
+     * @param clientFirstName The bill name.
      * @return paginated response with the bill found
      * @throws ValidationException If the page is less than 1, the id is less than
      *                             1, the size is less than 1, the order is defined
@@ -79,7 +80,13 @@ public final class BillController {
             @RequestParam(required = false) OrderType order,
             @RequestParam(required = false, name = "order_by") String orderBy,
             @RequestParam(required = false) Long id,
-            @RequestParam(required = false) String name)
+            @RequestParam(required = false, name = "client_id") Long clientId,
+            @RequestParam(required = false, name = "client_first_name") String clientFirstName,
+            @RequestParam(required = false, name = "client_last_name") String clientLastName,
+            @RequestParam(required = false, name = "client_identification") String identification,
+            @RequestParam(required = false, name = "client_identification_type") IdentificationType clientIdentificationType,
+            @RequestParam(required = false, name = "client_email") String clientEmail,
+            @RequestParam(required = false, name = "client_phone") String clientPhone)
             throws ValidationException {
         return okPaginated(
                 findBillPort::findPaginatedBy,
@@ -88,7 +95,13 @@ public final class BillController {
                 Order.of(order, orderBy),
                 Criteria.of(
                         like("id", id),
-                        like("name", name)),
+                        like("client.id", clientId),
+                        like("client.firstName", clientFirstName),
+                        like("client.lastName", clientLastName),
+                        like("client.identification", identification),
+                        like("client.identificationType", clientIdentificationType),
+                        like("client.emails", clientEmail),
+                        like("client.phones", clientPhone)),
                 "Cuentas encontradas",
                 InvalidStateValidation.of(
                         id != null && id < 1,
