@@ -26,6 +26,7 @@ public interface ProductSaleMapper
      * <ul>
      * <li><code>id</code></li>
      * <li><code>seller</code></li>
+     * <li><code>price</code></li>
      * </ul>
      * </li>
      * </ul>
@@ -35,6 +36,7 @@ public interface ProductSaleMapper
      */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "price", ignore = true)
     @Mapping(target = "bill", source = "billId")
     @Mapping(target = "product", source = "productId")
     ProductSale fromRequest(CreateProductSaleRequest request);
@@ -46,6 +48,7 @@ public interface ProductSaleMapper
      * <li><strong>Ignores:</strong>
      * <ul>
      * <li><code>seller</code></li>
+     * <li><code>price</code></li>
      * </ul>
      * </li>
      * </ul>
@@ -54,6 +57,7 @@ public interface ProductSaleMapper
      * @return the product sale builder
      */
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "price", ignore = true)
     @Mapping(target = "bill", source = "billId")
     @Mapping(target = "product", source = "productId")
     ProductSale fromRequest(UpdateProductSaleRequest request);

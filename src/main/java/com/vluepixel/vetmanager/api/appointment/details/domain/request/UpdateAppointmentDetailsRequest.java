@@ -21,8 +21,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class UpdateAppointmentDetailsRequest implements Request {
-    @NotNull(message = "El id del tipo de cita es requerido")
-    @Positive(message = "El id del tipo de cita debe ser mayor a 0")
+    @NotNull(message = "El id del detalle de la cita es requerido")
+    @Positive(message = "El id del detalle de la cita debe ser mayor a 0")
     private Long id;
 
     @Max(value = 1440, message = "La duración de la cita no puede ser mayor a 1440 minutos")

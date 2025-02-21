@@ -89,7 +89,7 @@ public final class ProductController {
                 Criteria.of(
                         like("id", id),
                         like("name", name)),
-                "Categorías encontradas",
+                "Productos encontrados",
                 InvalidStateValidation.of(
                         id != null && id < 1,
                         "query.id",
@@ -113,7 +113,7 @@ public final class ProductController {
     public ResponseEntity<ProductResponse> getById(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> findProductPort.findById(id),
-                "Categoría encontrada",
+                "Producto encontrado",
                 InvalidStateValidation.of(
                         id < 1,
                         "query.id",
@@ -135,7 +135,7 @@ public final class ProductController {
     public ResponseEntity<ProductResponse> create(@RequestBody CreateProductRequest request)
             throws ValidationException {
         return ok(() -> createProductPort.create(request),
-                "Categoría creada exitosamente",
+                "Producto creado exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -156,7 +156,7 @@ public final class ProductController {
     public ResponseEntity<ProductResponse> update(@RequestBody UpdateProductRequest request)
             throws ValidationException, NotFoundException {
         return ok(() -> updateProductPort.update(request),
-                "Cita actualizada exitosamente",
+                "Producto actualizado exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -176,7 +176,7 @@ public final class ProductController {
     public ResponseEntity<BasicResponse> delete(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> deleteProductPort.deleteById(id),
-                "Cita eliminada exitosamente",
+                "Producto eliminado exitosamente",
                 InvalidStateValidation.of(
                         id < 1,
                         "query.id",

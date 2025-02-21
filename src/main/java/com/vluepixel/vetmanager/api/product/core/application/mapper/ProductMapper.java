@@ -1,7 +1,6 @@
 package com.vluepixel.vetmanager.api.product.core.application.mapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -77,6 +76,10 @@ public interface ProductMapper
      * @return the categories
      */
     default List<Category> mapCategoryIdsToCategories(List<Integer> categoryIds) {
-        return categoryIds.stream().map(id -> Category.builder().id(id).build()).collect(Collectors.toList());
+        if (categoryIds == null) {
+            return null;
+        }
+
+        return categoryIds.stream().map(id -> Category.builder().id(id).build()).toList();
     }
 }

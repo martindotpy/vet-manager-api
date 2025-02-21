@@ -4,7 +4,9 @@ import com.vluepixel.vetmanager.api.bill.sale.domain.model.enums.SaleType;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -12,6 +14,8 @@ import lombok.experimental.SuperBuilder;
  */
 @Getter
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public final class CreateAppointmentSaleRequest extends CreateSaleRequest {
     private final SaleType type = SaleType.APPOINTMENT;
 

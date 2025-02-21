@@ -1,7 +1,12 @@
 package com.vluepixel.vetmanager.api.bill.sale.application.usecase;
 
+import java.math.BigDecimal;
+
 import org.slf4j.MDC;
 
+import com.vluepixel.vetmanager.api.appointment.core.domain.model.Appointment;
+import com.vluepixel.vetmanager.api.appointment.core.domain.repository.AppointmentRepository;
+import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.bill.sale.application.dto.SaleDto;
 import com.vluepixel.vetmanager.api.bill.sale.application.mapper.SaleMapper;
 import com.vluepixel.vetmanager.api.bill.sale.application.port.in.UpdateSalePort;
@@ -30,7 +35,11 @@ import lombok.extern.slf4j.Slf4j;
 public class UpdateSaleUseCase implements UpdateSalePort {
     private final TransactionalPort transactionalPort;
 
+    private final UpdateBillTotalUsecase updateBillTotalUsecase;
+
     private final ProductRepository productRepository;
+
+    private final AppointmentRepository appointmentRepository;
 
     private final SaleRepository saleRepository;
     private final SaleMapper saleMapper;
@@ -42,11 +51,13 @@ public class UpdateSaleUseCase implements UpdateSalePort {
 
         Sale updatedSale = saleMapper.fromRequest(request);
         Sale updatedSaleAux = transactionalPort.run((aux) -> {
-            switch (updatedSale) {
+            Sale sale = updatedSale;
+
+            switch (sale) {
                 case ProductSale productSale -> {
                     aux.setEntityClass(Sale.class);
 
-                    Sale sale = saleRepository.findById(productSale.getId())
+                    sale = saleRepository.findById(productSale.getId())
                             .orElseThrow(() -> new NotFoundException(Sale.class, productSale.getId()));
 
                     if (!(sale instanceof ProductSale)) {
@@ -55,6 +66,7 @@ public class UpdateSaleUseCase implements UpdateSalePort {
 
                     ProductSale preUpdateProductSale = (ProductSale) sale;
 
+                    // Update product
                     aux.setEntityClass(Product.class);
 
                     Integer quantity = productSale.getQuantity() - preUpdateProductSale.getQuantity();
@@ -62,21 +74,55 @@ public class UpdateSaleUseCase implements UpdateSalePort {
                     Long productId = productSale.getProduct().getId();
                     Product product = productRepository.findById(productId)
                             .orElseThrow(() -> new NotFoundException(Product.class, productId));
-                    product.reduceQuantity(quantity);
+                    product.reduceQuantity(quantity); // Increase quantity if quantity is negative
 
                     productRepository.save(product);
+
+                    // Update sale price
+                    BigDecimal price = product.getPrice().multiply(BigDecimal.valueOf(productSale.getQuantity()));
+
+                    sale = ProductSale.builder()
+                            .price(price)
+                            .product(product)
+                            .quantity(productSale.getQuantity())
+                            .discount(productSale.getDiscount())
+                            .seller(productSale.getSeller())
+                            .bill(productSale.getBill())
+                            .build();
 
                     aux.setEntityClass(productSale.getClass());
                 }
                 case AppointmentSale appointmentSale -> {
+                    // Calculate sale price
+                    aux.setEntityClass(Appointment.class);
+
+                    Long appointmentId = appointmentSale.getAppointment().getId();
+                    Appointment appointment = appointmentRepository.findById(appointmentId)
+                            .orElseThrow(() -> new NotFoundException(Appointment.class, appointmentId));
+                    BigDecimal price = appointment.getDetails().stream()
+                            .reduce(BigDecimal.ZERO, (total, detail) -> total.add(detail.getPrice()), BigDecimal::add);
+
+                    sale = AppointmentSale.builder()
+                            .price(price)
+                            .appointment(appointment)
+                            .discount(appointmentSale.getDiscount())
+                            .seller(appointmentSale.getSeller())
+                            .bill(appointmentSale.getBill())
+                            .build();
+
                     aux.setEntityClass(appointmentSale.getClass());
                 }
                 case TreatmentSale treatmentSale -> {
                     aux.setEntityClass(treatmentSale.getClass());
                 }
+                default -> throw new RegisterNotInstanceOfSubclassException(Sale.class);
             }
 
-            return saleRepository.save(updatedSale);
+            // Update bill total
+            aux.setEntityClass(Bill.class);
+            updateBillTotalUsecase.updateTotal(sale.getBill().getId(), sale);
+
+            return saleRepository.save(sale);
         });
 
         log.info("Sale updated");

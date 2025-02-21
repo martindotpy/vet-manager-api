@@ -1,13 +1,11 @@
 package com.vluepixel.vetmanager.api.bill.core.domain.request;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 import com.vluepixel.vetmanager.api.shared.domain.request.Request;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,13 +20,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public final class CreateBillRequest implements Request {
     @NotNull(message = "El descuento es requerido")
-    @Positive(message = "El descuento debe ser mayor a 0")
+    @PositiveOrZero(message = "El descuento debe ser mayor o igual a 0")
     @Max(value = 100, message = "El descuento no puede ser mayor a 100")
     private Integer discount;
-    @NotNull(message = "El total pagado es requerido")
-    @Positive(message = "El total pagado debe ser mayor a 0")
-    private BigDecimal totalPaid;
-    private LocalDateTime lastPaidAt;
 
     @NotNull(message = "El id del cliente es requerido")
     @Positive(message = "El id del cliente debe ser mayor a 0")

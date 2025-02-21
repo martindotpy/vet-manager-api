@@ -9,13 +9,14 @@ import com.vluepixel.vetmanager.api.bill.sale.application.dto.AppointmentSaleDto
 import com.vluepixel.vetmanager.api.bill.sale.domain.model.AppointmentSale;
 import com.vluepixel.vetmanager.api.bill.sale.domain.request.CreateAppointmentSaleRequest;
 import com.vluepixel.vetmanager.api.bill.sale.domain.request.UpdateAppointmentSaleRequest;
+import com.vluepixel.vetmanager.api.patient.core.application.mapper.PatientMapper;
 import com.vluepixel.vetmanager.api.shared.application.mapper.BasicMapper;
 import com.vluepixel.vetmanager.api.shared.application.mapper.StringUtilsMapper;
 
 /**
  * Appointment sale mapper.
  */
-@Mapper(componentModel = "spring", uses = { StringUtilsMapper.class })
+@Mapper(componentModel = "spring", uses = { StringUtilsMapper.class, PatientMapper.class })
 public interface AppointmentSaleMapper
         extends BasicMapper<AppointmentSale, AppointmentSaleDto> {
     /**
@@ -26,6 +27,7 @@ public interface AppointmentSaleMapper
      * <ul>
      * <li><code>id</code></li>
      * <li><code>seller</code></li>
+     * <li><code>price</code></li>
      * </ul>
      * </li>
      * </ul>
@@ -35,6 +37,7 @@ public interface AppointmentSaleMapper
      */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "price", ignore = true)
     @Mapping(target = "bill", source = "billId")
     @Mapping(target = "appointment", source = "appointmentId")
     AppointmentSale fromRequest(CreateAppointmentSaleRequest request);
@@ -46,6 +49,7 @@ public interface AppointmentSaleMapper
      * <li><strong>Ignores:</strong>
      * <ul>
      * <li><code>seller</code></li>
+     * <li><code>price</code></li>
      * </ul>
      * </li>
      * </ul>
@@ -54,6 +58,7 @@ public interface AppointmentSaleMapper
      * @return the appointment sale builder
      */
     @Mapping(target = "seller", ignore = true)
+    @Mapping(target = "price", ignore = true)
     @Mapping(target = "bill", source = "billId")
     @Mapping(target = "appointment", source = "appointmentId")
     AppointmentSale fromRequest(UpdateAppointmentSaleRequest request);

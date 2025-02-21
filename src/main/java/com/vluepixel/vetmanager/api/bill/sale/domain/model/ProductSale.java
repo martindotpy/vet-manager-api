@@ -1,21 +1,21 @@
 package com.vluepixel.vetmanager.api.bill.sale.domain.model;
 
 import org.hibernate.envers.Audited;
-import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.product.core.domain.model.Product;
-import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Inheritance;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -23,9 +23,11 @@ import lombok.experimental.SuperBuilder;
  */
 @Entity
 @Audited
-@Inheritance
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public final class ProductSale extends Sale {
     @NotNull
     @Max(value = 999)
@@ -36,12 +38,4 @@ public final class ProductSale extends Sale {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_product_sale_product"))
     private Product product;
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_product_sale_seller"))
-    @CreatedBy
-    private User seller;
-    @NotNull
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_product_sale_bill"))
-    private Bill bill;
 }
