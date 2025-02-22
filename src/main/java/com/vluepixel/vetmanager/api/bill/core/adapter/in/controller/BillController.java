@@ -106,7 +106,11 @@ public final class BillController {
                 InvalidStateValidation.of(
                         id != null && id < 1,
                         "query.id",
-                        "El id debe ser mayor a 0"));
+                        "El id debe ser mayor a 0"),
+                InvalidStateValidation.of(
+                        clientId != null && clientId < 1,
+                        "query.client_id",
+                        "El id del cliente debe ser mayor a 0"));
     }
 
     /**

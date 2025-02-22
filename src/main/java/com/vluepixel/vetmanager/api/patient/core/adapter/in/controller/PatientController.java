@@ -137,7 +137,19 @@ public final class PatientController {
                 InvalidStateValidation.of(
                         id != null && id < 1,
                         "query.id",
-                        "El id debe ser mayor a 0"));
+                        "El id debe ser mayor a 0"),
+                InvalidStateValidation.of(
+                        raceId != null && raceId < 1,
+                        "query.race_id",
+                        "El id de la raza debe ser mayor a 0"),
+                InvalidStateValidation.of(
+                        speciesId != null && speciesId < 1,
+                        "query.species_id",
+                        "El id de la especie debe ser mayor a 0"),
+                InvalidStateValidation.of(
+                        ownerId != null && ownerId < 1,
+                        "query.owner_id",
+                        "El id del dueño debe ser mayor a 0"));
     }
 
     /**
