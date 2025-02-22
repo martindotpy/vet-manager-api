@@ -25,7 +25,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,7 +56,7 @@ public final class Bill {
     @Column(columnDefinition = "decimal(7, 2)")
     private BigDecimal total;
     @NotNull
-    @Positive
+    @PositiveOrZero
     @Max(100)
     @Column(columnDefinition = "tinyint unsigned")
     private Integer discount;
