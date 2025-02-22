@@ -91,4 +91,46 @@ public class UpdateAppointmentSaleDataProvider {
             .appointmentId(null)
             .discount(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getDiscount())
             .build();
+
+    // Discount
+    private static final int MAX_DISCOUNT_VALUE = 100;
+    public static final UpdateAppointmentSaleRequest INVALID_DISCOUNT_TOO_BIG_UPDATE_APPOINTMENT_SALE_REQUEST = UpdateAppointmentSaleRequest
+            .builder()
+            .id(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getId())
+            .billId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getBillId())
+            .appointmentId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getAppointmentId())
+            .discount(MAX_DISCOUNT_VALUE + 1)
+            .build();
+
+    public static final UpdateAppointmentSaleRequest VALID_DISCOUNT_MAX_VALUE_UPDATE_APPOINTMENT_SALE_REQUEST = UpdateAppointmentSaleRequest
+            .builder()
+            .id(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getId())
+            .billId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getBillId())
+            .appointmentId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getAppointmentId())
+            .discount(MAX_DISCOUNT_VALUE)
+            .build();
+
+    public static final UpdateAppointmentSaleRequest VALID_DISCOUNT_ZERO_UPDATE_APPOINTMENT_SALE_REQUEST = UpdateAppointmentSaleRequest
+            .builder()
+            .id(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getId())
+            .billId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getBillId())
+            .appointmentId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getAppointmentId())
+            .discount(0)
+            .build();
+
+    public static final UpdateAppointmentSaleRequest INVALID_DISCOUNT_NEGATIVE_UPDATE_APPOINTMENT_SALE_REQUEST = UpdateAppointmentSaleRequest
+            .builder()
+            .id(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getId())
+            .billId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getBillId())
+            .appointmentId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getAppointmentId())
+            .discount(-1)
+            .build();
+
+    public static final UpdateAppointmentSaleRequest INVALID_DISCOUNT_NULL_UPDATE_APPOINTMENT_SALE_REQUEST = UpdateAppointmentSaleRequest
+            .builder()
+            .id(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getId())
+            .billId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getBillId())
+            .appointmentId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getAppointmentId())
+            .discount(null)
+            .build();
 }
