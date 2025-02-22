@@ -79,7 +79,15 @@ public class UpdateBillDataProvider {
             .build();
 
     // Total Paid
-    public static final UpdateBillRequest INVALID_TOTAL_PAID_ZERO_UPDATE_BILL_REQUEST = UpdateBillRequest
+    public static final UpdateBillRequest VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST = UpdateBillRequest
+            .builder()
+            .id(VALID_UPDATE_BILL_REQUEST.getId())
+            .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
+            .totalPaid(BigDecimal.valueOf(999))
+            .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
+            .build();
+
+    public static final UpdateBillRequest VALID_TOTAL_PAID_ZERO_UPDATE_BILL_REQUEST = UpdateBillRequest
             .builder()
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
@@ -100,39 +108,6 @@ public class UpdateBillDataProvider {
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
             .totalPaid(null)
-            .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
-            .build();
-
-    // Last Paid
-    public static final UpdateBillRequest VALID_LAST_PAID_MINUS_YEAR_UPDATE_BILL_REQUEST = UpdateBillRequest
-            .builder()
-            .id(VALID_UPDATE_BILL_REQUEST.getId())
-            .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
-            .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
-            .build();
-
-    public static final UpdateBillRequest VALID_LAST_PAID_TODAY_UPDATE_BILL_REQUEST = UpdateBillRequest
-            .builder()
-            .id(VALID_UPDATE_BILL_REQUEST.getId())
-            .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
-            .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
-            .build();
-
-    public static final UpdateBillRequest INVALID_LAST_PAID_FUTURE_UPDATE_BILL_REQUEST = UpdateBillRequest
-            .builder()
-            .id(VALID_UPDATE_BILL_REQUEST.getId())
-            .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
-            .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
-            .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
-            .build();
-
-    public static final UpdateBillRequest INVALID_LAST_PAID_NULL_UPDATE_BILL_REQUEST = UpdateBillRequest
-            .builder()
-            .id(VALID_UPDATE_BILL_REQUEST.getId())
-            .discount(VALID_UPDATE_BILL_REQUEST.getDiscount())
-            .totalPaid(VALID_UPDATE_BILL_REQUEST.getTotalPaid())
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
