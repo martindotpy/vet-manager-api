@@ -8,7 +8,9 @@ import com.vluepixel.vetmanager.api.bill.core.application.port.in.UpdateBillPort
 import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.bill.core.domain.repository.BillRepository;
 import com.vluepixel.vetmanager.api.bill.core.domain.request.UpdateBillRequest;
+import com.vluepixel.vetmanager.api.client.core.domain.model.Client;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
+import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,14 @@ public class UpdateBillUseCase implements UpdateBillPort {
         MDC.put("operationId", "Bill id " + request.getId());
         log.info("Updating bill");
 
-        Bill updatedBill = billMapper.fromRequest(request).build();
+        Bill preUpdateBill = billRepository.findById(request.getId())
+                .orElseThrow(() -> new NotFoundException(Bill.class, request.getId()));
+
+        Bill updatedBill = billMapper.toBuilder(preUpdateBill)
+                .discount(request.getDiscount())
+                .totalPaid(request.getTotalPaid())
+                .client(Client.builder().id(request.getClientId()).build())
+                .build();
         updatedBill = billRepository.save(updatedBill);
         updatedBill = billRepository.findById(updatedBill.getId()).get();
 
