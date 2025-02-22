@@ -135,7 +135,7 @@ public final class AppointmentTypeController {
     public ResponseEntity<AppointmentTypeResponse> create(@RequestBody CreateAppointmentTypeRequest request)
             throws ValidationException {
         return ok(() -> createAppointmentTypePort.create(request),
-                "Tipo de cita creada",
+                "Tipo de cita creada exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -156,7 +156,7 @@ public final class AppointmentTypeController {
     public ResponseEntity<AppointmentTypeResponse> update(@RequestBody UpdateAppointmentTypeRequest request)
             throws ValidationException, NotFoundException {
         return ok(() -> updateAppointmentTypePort.update(request),
-                "Tipo de cita actualizada",
+                "Tipo de cita actualizada exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -177,7 +177,7 @@ public final class AppointmentTypeController {
     public ResponseEntity<BasicResponse> delete(@PathVariable Integer id)
             throws ValidationException, NotFoundException {
         return ok(() -> deleteAppointmentTypePort.deleteById(id),
-                "Tipo de cita eliminada",
+                "Tipo de cita eliminada exitosamente",
                 InvalidStateValidation.of(
                         id < 1,
                         "query.id",

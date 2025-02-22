@@ -156,7 +156,7 @@ public final class SpeciesController {
     public ResponseEntity<SpeciesResponse> update(@RequestBody UpdateSpeciesRequest request)
             throws ValidationException, NotFoundException {
         return ok(() -> updateSpeciesPort.update(request),
-                "Cita actualizada exitosamente",
+                "Especie actualizada exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -176,7 +176,7 @@ public final class SpeciesController {
     public ResponseEntity<BasicResponse> delete(@PathVariable Integer id)
             throws ValidationException, NotFoundException {
         return ok(() -> deleteSpeciesPort.deleteById(id),
-                "Cita eliminada exitosamente",
+                "Especie eliminada exitosamente",
                 InvalidStateValidation.of(
                         id < 1,
                         "query.id",

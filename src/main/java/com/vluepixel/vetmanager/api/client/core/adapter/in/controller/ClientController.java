@@ -108,7 +108,7 @@ public final class ClientController {
                         like("address", address),
                         like("phones", phone),
                         like("emails", email)),
-                "Tipos de cliente encontradas",
+                "Clientes encontrados",
                 InvalidStateValidation.of(
                         id != null && id < 1,
                         "query.id",
@@ -130,7 +130,7 @@ public final class ClientController {
     public ResponseEntity<ClientResponse> create(@RequestBody CreateClientRequest request)
             throws ValidationException {
         return ok(() -> createClientPort.create(request),
-                "Cliente creado",
+                "Cliente creado exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -151,7 +151,7 @@ public final class ClientController {
     public ResponseEntity<ClientResponse> update(@RequestBody UpdateClientRequest request)
             throws ValidationException, NotFoundException {
         return ok(() -> updateClientPort.update(request),
-                "Cliente actualizado",
+                "Cliente actualizado exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -172,7 +172,7 @@ public final class ClientController {
     public ResponseEntity<BasicResponse> delete(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> deleteClientPort.deleteById(id),
-                "Cliente eliminado",
+                "Cliente eliminado exitosamente",
                 InvalidStateValidation.of(
                         id < 1,
                         "query.id",

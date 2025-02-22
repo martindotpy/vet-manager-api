@@ -62,7 +62,7 @@ public final class VaccineController {
     public ResponseEntity<VaccinesResponse> getByPatientId(@PathVariable(name = "patient_id") Long patientId)
             throws ValidationException, NotFoundException {
         return ok(() -> findVaccinePort.findAllByPatientId(patientId),
-                "Vacunas del paciente obtenidas exitosamente",
+                "Vacunas del paciente encontradas",
                 InvalidStateValidation.of(
                         patientId < 1,
                         "path.patient_id",

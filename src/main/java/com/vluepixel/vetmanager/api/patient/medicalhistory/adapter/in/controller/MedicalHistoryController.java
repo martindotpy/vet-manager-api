@@ -64,7 +64,7 @@ public final class MedicalHistoryController {
             @PathVariable(name = "patient_id") Long patientId)
             throws ValidationException, NotFoundException {
         return ok(() -> findMedicalHistoryPort.findAllByPatientId(patientId),
-                "Historiales médicos del paciente obtenidos exitosamente",
+                "Historiales médicos del paciente encontrados exitosamente",
                 InvalidStateValidation.of(
                         patientId < 1,
                         "path.patient_id",

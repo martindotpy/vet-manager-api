@@ -66,7 +66,6 @@ public final class PatientController {
      * @param orderBy                 The order by field.
      * @param id                      The patient id.
      * @param name                    The patient name.
-     * @param age                     The patient age.
      * @param gender                  The patient gender.
      * @param deceased                The patient deceased status.
      * @param raceId                  The race id.

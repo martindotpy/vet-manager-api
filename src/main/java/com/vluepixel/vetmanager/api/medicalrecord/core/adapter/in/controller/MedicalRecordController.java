@@ -61,7 +61,7 @@ public final class MedicalRecordController {
     public ResponseEntity<MedicalRecordsResponse> getByPatientId(@PathVariable(name = "patient_id") Long patientId)
             throws ValidationException {
         return ok(() -> findMedicalRecordPort.findAllByPatientId(patientId),
-                "Historiales médicos del paciente obtenidos exitosamente",
+                "Registros médicos del paciente encontrados exitosamente",
                 InvalidStateValidation.of(
                         patientId < 1,
                         "path.patient_id",

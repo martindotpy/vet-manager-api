@@ -104,7 +104,7 @@ public class UserController {
                         like("lastName", lastName),
                         like("email", email),
                         in("roles", role)),
-                "Usuarios encontrados correctamente",
+                "Usuarios encontrados",
                 InvalidStateValidation.of(
                         id != null && id < 1,
                         "query.id",
@@ -128,7 +128,7 @@ public class UserController {
     public ResponseEntity<AuthenticationResponse> updateCurrentUser(@RequestBody UpdateUserRequest request)
             throws ValidationException {
         return ok(() -> updateCurrentUserPort.updateCurrentUser(request),
-                "Usuario actualizado correctamente",
+                "Usuario actualizado exitosamente",
                 ValidationRequest.of(request),
                 ValidStateValidation.of(
                         request.getId().equals(getCurrentUserPort.get().getId()),
@@ -153,7 +153,7 @@ public class UserController {
     public ResponseEntity<UserResponse> update(@RequestBody UpdateUserRequest request, @PathVariable Long id)
             throws ValidationException {
         return ok(() -> updateCurrentUserPort.update(request),
-                "Usuario actualizado correctamente",
+                "Usuario actualizado exitosamente",
                 ValidationRequest.of(request),
                 ValidStateValidation.of(
                         request.getId().equals(id),
@@ -176,7 +176,7 @@ public class UserController {
     public ResponseEntity<BasicResponse> delete(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> deleteUserPort.deleteById(id),
-                "Usuario eliminado correctamente",
+                "Usuario eliminado exitosamente",
                 InvalidStateValidation.of(
                         id < 1,
                         "path.id",
@@ -200,7 +200,7 @@ public class UserController {
     public ResponseEntity<AuthenticationResponse> updateCurrentUserEmail(@RequestBody UpdateUserEmailRequest request)
             throws ValidationException {
         return ok(() -> updateUserEmailPort.updateCurrentUser(request),
-                "Usuario actualizado correctamente",
+                "Usuario actualizado exitosamente",
                 ValidationRequest.of(request),
                 ValidStateValidation.of(
                         request.getId().equals(getCurrentUserPort.get().getId()),
@@ -226,7 +226,7 @@ public class UserController {
             @PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> updateUserEmailPort.update(request),
-                "Usuario actualizado correctamente",
+                "Usuario actualizado exitosamente",
                 ValidationRequest.of(request),
                 ValidStateValidation.of(
                         request.getId().equals(id),

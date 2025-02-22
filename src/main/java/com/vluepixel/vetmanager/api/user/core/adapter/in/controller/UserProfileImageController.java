@@ -92,7 +92,7 @@ public class UserProfileImageController {
         }
 
         return ok(() -> updateUserImageProfilePort.updateCurrentUser(request),
-                "Image del perfil de usuario ha sido actualizado correctamente");
+                "Image del perfil de usuario actualizado exitosamente");
     }
 
     /**
@@ -139,6 +139,6 @@ public class UserProfileImageController {
         }
 
         return ok(() -> updateUserImageProfilePort.update(request),
-                "Image del perfil de usuario ha sido actualizado correctamente");
+                "Image del perfil de usuario actualizado exitosamente");
     }
 }

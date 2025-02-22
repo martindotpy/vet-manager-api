@@ -64,7 +64,7 @@ public final class TreatmentController {
             @PathVariable(name = "record_id") Long recordId)
             throws ValidationException {
         return ok(() -> findTreatmentPort.findAllByPatientIdAndMedicalRecordId(patientId, recordId),
-                "Historiales médicos del paciente obtenidos exitosamente",
+                "Tratamientos del paciente encontrados exitosamente",
                 InvalidStateValidation.of(
                         patientId < 1,
                         "path.patient_id",

@@ -64,7 +64,7 @@ public final class SaleController {
     public ResponseEntity<SaleResponse> getById(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> findSalePort.findById(id),
-                "Categoría encontrada",
+                "Venta encontrada",
                 InvalidStateValidation.of(
                         id < 1,
                         "query.id",
@@ -86,7 +86,7 @@ public final class SaleController {
     public ResponseEntity<SaleResponse> create(@RequestBody CreateSaleRequest request)
             throws ValidationException {
         return ok(() -> createSalePort.create(request),
-                "Categoría creada exitosamente",
+                "Venta creada exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -107,7 +107,7 @@ public final class SaleController {
     public ResponseEntity<SaleResponse> update(@RequestBody UpdateSaleRequest request)
             throws ValidationException, NotFoundException {
         return ok(() -> updateSalePort.update(request),
-                "Cita actualizada exitosamente",
+                "Venta actualizada exitosamente",
                 ValidationRequest.of(request));
     }
 
@@ -127,7 +127,7 @@ public final class SaleController {
     public ResponseEntity<BasicResponse> delete(@PathVariable Long id)
             throws ValidationException, NotFoundException {
         return ok(() -> deleteSalePort.deleteById(id),
-                "Cita eliminada exitosamente",
+                "Venta eliminada exitosamente",
                 InvalidStateValidation.of(
                         id < 1,
                         "query.id",
