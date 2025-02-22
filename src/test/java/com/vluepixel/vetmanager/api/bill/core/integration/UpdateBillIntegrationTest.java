@@ -8,7 +8,7 @@ import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider
 import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.INVALID_DISCOUNT_NEGATIVE_UPDATE_BILL_REQUEST;
 import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.INVALID_DISCOUNT_NULL_UPDATE_BILL_REQUEST;
 import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.INVALID_DISCOUNT_TOO_BIG_UPDATE_BILL_REQUEST;
-import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.INVALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST;
+import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST;
 import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.INVALID_ID_NEGATIVE_UPDATE_BILL_REQUEST;
 import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.INVALID_ID_NOT_FOUND_UPDATE_BILL_REQUEST;
 import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.INVALID_TOTAL_PAID_NEGATIVE_UPDATE_BILL_REQUEST;
@@ -93,7 +93,7 @@ public class UpdateBillIntegrationTest extends BaseIntegrationTest {
     void noUser_UpdateBillWithInvalidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/bill")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST)))
+                .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST)))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
@@ -266,11 +266,11 @@ public class UpdateBillIntegrationTest extends BaseIntegrationTest {
                                 .value(VALID_DISCOUNT_MAX_VALUE_UPDATE_BILL_REQUEST.getClientId()));
     }
 
-    @Test
+    @Test // TODO
     void user_UpdateBillWithInvalidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/bill")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST))
+                .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpectAll(
@@ -501,11 +501,11 @@ public class UpdateBillIntegrationTest extends BaseIntegrationTest {
                                 .value(VALID_DISCOUNT_MAX_VALUE_UPDATE_BILL_REQUEST.getClientId()));
     }
 
-    @Test
+    @Test // TODO
     void admin_UpdateBillWithInvalidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/bill")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST))
+                .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpectAll(

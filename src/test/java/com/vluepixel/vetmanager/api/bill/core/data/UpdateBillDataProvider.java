@@ -54,7 +54,7 @@ public class UpdateBillDataProvider {
             .clientId(VALID_UPDATE_BILL_REQUEST.getClientId())
             .build();
 
-    public static final UpdateBillRequest INVALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST = UpdateBillRequest
+    public static final UpdateBillRequest VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST = UpdateBillRequest
             .builder()
             .id(VALID_UPDATE_BILL_REQUEST.getId())
             .discount(0)
