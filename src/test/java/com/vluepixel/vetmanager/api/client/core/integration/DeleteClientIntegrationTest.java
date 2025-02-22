@@ -18,7 +18,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the delete client functionality.
  */
 public class DeleteClientIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Cliente eliminado";
+    private static final String MESSAGE_OK = "Cliente eliminado exitosamente";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
             .format("Cliente con id %s no encontrado(a)", parameter);
     // -----------------------------------------------------------------------------------------------------------------

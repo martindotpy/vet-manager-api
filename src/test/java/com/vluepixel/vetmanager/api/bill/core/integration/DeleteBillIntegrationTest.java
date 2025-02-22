@@ -1,5 +1,6 @@
 package com.vluepixel.vetmanager.api.bill.core.integration;
 
+import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.VALID_UPDATE_BILL_REQUEST;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_USER_JWT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -61,7 +62,7 @@ public class DeleteBillIntegrationTest extends BaseIntegrationTest {
     @Test
     @DirtiesContext
     void user_DeleteBillWithValidParams_Ok() throws Exception {
-        mockMvc.perform(delete("/bill/{id}", 2)
+        mockMvc.perform(delete("/bill/{id}", VALID_UPDATE_BILL_REQUEST.getId())
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value(MESSAGE_OK));

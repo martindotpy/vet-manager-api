@@ -48,7 +48,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * </p>
  */
 class UpdateUserIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Usuario actualizado correctamente";
+    private static final String MESSAGE_OK = "Usuario actualizado exitosamente";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
             .format("Usuario con id %s no encontrado(a)", parameter);
 

@@ -16,7 +16,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the delete species functionality.
  */
 public class DeleteSpeciesIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Cita eliminada exitosamente";
+    private static final String MESSAGE_OK = "Especie eliminada exitosamente";
     private static final String MESSAGE_CONFLICT = "No se puede eliminar el/la especie porque está en uso en otros registros";
     private static final String MESSAGE_NOT_FOUND = "Especie con id 10 no encontrado(a)";
 

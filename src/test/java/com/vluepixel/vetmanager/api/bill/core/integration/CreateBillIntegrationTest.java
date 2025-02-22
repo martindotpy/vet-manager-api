@@ -170,19 +170,22 @@ public class CreateBillIntegrationTest extends BaseIntegrationTest {
                                 .value(VALID_DISCOUNT_MAX_VALUE_CREATE_BILL_REQUEST.getClientId()));
     }
 
-    @Test // TODO
-    void user_CreateBillWithInvalidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
+    @Test
+    @Order(3)
+    @DirtiesContext
+    void user_CreateBillWithInvalidArguments_Discount_Zero_Ok() throws Exception {
         mockMvc.perform(post("/bill")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_CREATE_BILL_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("discount"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must be greater than 0")); // TODO: TRANSLATE
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.discount")
+                                .value(VALID_DISCOUNT_ZERO_CREATE_BILL_REQUEST.getDiscount()),
+                        jsonPath("$.content.client.id")
+                                .value(VALID_DISCOUNT_ZERO_CREATE_BILL_REQUEST.getClientId()));
     }
 
     @Test
@@ -258,7 +261,7 @@ public class CreateBillIntegrationTest extends BaseIntegrationTest {
 
     // Role: ADMIN
     @Test
-    @Order(3)
+    @Order(4)
     @DirtiesContext
     void admin_CreateBillWithValidArguments_Ok() throws Exception {
         mockMvc.perform(post("/bill")
@@ -290,7 +293,7 @@ public class CreateBillIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @DirtiesContext
     void admin_CreateBillWithValidArguments_Discount_MaxValue_Ok() throws Exception {
         mockMvc.perform(post("/bill")
@@ -307,19 +310,22 @@ public class CreateBillIntegrationTest extends BaseIntegrationTest {
                                 .value(VALID_DISCOUNT_MAX_VALUE_CREATE_BILL_REQUEST.getClientId()));
     }
 
-    @Test // TODO
-    void admin_CreateBillWithInvalidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
+    @Test
+    @Order(6)
+    @DirtiesContext
+    void admin_CreateBillWithInvalidArguments_Discount_Zero_Ok() throws Exception {
         mockMvc.perform(post("/bill")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_CREATE_BILL_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("discount"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must be greater than 0")); // TODO: TRANSLATE
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.discount")
+                                .value(VALID_DISCOUNT_ZERO_CREATE_BILL_REQUEST.getDiscount()),
+                        jsonPath("$.content.client.id")
+                                .value(VALID_DISCOUNT_ZERO_CREATE_BILL_REQUEST.getClientId()));
     }
 
     @Test

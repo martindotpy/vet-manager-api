@@ -266,19 +266,23 @@ public class UpdateBillIntegrationTest extends BaseIntegrationTest {
                                 .value(VALID_DISCOUNT_MAX_VALUE_UPDATE_BILL_REQUEST.getClientId()));
     }
 
-    @Test // TODO
-    void user_UpdateBillWithInvalidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
+    @Test
+    @DirtiesContext
+    void user_UpdateBillWithInvalidArguments_Discount_Zero_Ok() throws Exception {
         mockMvc.perform(put("/bill")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("discount"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must be greater than 0")); // TODO: TRANSLATE
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST.getId()),
+                        jsonPath("$.content.total_paid")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST.getTotalPaid().doubleValue()),
+                        jsonPath("$.content.discount")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST.getDiscount()),
+                        jsonPath("$.content.client.id")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST.getClientId()));
     }
 
     @Test
@@ -313,23 +317,19 @@ public class UpdateBillIntegrationTest extends BaseIntegrationTest {
 
     // Total Paid
     @Test
-    @DirtiesContext
-    void user_UpdateBillWithInvalidArguments_TotalPaid_GreatherThanTotal_Ok() throws Exception {
+    void user_UpdateBillWithInvalidArguments_TotalPaid_GreatherThanTotal_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/bill")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk())
+                .andExpect(status().isUnprocessableEntity())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST.getId()),
-                        jsonPath("$.content.total_paid")
-                                .value(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST.getTotalPaid()
-                                        .doubleValue()),
-                        jsonPath("$.content.discount")
-                                .value(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST.getDiscount()),
-                        jsonPath("$.content.client.id")
-                                .value(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST.getClientId()));
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("total_paid"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]")
+                                .value("El total pagado no puede ser mayor al total de la cuenta"));
     }
 
     @Test
@@ -501,19 +501,23 @@ public class UpdateBillIntegrationTest extends BaseIntegrationTest {
                                 .value(VALID_DISCOUNT_MAX_VALUE_UPDATE_BILL_REQUEST.getClientId()));
     }
 
-    @Test // TODO
-    void admin_UpdateBillWithInvalidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
+    @Test
+    @DirtiesContext
+    void admin_UpdateBillWithInvalidArguments_Discount_Zero_Ok() throws Exception {
         mockMvc.perform(put("/bill")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("discount"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must be greater than 0")); // TODO: TRANSLATE
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST.getId()),
+                        jsonPath("$.content.total_paid")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST.getTotalPaid().doubleValue()),
+                        jsonPath("$.content.discount")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST.getDiscount()),
+                        jsonPath("$.content.client.id")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_BILL_REQUEST.getClientId()));
     }
 
     @Test
@@ -548,23 +552,19 @@ public class UpdateBillIntegrationTest extends BaseIntegrationTest {
 
     // Total Paid
     @Test
-    @DirtiesContext
-    void admin_UpdateBillWithInvalidArguments_TotalPaid_GreatherThanTotal_Ok() throws Exception {
+    void admin_UpdateBillWithInvalidArguments_TotalPaid_GreatherThanTotal_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/bill")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk())
+                .andExpect(status().isUnprocessableEntity())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST.getId()),
-                        jsonPath("$.content.total_paid")
-                                .value(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST.getTotalPaid()
-                                        .doubleValue()),
-                        jsonPath("$.content.discount")
-                                .value(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST.getDiscount()),
-                        jsonPath("$.content.client.id")
-                                .value(VALID_TOTAL_PAID_GREATER_THAN_TOTAL_UPDATE_BILL_REQUEST.getClientId()));
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("total_paid"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]")
+                                .value("El total pagado no puede ser mayor al total de la cuenta"));
     }
 
     @Test

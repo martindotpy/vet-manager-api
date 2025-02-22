@@ -16,7 +16,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the get user use case.
  */
 public class GetClientIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Tipos de cliente encontradas";
+    private static final String MESSAGE_OK = "Clientes encontrados";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------

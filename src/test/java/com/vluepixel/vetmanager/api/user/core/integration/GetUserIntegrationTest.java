@@ -13,7 +13,7 @@ import org.springframework.util.MultiValueMap;
 import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 
 class GetUserIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Usuarios encontrados correctamente";
+    private static final String MESSAGE_OK = "Usuarios encontrados";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------

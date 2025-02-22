@@ -54,7 +54,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the create client functionality.
  */
 public class CreateClientIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Cliente creado";
+    private static final String MESSAGE_OK = "Cliente creado exitosamente";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------

@@ -55,7 +55,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the update client functionality.
  */
 public class UpdateClientIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Cliente actualizado";
+    private static final String MESSAGE_OK = "Cliente actualizado exitosamente";
     private static final String MESSAGE_NOT_FOUND = "Cliente no encontrado(a)";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:

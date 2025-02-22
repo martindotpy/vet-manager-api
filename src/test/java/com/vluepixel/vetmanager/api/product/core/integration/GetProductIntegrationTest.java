@@ -861,7 +861,7 @@ public class GetProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, name, description, quantity, updated_at"));
+                                .value("Solo los siguientes campos son válidos: id, name, price, description, quantity, updated_at"));
     }
 
     @Test
@@ -1484,7 +1484,7 @@ public class GetProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, name, description, quantity, updated_at"));
+                                .value("Solo los siguientes campos son válidos: id, name, price, description, quantity, updated_at"));
     }
 
     @Test

@@ -24,7 +24,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  */
 class DeleteUserIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_FORBIDDEN_USER = "El usuario no se puede borrar así mismo";
-    private static final String MESSAGE_OK = "Usuario eliminado correctamente";
+    private static final String MESSAGE_OK = "Usuario eliminado exitosamente";
     private static final Function<String, String> MESSAGE_NOT_FOUND = user -> String
             .format("Usuario con id %s no encontrado(a)", user);
     // -----------------------------------------------------------------------------------------------------------------

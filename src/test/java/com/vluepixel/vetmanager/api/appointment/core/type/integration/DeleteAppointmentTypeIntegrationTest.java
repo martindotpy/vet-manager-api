@@ -19,15 +19,23 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the delete appointment type functionality.
  */
 public class DeleteAppointmentTypeIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Tipo de cita eliminada";
+    private static final String MESSAGE_OK = "Tipo de cita eliminada exitosamente";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
             .format("Tipo de cita con id %s no encontrado(a)", parameter);
+    private static final String MESSAGE_CONFLICT = "No se puede eliminar el/la tipo de cita porque está en uso en otros registros";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
 
     @Test
     void noUser_DeleteAppointmentTypeWithValidParams_Forbidden() throws Exception {
+        mockMvc.perform(delete("/appointment/type/{id}", 3))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_DeleteAppointmentTypeWithValidParams_WithUse_Forbidden() throws Exception {
         mockMvc.perform(delete("/appointment/type/{id}", VALID_UPDATE_APPOINTMENT_TYPE_REQUEST.getId()))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -63,10 +71,18 @@ public class DeleteAppointmentTypeIntegrationTest extends BaseIntegrationTest {
     @Test
     @DirtiesContext
     void user_DeleteAppointmentTypeWithValidParams_Ok() throws Exception {
-        mockMvc.perform(delete("/appointment/type/{id}", VALID_UPDATE_APPOINTMENT_TYPE_REQUEST.getId())
+        mockMvc.perform(delete("/appointment/type/{id}", 3)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value(MESSAGE_OK));
+    }
+
+    @Test
+    void user_DeleteAppointmentTypeWithValidParams_WithUse_Conflict() throws Exception {
+        mockMvc.perform(delete("/appointment/type/{id}", VALID_UPDATE_APPOINTMENT_TYPE_REQUEST.getId())
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value(MESSAGE_CONFLICT));
     }
 
     @Test
@@ -112,10 +128,18 @@ public class DeleteAppointmentTypeIntegrationTest extends BaseIntegrationTest {
     @Test
     @DirtiesContext
     void admin_DeleteAppointmentTypeWithValidParams_Ok() throws Exception {
-        mockMvc.perform(delete("/appointment/type/{id}", VALID_UPDATE_APPOINTMENT_TYPE_REQUEST.getId())
+        mockMvc.perform(delete("/appointment/type/{id}", 3)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value(MESSAGE_OK));
+    }
+
+    @Test
+    void admin_DeleteAppointmentTypeWithValidParams_WithUse_Conflict() throws Exception {
+        mockMvc.perform(delete("/appointment/type/{id}", VALID_UPDATE_APPOINTMENT_TYPE_REQUEST.getId())
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value(MESSAGE_CONFLICT));
     }
 
     @Test

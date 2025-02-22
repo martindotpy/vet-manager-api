@@ -33,7 +33,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the update appointment type functionality.
  */
 public class UpdateAppointmentTypeIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Tipo de cita actualizada";
+    private static final String MESSAGE_OK = "Tipo de cita actualizada exitosamente";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------

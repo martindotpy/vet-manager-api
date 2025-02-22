@@ -170,6 +170,12 @@ VALUES
         2,
         150,
         'Operación'
+    ),
+    (
+        60,
+        3,
+        350,
+        'Paseo'
     );
 
 INSERT INTO

@@ -29,7 +29,7 @@ public class UpdateProfileImageIntegrationTest extends BaseIntegrationTest {
 
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
             .format("Imagen con nombre %s no encontrado(a)", parameter);
-    private static final String MESSAGE_OK = "Image del perfil de usuario ha sido actualizado correctamente";
+    private static final String MESSAGE_OK = "Image del perfil de usuario actualizado exitosamente";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------

@@ -58,7 +58,7 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
     @Test
     void noUser_GetAppointmentTypeWithInvalidParams_ID_NotFound_Forbidden() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("id", "20");
+        queryParams.add("id", "30");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
@@ -405,11 +405,11 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -420,11 +420,11 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // ID
@@ -450,7 +450,7 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
     @Test
     void user_GetAppointmentTypeWithInvalidParams_ID_NotFound_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("id", "20");
+        queryParams.add("id", "30");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
@@ -483,10 +483,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -504,10 +504,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -525,10 +525,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Page
@@ -582,10 +582,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -602,10 +602,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Size
@@ -659,10 +659,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(111),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -679,10 +679,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -699,10 +699,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Order
@@ -761,10 +761,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -782,10 +782,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -803,10 +803,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // OrderBy
@@ -828,7 +828,7 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, name, duration_in_minutes"));
+                                .value("Solo los siguientes campos son válidos: id, name, duration_in_minutes, price"));
     }
 
     @Test
@@ -847,10 +847,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -916,10 +916,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -939,10 +939,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -962,10 +962,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Role: ADMIN
@@ -982,11 +982,11 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -997,11 +997,11 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // ID
@@ -1027,7 +1027,7 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
     @Test
     void admin_GetAppointmentTypeWithInvalidParams_ID_NotFound_Ok() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
-        queryParams.add("id", "20");
+        queryParams.add("id", "30");
         queryParams.add("page", "1");
         queryParams.add("size", "10");
 
@@ -1060,10 +1060,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1081,10 +1081,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1102,10 +1102,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Page
@@ -1159,10 +1159,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1179,10 +1179,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Size
@@ -1236,10 +1236,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(111),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1256,10 +1256,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1276,10 +1276,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // Order
@@ -1338,10 +1338,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1359,10 +1359,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1380,10 +1380,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     // OrderBy
@@ -1405,7 +1405,7 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, name, duration_in_minutes"));
+                                .value("Solo los siguientes campos son válidos: id, name, duration_in_minutes, price"));
     }
 
     @Test
@@ -1424,10 +1424,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1493,10 +1493,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1516,10 +1516,10 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 
     @Test
@@ -1539,9 +1539,9 @@ public class GetAppointmentTypeTypeIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.page").value(1),
                         jsonPath("$.size").value(10),
-                        jsonPath("$.total_elements").value(2),
+                        jsonPath("$.total_elements").value(3),
                         jsonPath("$.total_pages").value(1),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(2));
+                        jsonPath("$.content.length()").value(3));
     }
 }

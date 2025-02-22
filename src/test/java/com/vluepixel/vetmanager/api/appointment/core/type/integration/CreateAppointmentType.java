@@ -31,7 +31,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the create appointment type functionality.
  */
 public class CreateAppointmentType extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Tipo de cita creada";
+    private static final String MESSAGE_OK = "Tipo de cita creada exitosamente";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
