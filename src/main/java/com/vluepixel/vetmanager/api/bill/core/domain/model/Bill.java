@@ -71,7 +71,7 @@ public final class Bill {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "bill", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "bill", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Sale> sales;
     @NotNull
     @ManyToOne
