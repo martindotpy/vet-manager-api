@@ -44,7 +44,7 @@ public final class EnumValidation<T extends Enum<?>> implements Validation {
 
         StringBuilder message = new StringBuilder();
 
-        message.append("Valid values for `").append(field).append("` are: ");
+        message.append("Valores validos para `").append(field).append("` son: ");
         message.append(String.join(", ", Stream.of(enumType.getEnumConstants()).map(Enum::name).toList()));
 
         return List.of(new ValidationError(field, message.toString()));

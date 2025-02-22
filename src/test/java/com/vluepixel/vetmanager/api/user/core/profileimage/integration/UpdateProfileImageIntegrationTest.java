@@ -195,7 +195,7 @@ public class UpdateProfileImageIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("param.image_file"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Valid values for `param.image_file` are: PNG, JPG, JPEG, WEBP"));
+                                .value("Valores validos para `param.image_file` son: PNG, JPG, JPEG, WEBP"));
     }
 
     @Test
@@ -328,7 +328,7 @@ public class UpdateProfileImageIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("param.image_file"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Valid values for `param.image_file` are: PNG, JPG, JPEG, WEBP"));
+                                .value("Valores validos para `param.image_file` son: PNG, JPG, JPEG, WEBP"));
     }
 
     @Test
@@ -417,7 +417,7 @@ public class UpdateProfileImageIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("param.image_file"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Valid values for `param.image_file` are: PNG, JPG, JPEG, WEBP"));
+                                .value("Valores validos para `param.image_file` son: PNG, JPG, JPEG, WEBP"));
     }
 
     @Test
