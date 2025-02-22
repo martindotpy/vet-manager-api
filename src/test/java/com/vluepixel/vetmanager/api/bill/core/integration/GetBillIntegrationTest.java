@@ -1302,7 +1302,7 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, discount, paid, last_paid_at, created_at"));
+                                .value("Solo los siguientes campos son válidos: id, total, discount, total_paid, paid, last_paid_at, created_at"));
     }
 
     @Test
@@ -2514,7 +2514,7 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("query.order_by"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("Solo los siguientes campos son válidos: id, discount, paid, last_paid_at, created_at"));
+                                .value("Solo los siguientes campos son válidos: id, total, discount, total_paid, paid, last_paid_at, created_at"));
     }
 
     @Test
