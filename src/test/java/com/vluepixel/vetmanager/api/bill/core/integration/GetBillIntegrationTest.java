@@ -1394,7 +1394,7 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
-    @Test // TODO: Returns Invalid Client ID
+    @Test
     void user_GetBillWithInvalidParams_ClientID_Negative_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -1412,7 +1412,7 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("query.client_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
+                        jsonPath("$.details[0].messages[0]").value("El id del cliente debe ser mayor a 0"));
     }
 
     @Test
@@ -2606,7 +2606,7 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
     }
 
-    @Test // TODO: Returns Invalid Client ID
+    @Test
     void admin_GetBillWithInvalidParams_ClientID_Negative_UnprocessableEntity() throws Exception {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("page", "1");
@@ -2624,7 +2624,7 @@ public class GetBillIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("query.client_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("Valor numérico inválido"));
+                        jsonPath("$.details[0].messages[0]").value("El id del cliente debe ser mayor a 0"));
     }
 
     @Test
