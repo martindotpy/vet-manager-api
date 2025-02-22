@@ -195,7 +195,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name").value(VALID_CREATE_APPOINTMENT_TYPE_REQUEST.getName()),
                         jsonPath("$.content.duration_in_minutes")
                                 .value(VALID_CREATE_APPOINTMENT_TYPE_REQUEST.getDurationInMinutes()),
@@ -230,7 +230,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name")
                                 .value(VALID_NAME_MAX_LENGTH_CREATE_APPOINTMENT_TYPE_REQUEST.getName()),
                         jsonPath("$.content.duration_in_minutes")
@@ -343,7 +343,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     @DirtiesContext
     void user_CreateAppointmentTypeWithValidArguments_DurationUnMinutes_MaxValue_Ok() throws Exception {
         mockMvc.perform(post("/appointment/type")
@@ -354,7 +354,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name")
                                 .value(VALID_DURATION_IN_MINUTES_MAX_VALUE_CREATE_APPOINTMENT_TYPE_REQUEST.getName()),
                         jsonPath("$.content.duration_in_minutes")
@@ -431,7 +431,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name")
                                 .value(VALID_PRICE_MAX_VALUE_CREATE_APPOINTMENT_TYPE_REQUEST.getName()),
                         jsonPath("$.content.duration_in_minutes")
@@ -452,7 +452,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name").value(VALID_CREATE_APPOINTMENT_TYPE_REQUEST.getName()),
                         jsonPath("$.content.duration_in_minutes")
                                 .value(VALID_CREATE_APPOINTMENT_TYPE_REQUEST.getDurationInMinutes()),
@@ -487,7 +487,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name")
                                 .value(VALID_NAME_MAX_LENGTH_CREATE_APPOINTMENT_TYPE_REQUEST.getName()),
                         jsonPath("$.content.duration_in_minutes")
@@ -600,7 +600,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     @DirtiesContext
     void admin_UpdateAppointmentTypeWithValidArguments_DurationUnMinutes_MaxValue_Ok() throws Exception {
         mockMvc.perform(post("/appointment/type")
@@ -611,7 +611,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name")
                                 .value(VALID_DURATION_IN_MINUTES_MAX_VALUE_CREATE_APPOINTMENT_TYPE_REQUEST.getName()),
                         jsonPath("$.content.duration_in_minutes")
@@ -688,7 +688,7 @@ public class CreateAppointmentType extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
-                        jsonPath("$.content.id").value(3),
+                        jsonPath("$.content.id").value(4),
                         jsonPath("$.content.name")
                                 .value(VALID_PRICE_MAX_VALUE_CREATE_APPOINTMENT_TYPE_REQUEST.getName()),
                         jsonPath("$.content.duration_in_minutes")
