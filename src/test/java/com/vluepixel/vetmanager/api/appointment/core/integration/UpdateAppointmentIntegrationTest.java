@@ -21,11 +21,11 @@ import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointme
 import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.INVALID_PATIENT_ID_NEGATIVE_UPDATE_APPOINTMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.INVALID_PATIENT_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.INVALID_PATIENT_ID_NULL_UPDATE_APPOINTMENT_REQUEST;
-import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.VALID_START_AT_FUTURE_UPDATE_APPOINTMENT_REQUEST;
+import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.INVALID_START_AT_MINUS_YEAR_UPDATE_APPOINTMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.INVALID_START_AT_NULL_UPDATE_APPOINTMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.VALID_DETAILS_DURATION_IN_MINUTES_MAX_VALUE_UPDATE_APPOINTMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.VALID_DETAILS_PRICE_MAX_VALUE_UPDATE_APPOINTMENT_REQUEST;
-import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.INVALID_START_AT_MINUS_YEAR_UPDATE_APPOINTMENT_REQUEST;
+import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.VALID_START_AT_FUTURE_UPDATE_APPOINTMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.VALID_START_AT_TODAY_UPDATE_APPOINTMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.appointment.core.data.UpdateAppointmentDataProvider.VALID_UPDATE_APPOINTMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
@@ -140,7 +140,8 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("start_at"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("La fecha de inicio no puede ser en el pasado"));
+                        jsonPath("$.details[0].messages[0]")
+                                .value("La fecha de inicio debe ser mayor a la fecha actual"));
     }
 
     @Test

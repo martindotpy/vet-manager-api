@@ -7,6 +7,7 @@ import com.vluepixel.vetmanager.api.appointment.details.domain.request.CreateApp
 import com.vluepixel.vetmanager.api.shared.domain.request.Request;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -33,4 +34,9 @@ public final class CreateAppointmentRequest implements Request {
     @NotNull(message = "El id del paciente es requerido")
     @Positive(message = "El id del paciente debe ser mayor a 0")
     private Long patientId;
+
+    @AssertTrue(message = "La fecha de inicio debe ser mayor a la fecha actual")
+    public boolean isStartAt() {
+        return startAt.isAfter(LocalDateTime.now());
+    }
 }
