@@ -128,7 +128,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     // Start At
-    @Test // TODO: Implements start at validation in the past.
+    @Test
     void admin_UpdateAppointmentWithValidArguments_StartAt_MinusYear_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/appointment")
                 .contentType(MediaType.APPLICATION_JSON)
