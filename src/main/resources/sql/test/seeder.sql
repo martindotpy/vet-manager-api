@@ -368,3 +368,51 @@ VALUES
         '2025-02-19T23:51:17.578',
         'Primera cita'
     );
+
+INSERT INTO
+    medical_record (
+        deleted,
+        heart_rate,
+        respitarion_rate,
+        sterilized,
+        temperature_in_celsius,
+        `weight`,
+        entry_at,
+        patient_id,
+        vet_id,
+        diagnosis,
+        physical_exam,
+        reason,
+        recipe
+    )
+VALUES 
+    (
+        0,
+        80,
+        18,
+        1,
+        39.7,
+        12.50,
+        '2025-02-23 14:30:00.123456',
+        1,
+        1,
+        'Infección leve',
+        'Fiebre moderada',
+        'Fiebre persistente',
+        'Paracetamol 250mg'
+    ),
+    (
+        0,
+        95,
+        22,
+        0,
+        36.7,
+        8.75,
+        '2025-02-22 10:15:45.654321',
+        2,
+        2,
+        'Lesión en pata',
+        'Cojera en pata trasera',
+        'Accidente doméstico',
+        'Antiinflamatorio y reposo'
+    );
