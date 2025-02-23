@@ -333,3 +333,38 @@ VALUES
         2,
         2
     );
+
+INSERT INTO
+    medical_history (
+        deleted,
+        created_at,
+        id,
+        patient_id,
+        updated_at,
+        content
+    )
+VALUES
+    (
+        0,
+        '2025-02-19T23:51:17.578',
+        1,
+        1,
+        '2025-02-19T23:51:17.578',
+        'Primera cita'
+    ),
+    (
+        0,
+        '2025-02-19T23:51:17.578',
+        2,
+        1,
+        '2025-02-19T23:51:17.578',
+        'Segunda cita'
+    ),
+    (
+        0,
+        '2025-02-19T23:51:17.578',
+        3,
+        2,
+        '2025-02-19T23:51:17.578',
+        'Primera cita'
+    );
