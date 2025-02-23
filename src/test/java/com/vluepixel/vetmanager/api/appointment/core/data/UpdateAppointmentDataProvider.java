@@ -3,6 +3,7 @@ package com.vluepixel.vetmanager.api.appointment.core.data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.vluepixel.vetmanager.api.appointment.core.domain.request.UpdateAppointmentRequest;
@@ -12,27 +13,21 @@ import com.vluepixel.vetmanager.api.appointment.details.domain.request.UpdateApp
  * Update appointment data provider.
  */
 public class UpdateAppointmentDataProvider {
+    private static final List<UpdateAppointmentDetailsRequest> details = Arrays.asList(
+            UpdateAppointmentDetailsRequest
+                    .builder()
+                    .id(1L)
+                    .durationInMinutes(1440)
+                    .price(BigDecimal.valueOf(9999.99))
+                    .appointmentTypeId(1L)
+                    .build());
+
     public static final UpdateAppointmentRequest INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST = UpdateAppointmentRequest
             .builder()
             .id(10L)
             .startAt(LocalDateTime.now())
             .description("New Description")
-            .details(new ArrayList<UpdateAppointmentDetailsRequest>(
-                    List.of(
-                            UpdateAppointmentDetailsRequest
-                                    .builder()
-                                    .id(1L)
-                                    .durationInMinutes(60)
-                                    .price(BigDecimal.valueOf(100))
-                                    .appointmentTypeId(1L)
-                                    .build(),
-                            UpdateAppointmentDetailsRequest
-                                    .builder()
-                                    .id(2L)
-                                    .durationInMinutes(120)
-                                    .price(BigDecimal.valueOf(200))
-                                    .appointmentTypeId(1L)
-                                    .build())))
+            .details(details)
             .patientId(1L)
             .build();
 
@@ -48,19 +43,19 @@ public class UpdateAppointmentDataProvider {
     public static final UpdateAppointmentRequest INVALID_ID_NULL_UPDATE_APPOINTMENT_REQUEST = UpdateAppointmentRequest
             .builder()
             .id(null)
-            .startAt(INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST.getStartAt())
-            .description(INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST.getDescription())
-            .details(INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST.getDetails())
-            .patientId(INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST.getPatientId())
+            .startAt(INVALID_ID_NEGATIVE_UPDATE_APPOINTMENT_REQUEST.getStartAt())
+            .description(INVALID_ID_NEGATIVE_UPDATE_APPOINTMENT_REQUEST.getDescription())
+            .details(INVALID_ID_NEGATIVE_UPDATE_APPOINTMENT_REQUEST.getDetails())
+            .patientId(INVALID_ID_NEGATIVE_UPDATE_APPOINTMENT_REQUEST.getPatientId())
             .build();
 
     public static final UpdateAppointmentRequest VALID_UPDATE_APPOINTMENT_REQUEST = UpdateAppointmentRequest
             .builder()
             .id(1L)
-            .startAt(INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST.getStartAt())
-            .description(INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST.getDescription())
-            .details(INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST.getDetails())
-            .patientId(INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST.getPatientId())
+            .startAt(INVALID_ID_NULL_UPDATE_APPOINTMENT_REQUEST.getStartAt())
+            .description(INVALID_ID_NULL_UPDATE_APPOINTMENT_REQUEST.getDescription())
+            .details(INVALID_ID_NULL_UPDATE_APPOINTMENT_REQUEST.getDetails())
+            .patientId(INVALID_ID_NULL_UPDATE_APPOINTMENT_REQUEST.getPatientId())
             .build();
 
     // -----------------------------------------------------------------------------------------------------------------
