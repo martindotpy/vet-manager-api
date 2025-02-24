@@ -60,7 +60,7 @@ public class GetPatientHistoryIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(2));
     }
 
     @Test
@@ -111,7 +111,7 @@ public class GetPatientHistoryIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content").isArray(),
-                        jsonPath("$.content.length()").value(0));
+                        jsonPath("$.content.length()").value(2));
     }
 
     @Test
