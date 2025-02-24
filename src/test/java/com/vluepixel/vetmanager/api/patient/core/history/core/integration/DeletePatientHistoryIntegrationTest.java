@@ -19,9 +19,9 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the delete patient history functionality.
  */
 public class DeletePatientHistoryIntegrationTest extends BaseIntegrationTest {
-    private static final String MESSAGE_OK = "Paciente eliminado exitosamente";
+    private static final String MESSAGE_OK = "Historial médico eliminado exitosamente";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
-            .format("Paciente con id %s no encontrado(a)", parameter);
+            .format("Historia clínica con id %s no encontrado(a)", parameter);
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -35,8 +35,7 @@ public class DeletePatientHistoryIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void noUser_DeletePatientHistoryWithInvalidParams_Forbidden() throws Exception {
-        mockMvc.perform(delete("/patient/{patient_id}/history/{id}", 1, 3)
-                .header("Authorization", BEARER_USER_JWT))
+        mockMvc.perform(delete("/patient/{patient_id}/history/{id}", 1, 3))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
