@@ -40,7 +40,7 @@ public class DeleteMedicalRecordUseCase implements DeleteMedicalRecordPort {
             return medicalRecordRepository.updateBy(
                     Criteria.of(
                             equal("id", id),
-                            equal("patient.id", id)),
+                            equal("patient.id", patientId)),
                     FieldUpdate.set("deleted", true));
         });
 

@@ -40,7 +40,7 @@ public class DeleteMedicalHistoryUseCase implements DeleteMedicalHistoryPort {
             return medicalHistoryRepository.updateBy(
                     Criteria.of(
                             equal("id", id),
-                            equal("patient.id", id)),
+                            equal("patient.id", patientId)),
                     FieldUpdate.set("deleted", true));
         });
 
