@@ -2,6 +2,8 @@ package com.vluepixel.vetmanager.api.patient.medicalhistory.application.usecase;
 
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.equal;
 
+import java.time.LocalDateTime;
+
 import org.slf4j.MDC;
 
 import com.vluepixel.vetmanager.api.patient.medicalhistory.application.dto.MedicalHistoryDto;
@@ -44,8 +46,9 @@ public class UpdateMedicalHistoryUseCase implements UpdateMedicalHistoryPort {
             return medicalHistoryRepository.updateBy(
                     Criteria.of(
                             equal("id", request.getId()),
-                            equal("patientId", patientId)),
-                    FieldUpdate.set("content", request.getContent()));
+                            equal("patient.id", patientId)),
+                    FieldUpdate.set("content", request.getContent()),
+                    FieldUpdate.set("updatedAt", LocalDateTime.now()));
         });
 
         // Verify any unexpected behavior
