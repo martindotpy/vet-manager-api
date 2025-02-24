@@ -43,7 +43,7 @@ public class UpdatePatientRecordDataProvider {
 
     public static final UpdateMedicalRecordRequest INVALID_ID_NULL_UPDATE_PATIENT_RECORD_REQUEST = UpdateMedicalRecordRequest
             .builder()
-            .id(-10L)
+            .id(null)
             .reason(INVALID_ID_NEGATIVE_UPDATE_PATIENT_RECORD_REQUEST.getReason())
             .entryAt(INVALID_ID_NEGATIVE_UPDATE_PATIENT_RECORD_REQUEST.getEntryAt())
             .physicalExam(INVALID_ID_NEGATIVE_UPDATE_PATIENT_RECORD_REQUEST.getPhysicalExam())
@@ -454,7 +454,7 @@ public class UpdatePatientRecordDataProvider {
             .build();
 
     // Weight
-    private static final int MAX_WEIGHT_VALUE = 1000;
+    private static final int MAX_WEIGHT_VALUE = 999;
     public static final UpdateMedicalRecordRequest INVALID_WEIGHT_TOO_BIG_UPDATE_PATIENT_RECORD_REQUEST = UpdateMedicalRecordRequest
             .builder()
             .id(VALID_UPDATE_PATIENT_RECORD_REQUEST.getId())
@@ -480,7 +480,7 @@ public class UpdatePatientRecordDataProvider {
             .temperatureInCelsius(VALID_UPDATE_PATIENT_RECORD_REQUEST.getTemperatureInCelsius())
             .respitarionRate(VALID_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate())
             .heartRate(VALID_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate())
-            .weight(BigDecimal.valueOf(MAX_WEIGHT_VALUE))
+            .weight(BigDecimal.valueOf(MAX_WEIGHT_VALUE + 0.99))
             .sterilized(VALID_UPDATE_PATIENT_RECORD_REQUEST.isSterilized())
             .recipe(VALID_UPDATE_PATIENT_RECORD_REQUEST.getRecipe())
             .diagnosis(VALID_UPDATE_PATIENT_RECORD_REQUEST.getDiagnosis())
