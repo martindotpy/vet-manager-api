@@ -78,11 +78,11 @@ public class DeletePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @DirtiesContext
-    void user_DeletePatientRecordWithInvalidParams_Conflict() throws Exception {
-        mockMvc.perform(delete("/patient/{patient_id}/record/{id}", 1, 3)
+    void user_DeletePatientRecordWithInvalidParams_NotFound() throws Exception {
+        mockMvc.perform(delete("/patient/{patient_id}/record/{id}", 1, 2)
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.message").value(MESSAGE_OK));
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND.apply("2")));
     }
 
     @Test
@@ -136,11 +136,11 @@ public class DeletePatientRecordIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_DeletePatientRecordWithInvalidParams_Conflict() throws Exception {
+    void admin_DeletePatientRecordWithInvalidParams_NotFound() throws Exception {
         mockMvc.perform(delete("/patient/{patient_id}/record/{id}", 1, 2)
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.message").value(MESSAGE_OK));
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND.apply("2")));
     }
 
     @Test

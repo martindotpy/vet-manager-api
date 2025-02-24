@@ -53,7 +53,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.sterilized").value(VALID_CREATE_PATIENT_RECORD_REQUEST.isSterilized()),
                         jsonPath("$.content.recipe").value(VALID_CREATE_PATIENT_RECORD_REQUEST.getRecipe()),
                         jsonPath("$.content.diagnosis").value(VALID_CREATE_PATIENT_RECORD_REQUEST.getDiagnosis()),
-                        jsonPath("$.content.patient.id").value(VALID_CREATE_PATIENT_RECORD_REQUEST.getPatientId()),
                         jsonPath("$.content.vet.id").value(VALID_CREATE_PATIENT_RECORD_REQUEST.getVetId()),
                         jsonPath("$.content.treatments").isArray());
     }

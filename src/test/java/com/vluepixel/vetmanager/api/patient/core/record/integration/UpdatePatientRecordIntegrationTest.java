@@ -400,7 +400,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     // Recipe
     @Test
-    void noUser_UpdatePatientRecordWithValidArguments_Recype_Blank_Forbidden() throws Exception {
+    void noUser_UpdatePatientRecordWithValidArguments_Recipe_Blank_Forbidden() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST)))
@@ -409,7 +409,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void noUser_UpdatePatientRecordWithValidArguments_Recype_Empty_Forbidden() throws Exception {
+    void noUser_UpdatePatientRecordWithValidArguments_Recipe_Empty_Forbidden() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST)))
@@ -418,7 +418,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void noUser_UpdatePatientRecordWithValidArguments_Recype_Null_Forbidden() throws Exception {
+    void noUser_UpdatePatientRecordWithValidArguments_Recipe_Null_Forbidden() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST)))
@@ -1211,7 +1211,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     // Recipe
     @Test
     @DirtiesContext // TODO: Recipe should be null
-    void user_UpdatePatientRecordWithValidArguments_Recype_Blank_Ok() throws Exception {
+    void user_UpdatePatientRecordWithValidArguments_Recipe_Blank_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST))
@@ -1245,7 +1245,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @DirtiesContext // TODO: Recipe should be null
-    void user_UpdatePatientRecordWithValidArguments_Recype_Empty_Ok() throws Exception {
+    void user_UpdatePatientRecordWithValidArguments_Recipe_Empty_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST))
@@ -1279,7 +1279,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @DirtiesContext
-    void user_UpdatePatientRecordWithValidArguments_Recype_Null_Ok() throws Exception {
+    void user_UpdatePatientRecordWithValidArguments_Recipe_Null_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST))
@@ -2180,7 +2180,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     // Recipe
     @Test
     @DirtiesContext // TODO: Recipe should be null
-    void admin_UpdatePatientRecordWithValidArguments_Recype_Blank_Ok() throws Exception {
+    void admin_UpdatePatientRecordWithValidArguments_Recipe_Blank_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST))
@@ -2214,7 +2214,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @DirtiesContext // TODO: Recipe should be null
-    void admin_UpdatePatientRecordWithValidArguments_Recype_Empty_Ok() throws Exception {
+    void admin_UpdatePatientRecordWithValidArguments_Recipe_Empty_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST))
@@ -2248,7 +2248,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @DirtiesContext
-    void admin_UpdatePatientRecordWithValidArguments_Recype_Null_Ok() throws Exception {
+    void admin_UpdatePatientRecordWithValidArguments_Recipe_Null_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST))
