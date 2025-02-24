@@ -152,5 +152,4 @@ public class GetPatientHistoryIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages").value("Valor numérico inválido"));
     }
-
 }
