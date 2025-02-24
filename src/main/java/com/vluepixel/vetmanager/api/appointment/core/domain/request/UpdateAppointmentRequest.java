@@ -6,6 +6,7 @@ import java.util.List;
 import com.vluepixel.vetmanager.api.appointment.details.domain.request.UpdateAppointmentDetailsRequest;
 import com.vluepixel.vetmanager.api.shared.domain.request.Request;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -32,11 +33,17 @@ public final class UpdateAppointmentRequest implements Request {
     private String description;
 
     @NotEmpty(message = "La lista de detalles es requerido")
-    private List<@NotNull(message = "Ningún detalle puede ser nulo") UpdateAppointmentDetailsRequest> details;
+    private List<@Valid @NotNull(message = "Ningún detalle puede ser nulo") UpdateAppointmentDetailsRequest> details;
+    @NotNull(message = "El id del paciente es requerido")
+    @Positive(message = "El id del paciente debe ser mayor a 0")
     private Long patientId;
 
     @AssertTrue(message = "La fecha de inicio debe ser mayor a la fecha actual")
     public boolean isStartAt() {
+        if (startAt == null) {
+            return true;
+        }
+
         return startAt.isAfter(LocalDateTime.now());
     }
 }

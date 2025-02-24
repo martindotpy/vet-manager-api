@@ -25,9 +25,11 @@ public final class UpdateAppointmentDetailsRequest implements Request {
     @Positive(message = "El id del detalle de la cita debe ser mayor a 0")
     private Long id;
 
+    @NotNull(message = "La duración de la cita es requerida")
     @Max(value = 1440, message = "La duración de la cita no puede ser mayor a 1440 minutos")
     @Positive(message = "La duración de la cita debe ser mayor a 0")
     private int durationInMinutes;
+    @NotNull(message = "El precio de la cita es requerido")
     @DecimalMax(value = "9999.99", message = "El precio de la cita no puede ser mayor a 9999.99")
     @Positive(message = "El precio de la cita debe ser mayor a 0")
     private BigDecimal price;

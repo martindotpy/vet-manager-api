@@ -26,7 +26,6 @@ import lombok.NoArgsConstructor;
 public final class CreateAppointmentRequest implements Request {
     @NotNull(message = "La fecha de inicio es requerida")
     private LocalDateTime startAt;
-    @NotNull(message = "La descripción es requerida")
     private String description;
 
     @NotEmpty(message = "La lista de detalles es requerido")
@@ -37,6 +36,10 @@ public final class CreateAppointmentRequest implements Request {
 
     @AssertTrue(message = "La fecha de inicio debe ser mayor a la fecha actual")
     public boolean isStartAt() {
+        if (startAt == null) {
+            return true;
+        }
+
         return startAt.isAfter(LocalDateTime.now());
     }
 }
