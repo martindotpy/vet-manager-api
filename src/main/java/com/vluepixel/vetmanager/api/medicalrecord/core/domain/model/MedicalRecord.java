@@ -14,6 +14,7 @@ import com.vluepixel.vetmanager.api.user.core.domain.model.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -88,7 +89,7 @@ public final class MedicalRecord {
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_medical_record_vet"))
     private User vet;
-    @OneToMany(mappedBy = "medicalRecord")
+    @OneToMany(mappedBy = "medicalRecord", fetch = FetchType.EAGER)
     private List<@NotNull Treatment> treatments;
 
     @Builder.Default

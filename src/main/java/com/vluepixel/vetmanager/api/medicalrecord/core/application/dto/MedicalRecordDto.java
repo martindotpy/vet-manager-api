@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.application.dto.TreatmentDto;
-import com.vluepixel.vetmanager.api.patient.core.application.dto.PatientDto;
 import com.vluepixel.vetmanager.api.user.core.application.dto.UserDto;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +33,6 @@ public final class MedicalRecordDto {
     private String recipe;
     private String diagnosis;
 
-    private PatientDto patient;
     private UserDto vet;
     private List<TreatmentDto> treatments;
 }
