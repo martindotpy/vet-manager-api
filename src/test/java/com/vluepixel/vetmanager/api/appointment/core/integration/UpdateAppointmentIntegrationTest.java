@@ -223,7 +223,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Description
     @Test
-    @DirtiesContext // TODO: Description must be null
+    @DirtiesContext
     void admin_UpdateAppointmentWithValidArguments_Description_Blank_Ok() throws Exception {
         mockMvc.perform(put("/appointment")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -254,7 +254,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO: Description must be null
+    @DirtiesContext
     void admin_UpdateAppointmentWithValidArguments_Description_Empty_Ok() throws Exception {
         mockMvc.perform(put("/appointment")
                 .contentType(MediaType.APPLICATION_JSON)
