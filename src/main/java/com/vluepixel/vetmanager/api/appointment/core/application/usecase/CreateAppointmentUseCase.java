@@ -58,6 +58,6 @@ public class CreateAppointmentUseCase implements CreateAppointmentPort {
 
         log.info("Appointment created");
 
-        return appointmentMapper.toDto(newAppointmentAux);
+        return appointmentMapper.toDto(appointmentRepository.findById(newAppointmentAux.getId()).get());
     }
 }

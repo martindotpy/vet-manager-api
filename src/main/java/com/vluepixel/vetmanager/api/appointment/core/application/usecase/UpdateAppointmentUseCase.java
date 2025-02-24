@@ -75,6 +75,6 @@ public class UpdateAppointmentUseCase implements UpdateAppointmentPort {
 
         log.info("Appointment updated");
 
-        return appointmentMapper.toDto(updatedAppointmentAux);
+        return appointmentMapper.toDto(appointmentRepository.findById(updatedAppointmentAux.getId()).get());
     }
 }

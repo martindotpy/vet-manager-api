@@ -54,6 +54,7 @@ public final class Appointment {
     private Long id;
 
     @CreationTimestamp
+    @Column(updatable = false)
     private LocalDateTime createdAt;
     @NotNull
     private LocalDateTime startAt;
