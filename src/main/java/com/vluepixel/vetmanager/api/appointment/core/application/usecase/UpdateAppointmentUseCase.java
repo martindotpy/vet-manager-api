@@ -39,10 +39,18 @@ public class UpdateAppointmentUseCase implements UpdateAppointmentPort {
         MDC.put("operationId", "Appointment id " + request.getId());
         log.info("Updating appointment");
 
+        // Make null the description if the value is blank
+        String description = request.getDescription();
+        if (description != null && description.isBlank()) {
+            description = null;
+        }
+
         // Verify if the appointment details are valid
         Appointment appointmentToUpdate = appointmentRepository.findById(request.getId())
                 .orElseThrow(() -> new NotFoundException(Appointment.class, request.getId()));
-        Appointment updatedAppointment = appointmentMapper.fromRequest(request).build();
+        Appointment updatedAppointment = appointmentMapper.fromRequest(request)
+                .description(description)
+                .build();
         Stream<AppointmentDetails> streamPreviousDetails = appointmentToUpdate.getDetails().stream();
 
         for (AppointmentDetails updatedDetails : updatedAppointment.getDetails()) {

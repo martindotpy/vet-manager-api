@@ -35,7 +35,15 @@ public class CreateAppointmentUseCase implements CreateAppointmentPort {
         MDC.put("operationId", "Appointment start at " + request.getStartAt());
         log.info("Creating appointment");
 
-        Appointment newAppointment = appointmentMapper.fromRequest(request).build();
+        // Make null the description if the value is blank
+        String description = request.getDescription();
+        if (description != null && description.isBlank()) {
+            description = null;
+        }
+
+        Appointment newAppointment = appointmentMapper.fromRequest(request)
+                .description(description)
+                .build();
         Appointment newAppointmentAux = transactionalPort.run((aux) -> {
             // Save the details
             aux.setEntityClass(AppointmentDetails.class);
