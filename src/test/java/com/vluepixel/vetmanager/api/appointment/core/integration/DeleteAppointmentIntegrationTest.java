@@ -15,7 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 
 /**
- * Integration test for the delete appoinment functionality.
+ * Integration test for the delete appointment functionality.
  */
 public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Cita eliminada exitosamente";
@@ -28,28 +28,28 @@ public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void noUser_DeleteAppointmentWithValidParams_Forbidden() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", 3))
+        mockMvc.perform(delete("/appointment/{id}", 3))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
     void noUser_DeleteAppointmentWithInvalidParams_ID_NotFound_Forbidden() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", 10))
+        mockMvc.perform(delete("/appointment/{id}", 10))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
     void noUser_DeleteAppointmentWithInvalidParams_ID_Invalid_Forbidden() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", "invalid"))
+        mockMvc.perform(delete("/appointment/{id}", "invalid"))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
     @Test
     void noUser_DeleteAppointmentWithInvalidParams_ID_Negative_Forbidden() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", -1))
+        mockMvc.perform(delete("/appointment/{id}", -1))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
@@ -62,7 +62,7 @@ public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
     @Test
     @DirtiesContext
     void user_DeleteAppointmentWithValidParams_Forbidden() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", VALID_UPDATE_APPOINTMENT_REQUEST.getId())
+        mockMvc.perform(delete("/appointment/{id}", VALID_UPDATE_APPOINTMENT_REQUEST.getId())
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -70,7 +70,7 @@ public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void user_DeleteAppointmentWithInvalidParams_ID_NotFound_Forbidden() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", 10)
+        mockMvc.perform(delete("/appointment/{id}", 10)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -78,7 +78,7 @@ public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void user_DeleteAppointmentWithInvalidParams_ID_Invalid_Forbidden() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", "invalid")
+        mockMvc.perform(delete("/appointment/{id}", "invalid")
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -86,7 +86,7 @@ public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void user_DeleteAppointmentWithInvalidParams_ID_Negative_Forbidden() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", -1)
+        mockMvc.perform(delete("/appointment/{id}", -1)
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
@@ -96,7 +96,7 @@ public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
     @Test
     @DirtiesContext
     void admin_DeleteAppointmentWithValidParams_Ok() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", 2)
+        mockMvc.perform(delete("/appointment/{id}", 2)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value(MESSAGE_OK));
@@ -104,7 +104,7 @@ public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void admin_DeleteAppointmentWithInvalidParams_ID_NotFound_NotFound() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", 10)
+        mockMvc.perform(delete("/appointment/{id}", 10)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND.apply("10")));
@@ -112,7 +112,7 @@ public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void admin_DeleteAppointmentWithInvalidParams_ID_Invalid_UnprocessableEntity() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", "invalid")
+        mockMvc.perform(delete("/appointment/{id}", "invalid")
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpectAll(
@@ -125,7 +125,7 @@ public class DeleteAppointmentIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void admin_DeleteAppointmentWithInvalidParams_ID_Negative_UnprocessableEntity() throws Exception {
-        mockMvc.perform(delete("/appoinment/{id}", -1)
+        mockMvc.perform(delete("/appointment/{id}", -1)
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isUnprocessableEntity())
                 .andExpectAll(

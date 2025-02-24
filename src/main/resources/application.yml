@@ -85,6 +85,7 @@ security:
         - DELETE
       routes:
         - /client/{id}
+        - /appointment/{id}
 
   no-admin-operation-to-self-routes:
     - methods:
