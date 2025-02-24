@@ -33,6 +33,6 @@ public class CreateMedicalRecordUseCase implements CreateMedicalRecordPort {
 
         log.info("Medical record created");
 
-        return medicalrecordMapper.toDto(newMedicalRecord);
+        return medicalrecordMapper.toDto(medicalrecordRepository.findById(newMedicalRecord.getId()).get());
     }
 }
