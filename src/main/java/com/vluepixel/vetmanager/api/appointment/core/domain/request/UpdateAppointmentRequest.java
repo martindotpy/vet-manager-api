@@ -3,7 +3,6 @@ package com.vluepixel.vetmanager.api.appointment.core.domain.request;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vluepixel.vetmanager.api.appointment.details.domain.request.UpdateAppointmentDetailsRequest;
 import com.vluepixel.vetmanager.api.shared.domain.request.Request;
 
