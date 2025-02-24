@@ -17,6 +17,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the create patient record use case.
  */
 public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
+    private static final String MESSAGE_OK = "Registro médico creado exitosamente";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -38,14 +39,14 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value("a"),
+                        jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content.id").value(3),
                         jsonPath("$.content.reason").value(VALID_CREATE_PATIENT_RECORD_REQUEST.getReason()),
                         jsonPath("$.content.physical_exam")
                                 .value(VALID_CREATE_PATIENT_RECORD_REQUEST.getPhysicalExam()),
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_CREATE_PATIENT_RECORD_REQUEST.getTemperatureInCelsius()),
-                        jsonPath("$.content.respiration_rate")
+                        jsonPath("$.content.respitarion_rate")
                                 .value(VALID_CREATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
                         jsonPath("$.content.heart_rate").value(VALID_CREATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight").value(VALID_CREATE_PATIENT_RECORD_REQUEST.getWeight()),
