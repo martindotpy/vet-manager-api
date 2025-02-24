@@ -148,7 +148,9 @@ public final class MedicalHistoryController {
             @ApiResponse(responseCode = "422", description = "Validation error", content = @Content(schema = @Schema(implementation = DetailedFailureResponse.class)))
     })
     @DeleteMapping("/patient/{patient_id}/history/{id}")
-    public ResponseEntity<BasicResponse> delete(@PathVariable Long patientId, @PathVariable Long id)
+    public ResponseEntity<BasicResponse> delete(
+            @PathVariable(name = "patient_id") Long patientId,
+            @PathVariable Long id)
             throws NotFoundException, NotFoundException {
         return ok(() -> deleteMedicalHistoryPort.deleteByPatientIdAndId(patientId, id),
                 "Historial médico eliminado exitosamente",
