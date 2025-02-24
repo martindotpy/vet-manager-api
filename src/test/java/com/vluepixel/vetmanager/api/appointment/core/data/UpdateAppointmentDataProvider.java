@@ -24,7 +24,7 @@ public class UpdateAppointmentDataProvider {
     public static final UpdateAppointmentRequest INVALID_ID_NOT_FOUND_UPDATE_APPOINTMENT_REQUEST = UpdateAppointmentRequest
             .builder()
             .id(10L)
-            .startAt(LocalDateTime.now())
+            .startAt(LocalDateTime.now().plusMinutes(15))
             .description("New Description")
             .details(details)
             .patientId(1L)
@@ -74,7 +74,7 @@ public class UpdateAppointmentDataProvider {
     public static final UpdateAppointmentRequest VALID_START_AT_TODAY_UPDATE_APPOINTMENT_REQUEST = UpdateAppointmentRequest
             .builder()
             .id(VALID_UPDATE_APPOINTMENT_REQUEST.getId())
-            .startAt(LocalDateTime.now())
+            .startAt(LocalDateTime.now().plusMinutes(15))
             .description(VALID_UPDATE_APPOINTMENT_REQUEST.getDescription())
             .details(VALID_UPDATE_APPOINTMENT_REQUEST.getDetails())
             .patientId(VALID_UPDATE_APPOINTMENT_REQUEST.getPatientId())

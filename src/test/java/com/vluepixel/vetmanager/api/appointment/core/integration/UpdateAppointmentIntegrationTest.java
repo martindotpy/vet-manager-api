@@ -80,7 +80,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                                 .value(VALID_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0).getDurationInMinutes()),
                         jsonPath("$.content.details[0].price")
                                 .value(VALID_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0).getPrice()),
-                        jsonPath("$.content.details[0].appointment_type.id")
+                        jsonPath("$.content.details[0].appointment_type_id.id")
                                 .value(VALID_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0).getAppointmentTypeId()),
                         jsonPath("$.content.patient.id").value(VALID_UPDATE_APPOINTMENT_REQUEST.getPatientId()));
     }
@@ -168,7 +168,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.details[0].price")
                                 .value(VALID_START_AT_TODAY_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getPrice()),
-                        jsonPath("$.content.details[0].appointment_type.id")
+                        jsonPath("$.content.details[0].appointment_type_id")
                                 .value(VALID_START_AT_TODAY_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getAppointmentTypeId()),
                         jsonPath("$.content.patient.id")
@@ -199,7 +199,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.details[0].price")
                                 .value(VALID_START_AT_FUTURE_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getPrice()),
-                        jsonPath("$.content.details[0].appointment_type.id")
+                        jsonPath("$.content.details[0].appointment_type_id.id")
                                 .value(VALID_START_AT_FUTURE_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getAppointmentTypeId()),
                         jsonPath("$.content.patient.id")
@@ -246,7 +246,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.details[0].price")
                                 .value(INVALID_DESCRIPTION_BLANK_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getPrice()),
-                        jsonPath("$.content.details[0].appointment_type.id")
+                        jsonPath("$.content.details[0].appointment_type_id.id")
                                 .value(INVALID_DESCRIPTION_BLANK_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getAppointmentTypeId()),
                         jsonPath("$.content.patient.id")
@@ -277,7 +277,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.details[0].price")
                                 .value(INVALID_DESCRIPTION_EMPTY_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getPrice()),
-                        jsonPath("$.content.details[0].appointment_type.id")
+                        jsonPath("$.content.details[0].appointment_type_id.id")
                                 .value(INVALID_DESCRIPTION_EMPTY_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getAppointmentTypeId()),
                         jsonPath("$.content.patient.id")
@@ -308,7 +308,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.details[0].price")
                                 .value(INVALID_DESCRIPTION_NULL_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getPrice()),
-                        jsonPath("$.content.details[0].appointment_type.id")
+                        jsonPath("$.content.details[0].appointment_type_id.id")
                                 .value(INVALID_DESCRIPTION_NULL_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0)
                                         .getAppointmentTypeId()),
                         jsonPath("$.content.patient.id")
@@ -343,11 +343,9 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("details"),
+                        jsonPath("$.details[0].field").value("details[0].id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "El detalle con id %s no pertenece a la cita",
-                                INVALID_DETAILS_ID_NEGATIVE_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0).getId())));
+                        jsonPath("$.details[0].messages[0]").value("El id del detalle de la cita debe ser mayor a 0"));
     }
 
     @Test
@@ -360,11 +358,9 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("details"),
+                        jsonPath("$.details[0].field").value("details[0].id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value(String.format(
-                                "El detalle con id %s no pertenece a la cita",
-                                INVALID_DETAILS_ID_NULL_UPDATE_APPOINTMENT_REQUEST.getDetails().get(0).getId())));
+                        jsonPath("$.details[0].messages[0]").value("El id del detalle de la cita es requerido"));
     }
 
     // Duration In Minutes
@@ -379,9 +375,10 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("duration_in_minutes"),
+                        jsonPath("$.details[0].field").value("details[0].duration_in_minutes"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must be less than or equal to 1440")); // TODO
+                        jsonPath("$.details[0].messages[0]")
+                                .value("La duración de la cita no puede ser mayor a 1440 minutos"));
     }
 
     @Test
@@ -415,7 +412,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                                 .value(VALID_DETAILS_DURATION_IN_MINUTES_MAX_VALUE_UPDATE_APPOINTMENT_REQUEST
                                         .getDetails().get(0)
                                         .getPrice()),
-                        jsonPath("$.content.details[0].appointment_type.id")
+                        jsonPath("$.content.details[0].appointment_type_id.id")
                                 .value(VALID_DETAILS_DURATION_IN_MINUTES_MAX_VALUE_UPDATE_APPOINTMENT_REQUEST
                                         .getDetails().get(0)
                                         .getAppointmentTypeId()),
@@ -435,9 +432,9 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("duration_in_minutes"),
+                        jsonPath("$.details[0].field").value("details[0].duration_in_minutes"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must be greater than 0")); // TODO
+                        jsonPath("$.details[0].messages[0]").value("La duración de la cita debe ser mayor a 0"));
     }
 
     @Test
@@ -451,9 +448,9 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("duration_in_minutes"),
+                        jsonPath("$.details[0].field").value("details[0].duration_in_minutes"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must be greater than 0")); // TODO
+                        jsonPath("$.details[0].messages[0]").value("La duración de la cita debe ser mayor a 0"));
     }
 
     // Price
@@ -468,9 +465,10 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("price"),
+                        jsonPath("$.details[0].field").value("details[0].price"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must be less than or equal to 9999.99")); // TODO
+                        jsonPath("$.details[0].messages[0]")
+                                .value("El precio de la cita no puede ser mayor a 9999.99"));
     }
 
     @Test
@@ -504,7 +502,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                                 .value(VALID_DETAILS_PRICE_MAX_VALUE_UPDATE_APPOINTMENT_REQUEST
                                         .getDetails().get(0)
                                         .getPrice()),
-                        jsonPath("$.content.details[0].appointment_type.id")
+                        jsonPath("$.content.details[0].appointment_type_id.id")
                                 .value(VALID_DETAILS_PRICE_MAX_VALUE_UPDATE_APPOINTMENT_REQUEST
                                         .getDetails().get(0)
                                         .getAppointmentTypeId()),
@@ -524,9 +522,9 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("price"),
+                        jsonPath("$.details[0].field").value("details[0].price"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must be greater than 0")); // TODO
+                        jsonPath("$.details[0].messages[0]").value("El precio de la cita debe ser mayor a 0"));
     }
 
     @Test
@@ -540,9 +538,9 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("price"),
+                        jsonPath("$.details[0].field").value("details[0].price"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must not be null")); // TODO
+                        jsonPath("$.details[0].messages[0]").value("El precio de la cita es requerido"));
     }
 
     // Type ID
@@ -557,7 +555,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_APPOINTMET_TYPE_NOT_FOUND));
     }
 
-    @Test // TODO: Implements Type ID validations
+    @Test
     void admin_UpdateAppointmentWithInvalidArguments_TypeID_Negative_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/appointment")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -568,9 +566,9 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("appointment_type"),
+                        jsonPath("$.details[0].field").value("details[0].appointment_type_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must not be null")); // TODO
+                        jsonPath("$.details[0].messages[0]").value("El id del tipo de cita debe ser mayor a 0"));
     }
 
     @Test
@@ -584,9 +582,9 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("appointment_type"),
+                        jsonPath("$.details[0].field").value("details[0].appointment_type_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must not be null")); // TODO
+                        jsonPath("$.details[0].messages[0]").value("El id del tipo de cita es requerido"));
     }
 
     // Patient ID
@@ -601,7 +599,7 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_PATIENT_NOT_FOUND));
     }
 
-    @Test // TODO: Implements Patient ID validations
+    @Test
     void admin_UpdateAppointmentWithInvalidArguments_PatientID_Negative_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/appointment")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -614,10 +612,10 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("patient_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must not be null")); // TODO
+                        jsonPath("$.details[0].messages[0]").value("El id del paciente debe ser mayor a 0"));
     }
 
-    @Test // TODO: Implements Patient ID validations
+    @Test
     void admin_UpdateAppointmentWithInvalidArguments_PatientID_Null_UnprocessableEntity() throws Exception {
         mockMvc.perform(put("/appointment")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -630,6 +628,6 @@ public class UpdateAppointmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("patient_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]").value("must not be null")); // TODO
+                        jsonPath("$.details[0].messages[0]").value("El id del paciente es requerido"));
     }
 }
