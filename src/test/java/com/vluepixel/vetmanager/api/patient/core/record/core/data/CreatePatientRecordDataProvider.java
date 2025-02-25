@@ -686,7 +686,7 @@ public class CreatePatientRecordDataProvider {
             .sterilized(VALID_CREATE_PATIENT_RECORD_REQUEST.isSterilized())
             .recipe(VALID_CREATE_PATIENT_RECORD_REQUEST.getRecipe())
             .diagnosis(VALID_CREATE_PATIENT_RECORD_REQUEST.getDiagnosis())
-            .vetId(INVALID_VET_ID_NULL_UPDATE_PATIENT_RECORD_REQUEST.getVetId())
+            .vetId(VALID_CREATE_PATIENT_RECORD_REQUEST.getVetId())
             .patientId(10L)
             .build();
 
@@ -702,7 +702,7 @@ public class CreatePatientRecordDataProvider {
             .sterilized(VALID_CREATE_PATIENT_RECORD_REQUEST.isSterilized())
             .recipe(VALID_CREATE_PATIENT_RECORD_REQUEST.getRecipe())
             .diagnosis(VALID_CREATE_PATIENT_RECORD_REQUEST.getDiagnosis())
-            .vetId(INVALID_VET_ID_NULL_UPDATE_PATIENT_RECORD_REQUEST.getVetId())
+            .vetId(VALID_CREATE_PATIENT_RECORD_REQUEST.getVetId())
             .patientId(-1L)
             .build();
 
@@ -718,7 +718,7 @@ public class CreatePatientRecordDataProvider {
             .sterilized(VALID_CREATE_PATIENT_RECORD_REQUEST.isSterilized())
             .recipe(VALID_CREATE_PATIENT_RECORD_REQUEST.getRecipe())
             .diagnosis(VALID_CREATE_PATIENT_RECORD_REQUEST.getDiagnosis())
-            .vetId(INVALID_VET_ID_NULL_UPDATE_PATIENT_RECORD_REQUEST.getVetId())
+            .vetId(VALID_CREATE_PATIENT_RECORD_REQUEST.getVetId())
             .patientId(null)
             .build();
 }
