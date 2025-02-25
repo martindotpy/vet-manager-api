@@ -67,11 +67,11 @@ public final class Patient {
     private String characteristics;
     @Builder.Default
     private boolean deceased = false;
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<@NotNull MedicalHistory> medicalHistories;
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<@NotNull MedicalRecord> medicalRecords;
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<@NotNull Vaccine> vaccines;
 
     @NotNull
