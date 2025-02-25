@@ -1,4 +1,4 @@
-package com.vluepixel.vetmanager.api.patient.core.record.integration;
+package com.vluepixel.vetmanager.api.patient.core.record.core.integration;
 
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_USER_JWT;

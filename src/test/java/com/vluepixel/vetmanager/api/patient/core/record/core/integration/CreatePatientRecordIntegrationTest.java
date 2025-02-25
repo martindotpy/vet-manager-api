@@ -1,7 +1,7 @@
-package com.vluepixel.vetmanager.api.patient.core.record.integration;
+package com.vluepixel.vetmanager.api.patient.core.record.core.integration;
 
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
-import static com.vluepixel.vetmanager.api.patient.core.record.data.CreatePatientRecordDataProvider.VALID_CREATE_PATIENT_RECORD_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.record.core.data.CreatePatientRecordDataProvider.VALID_CREATE_PATIENT_RECORD_REQUEST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

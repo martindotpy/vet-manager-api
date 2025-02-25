@@ -1,4 +1,4 @@
-package com.vluepixel.vetmanager.api.patient.core.record.data;
+package com.vluepixel.vetmanager.api.patient.core.record.core.data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
