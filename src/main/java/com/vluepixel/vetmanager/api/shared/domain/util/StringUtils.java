@@ -5,35 +5,12 @@ package com.vluepixel.vetmanager.api.shared.domain.util;
  */
 public class StringUtils {
     /**
-     * Converts a snake case string to camel case.
+     * Returns null if the value is blank.
      *
-     * @param snakeCase The snake case string to convert.
-     * @return The camel case string
+     * @param value the value to check
+     * @return null if the value is blank, the value otherwise
      */
-    public static String toCamelCase(String snakeCase) {
-        StringBuilder camelCase = new StringBuilder();
-
-        String[] words = snakeCase.split("_");
-
-        camelCase.append(words[0].toLowerCase());
-
-        for (int i = 1; i < words.length; i++) {
-            camelCase.append(capitalize(words[i]));
-        }
-
-        return camelCase.toString();
-    }
-
-    /**
-     * Capitalizes a word.
-     *
-     * @param word The word to capitalize.
-     * @return The capitalized word.
-     */
-    private static String capitalize(String word) {
-        if (word == null || word.isEmpty()) {
-            return word;
-        }
-        return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+    public static String toNullIfBlank(String value) {
+        return value != null && value.isBlank() ? null : value;
     }
 }
