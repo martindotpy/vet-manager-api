@@ -16,6 +16,7 @@ import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.query.FieldUpdate;
+import com.vluepixel.vetmanager.api.shared.domain.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,16 @@ public class UpdateMedicalRecordUseCase implements UpdateMedicalRecordPort {
         MDC.put("operationId", "Medical record id " + request.getId());
         log.info("Updating medical record");
 
-        MedicalRecord updatedMedicalRecord = medicalRecordMapper.fromRequest(request).build();
+        // Make null the attributes if the value is blank
+        String physicalExam = StringUtils.toNullIfBlank(request.getPhysicalExam());
+        String recipe = StringUtils.toNullIfBlank(request.getRecipe());
+        String diagnosis = StringUtils.toNullIfBlank(request.getDiagnosis());
+
+        MedicalRecord updatedMedicalRecord = medicalRecordMapper.fromRequest(request)
+                .physicalExam(physicalExam)
+                .recipe(recipe)
+                .diagnosis(diagnosis)
+                .build();
         int rowsModified = transactionalPort.run((aux) -> {
             aux.setEntityClass(MedicalRecord.class);
 

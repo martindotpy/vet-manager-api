@@ -725,7 +725,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     // Physical Exam
     @Test
-    @DirtiesContext // TODO: Physical should be null
+    @DirtiesContext
     void user_UpdatePatientRecordWithValidArguments_PhysicalExam_Blank_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -759,7 +759,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO: Physical should be null
+    @DirtiesContext
     void user_UpdatePatientRecordWithValidArguments_PhysicalExam_Empty_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1210,7 +1210,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     // Recipe
     @Test
-    @DirtiesContext // TODO: Recipe should be null
+    @DirtiesContext
     void user_UpdatePatientRecordWithValidArguments_Recipe_Blank_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1244,7 +1244,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO: Recipe should be null
+    @DirtiesContext
     void user_UpdatePatientRecordWithValidArguments_Recipe_Empty_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1313,7 +1313,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     // Diagnosis
     @Test
-    @DirtiesContext // TODO: Diagnosis should be null
+    @DirtiesContext
     void user_UpdatePatientRecordWithValidArguments_Diagnosis_Blank_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1347,7 +1347,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO: Diagnosis should be null
+    @DirtiesContext
     void user_UpdatePatientRecordWithValidArguments_Diagnosis_Empty_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1694,7 +1694,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     // Physical Exam
     @Test
-    @DirtiesContext // TODO: Physical should be null
+    @DirtiesContext
     void admin_UpdatePatientRecordWithValidArguments_PhysicalExam_Blank_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1728,7 +1728,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO: Physical should be null
+    @DirtiesContext
     void admin_UpdatePatientRecordWithValidArguments_PhysicalExam_Empty_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -2179,7 +2179,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     // Recipe
     @Test
-    @DirtiesContext // TODO: Recipe should be null
+    @DirtiesContext
     void admin_UpdatePatientRecordWithValidArguments_Recipe_Blank_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -2213,7 +2213,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO: Recipe should be null
+    @DirtiesContext
     void admin_UpdatePatientRecordWithValidArguments_Recipe_Empty_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -2282,7 +2282,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     // Diagnosis
     @Test
-    @DirtiesContext // TODO: Diagnosis should be null
+    @DirtiesContext
     void admin_UpdatePatientRecordWithValidArguments_Diagnosis_Blank_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -2316,7 +2316,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO: Diagnosis should be null
+    @DirtiesContext
     void admin_UpdatePatientRecordWithValidArguments_Diagnosis_Empty_Ok() throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)

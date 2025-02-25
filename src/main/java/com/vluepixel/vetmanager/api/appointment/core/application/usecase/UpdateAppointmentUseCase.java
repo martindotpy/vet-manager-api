@@ -16,6 +16,7 @@ import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
 import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InnerEntityDoNotBelongToEntity;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
+import com.vluepixel.vetmanager.api.shared.domain.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,10 +41,7 @@ public class UpdateAppointmentUseCase implements UpdateAppointmentPort {
         log.info("Updating appointment");
 
         // Make null the description if the value is blank
-        String description = request.getDescription();
-        if (description != null && description.isBlank()) {
-            description = null;
-        }
+        String description = StringUtils.toNullIfBlank(request.getDescription());
 
         // Verify if the appointment details are valid
         Appointment appointmentToUpdate = appointmentRepository.findById(request.getId())

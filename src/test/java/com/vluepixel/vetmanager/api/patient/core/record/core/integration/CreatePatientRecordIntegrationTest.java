@@ -61,9 +61,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Registro médico creado exitosamente";
     private static final String MESSAGE_VET_NOT_FOUND = "Veterinario no encontrado(a)";
     private static final String MESSAGE_PATIENT_NOT_FOUND = "Paciente no encontrado(a)";
-    // -----------------------------------------------------------------------------------------------------------------
-    // Without authentication:
-    // -----------------------------------------------------------------------------------------------------------------
 
     @Test
     void noUser_CreatePatientRecordWithValidArguments_Forbidden() throws Exception {
@@ -83,7 +80,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Reason
     @Test
     void noUser_CreatePatientRecordWithInvalidArguments_Reason_Blank_Forbidden() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
@@ -111,7 +107,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Entry At
     @Test
     void noUser_CreatePatientRecordWithValidArguments_EntryAt_MinusYear_Forbidden() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
@@ -148,7 +143,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Physical Exam
     @Test
     void noUser_CreatePatientRecordWithValidArguments_PhysicalExam_Blank_Forbidden() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
@@ -176,7 +170,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Temperature In Celsius
     @Test
     void noUser_CreatePatientRecordWithInvalidArguments_TemperatureInCelsius_TooBig_Forbidden()
             throws Exception {
@@ -231,7 +224,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Respiration Rate
     @Test
     void noUser_CreatePatientRecordWithInvalidArguments_RespirationRate_Zero_Forbidden()
             throws Exception {
@@ -265,7 +257,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Heart Rate
     @Test
     void noUser_CreatePatientRecordWithInvalidArguments_HeartRate_TooBig_Forbidden()
             throws Exception {
@@ -320,7 +311,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Weight
     @Test
     void noUser_CreatePatientRecordWithInvalidArguments_Weight_TooBig_Forbidden()
             throws Exception {
@@ -375,9 +365,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Sterilized
-
-    // Recipe
     @Test
     void noUser_CreatePatientRecordWithValidArguments_Recipe_Blank_Forbidden() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
@@ -408,7 +395,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Diagnosis
     @Test
     void noUser_CreatePatientRecordWithValidArguments_Diagnosis_Blank_Forbidden() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
@@ -439,7 +425,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Vet ID
     @Test
     void noUser_CreatePatientRecordWithInvalidArguments_VetID_NotFound_Forbidden()
             throws Exception {
@@ -473,7 +458,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // Patient ID
     @Test
     void noUser_CreatePatientRecordWithInvalidArguments_PatientID_NotFound_Forbidden()
             throws Exception {
@@ -509,11 +493,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
 
-    // -----------------------------------------------------------------------------------------------------------------
-    // With authentication:
-    // -----------------------------------------------------------------------------------------------------------------
-
-    // Role: USER
     @Test
     @Order(1)
     @DirtiesContext
@@ -558,7 +537,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                                 .value("El id del paciente no coincide con el id del historial médico"));
     }
 
-    // Reason
     @Test
     void user_CreatePatientRecordWithInvalidArguments_Reason_Blank_UnprocessableEntity() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
@@ -604,7 +582,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La razón es requerida"));
     }
 
-    // Entry At
     @Test
     @Order(2)
     @DirtiesContext
@@ -728,10 +705,9 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La fecha de ingreso es requerida"));
     }
 
-    // Physical Exam
     @Test
     @Order(5)
-    @DirtiesContext // TODO: Physical Exam should be null
+    @DirtiesContext
     void user_CreatePatientRecordWithValidArguments_PhysicalExam_Blank_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -766,7 +742,7 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(6)
-    @DirtiesContext // TODO: Physical Exam should be null
+    @DirtiesContext
     void user_CreatePatientRecordWithValidArguments_PhysicalExam_Empty_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -834,7 +810,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.treatments").isArray());
     }
 
-    // Temperature In Celsius
     @Test
     void user_CreatePatientRecordWithInvalidArguments_TemperatureInCelsius_TooBig_UnprocessableEntity()
             throws Exception {
@@ -948,7 +923,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La temperatura es requerida"));
     }
 
-    // Respiration Rate
     @Test
     void user_CreatePatientRecordWithInvalidArguments_RespirationRate_Zero_UnprocessableEntity()
             throws Exception {
@@ -1000,7 +974,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La frecuencia respiratoria es requerida"));
     }
 
-    // Heart Rate
     @Test
     void user_CreatePatientRecordWithInvalidArguments_HeartRate_TooBig_UnprocessableEntity()
             throws Exception {
@@ -1113,7 +1086,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La frecuencia cardiaca es requerida"));
     }
 
-    // Weight
     @Test
     void user_CreatePatientRecordWithInvalidArguments_Weight_TooBig_UnprocessableEntity()
             throws Exception {
@@ -1226,12 +1198,9 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("El peso es requerido"));
     }
 
-    // Sterilized
-
-    // Recipe
     @Test
     @Order(11)
-    @DirtiesContext // TODO: Recipe should be null
+    @DirtiesContext
     void user_CreatePatientRecordWithValidArguments_Recipe_Blank_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1273,7 +1242,7 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(12)
-    @DirtiesContext // TODO: Recipe should be null
+    @DirtiesContext
     void user_CreatePatientRecordWithValidArguments_Recipe_Empty_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1355,10 +1324,9 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.treatments").isArray());
     }
 
-    // Diagnosis
     @Test
     @Order(14)
-    @DirtiesContext // TODO: Diagnosis should be null
+    @DirtiesContext
     void user_CreatePatientRecordWithValidArguments_Diagnosis_Blank_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1399,7 +1367,7 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(15)
-    @DirtiesContext // TODO: Diagnosis should be null
+    @DirtiesContext
     void user_CreatePatientRecordWithValidArguments_Diagnosis_Empty_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1479,7 +1447,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.treatments").isArray());
     }
 
-    // Vet ID
     @Test
     void user_CreatePatientRecordWithInvalidArguments_VetID_NotFound_NotFound()
             throws Exception {
@@ -1526,7 +1493,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("El id del veterinario es requerido"));
     }
 
-    // Patient ID
     @Test
     void user_CreatePatientRecordWithInvalidArguments_PatientID_NotFound_NotFound()
             throws Exception {
@@ -1583,7 +1549,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                                 .value("El id del paciente es requerido"));
     }
 
-    // Role: ADMIN
     @Test
     @Order(17)
     @DirtiesContext
@@ -1628,7 +1593,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                                 .value("El id del paciente no coincide con el id del historial médico"));
     }
 
-    // Reason
     @Test
     void admin_CreatePatientRecordWithInvalidArguments_Reason_Blank_UnprocessableEntity() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
@@ -1674,7 +1638,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La razón es requerida"));
     }
 
-    // Entry At
     @Test
     @Order(18)
     @DirtiesContext
@@ -1798,10 +1761,9 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La fecha de ingreso es requerida"));
     }
 
-    // Physical Exam
     @Test
     @Order(21)
-    @DirtiesContext // TODO: Physical Exam should be null
+    @DirtiesContext
     void admin_CreatePatientRecordWithValidArguments_PhysicalExam_Blank_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1836,7 +1798,7 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(22)
-    @DirtiesContext // TODO: Physical Exam should be null
+    @DirtiesContext
     void admin_CreatePatientRecordWithValidArguments_PhysicalExam_Empty_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -1904,7 +1866,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.treatments").isArray());
     }
 
-    // Temperature In Celsius
     @Test
     void admin_CreatePatientRecordWithInvalidArguments_TemperatureInCelsius_TooBig_UnprocessableEntity()
             throws Exception {
@@ -2018,7 +1979,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La temperatura es requerida"));
     }
 
-    // Respiration Rate
     @Test
     void admin_CreatePatientRecordWithInvalidArguments_RespirationRate_Zero_UnprocessableEntity()
             throws Exception {
@@ -2070,7 +2030,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La frecuencia respiratoria es requerida"));
     }
 
-    // Heart Rate
     @Test
     void admin_CreatePatientRecordWithInvalidArguments_HeartRate_TooBig_UnprocessableEntity()
             throws Exception {
@@ -2183,7 +2142,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("La frecuencia cardiaca es requerida"));
     }
 
-    // Weight
     @Test
     void admin_CreatePatientRecordWithInvalidArguments_Weight_TooBig_UnprocessableEntity()
             throws Exception {
@@ -2296,12 +2254,9 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("El peso es requerido"));
     }
 
-    // Sterilized
-
-    // Recipe
     @Test
     @Order(27)
-    @DirtiesContext // TODO: Recipe should be null
+    @DirtiesContext
     void admin_CreatePatientRecordWithValidArguments_Recipe_Blank_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -2343,7 +2298,7 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(28)
-    @DirtiesContext // TODO: Recipe should be null
+    @DirtiesContext
     void admin_CreatePatientRecordWithValidArguments_Recipe_Empty_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -2425,10 +2380,9 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.treatments").isArray());
     }
 
-    // Diagnosis
     @Test
     @Order(30)
-    @DirtiesContext // TODO: Diagnosis should be null
+    @DirtiesContext
     void admin_CreatePatientRecordWithValidArguments_Diagnosis_Blank_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -2469,7 +2423,7 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(31)
-    @DirtiesContext // TODO: Diagnosis should be null
+    @DirtiesContext
     void admin_CreatePatientRecordWithValidArguments_Diagnosis_Empty_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -2549,7 +2503,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.treatments").isArray());
     }
 
-    // Vet ID
     @Test
     void admin_CreatePatientRecordWithInvalidArguments_VetID_NotFound_NotFound()
             throws Exception {
@@ -2596,7 +2549,6 @@ public class CreatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages[0]").value("El id del veterinario es requerido"));
     }
 
-    // Patient ID
     @Test
     void admin_CreatePatientRecordWithInvalidArguments_PatientID_NotFound_NotFound()
             throws Exception {

@@ -12,6 +12,7 @@ import com.vluepixel.vetmanager.api.appointment.details.domain.model.Appointment
 import com.vluepixel.vetmanager.api.appointment.details.domain.repository.AppointmentDetailsRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
 import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
+import com.vluepixel.vetmanager.api.shared.domain.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,10 +37,7 @@ public class CreateAppointmentUseCase implements CreateAppointmentPort {
         log.info("Creating appointment");
 
         // Make null the description if the value is blank
-        String description = request.getDescription();
-        if (description != null && description.isBlank()) {
-            description = null;
-        }
+        String description = StringUtils.toNullIfBlank(request.getDescription());
 
         Appointment newAppointment = appointmentMapper.fromRequest(request)
                 .description(description)

@@ -9,6 +9,7 @@ import com.vluepixel.vetmanager.api.medicalrecord.core.domain.model.MedicalRecor
 import com.vluepixel.vetmanager.api.medicalrecord.core.domain.repository.MedicalRecordRepository;
 import com.vluepixel.vetmanager.api.medicalrecord.core.domain.request.CreateMedicalRecordRequest;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
+import com.vluepixel.vetmanager.api.shared.domain.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,16 @@ public class CreateMedicalRecordUseCase implements CreateMedicalRecordPort {
         MDC.put("operationId", "Medical record with patient id " + request.getPatientId());
         log.info("Creating medical record");
 
-        MedicalRecord newMedicalRecord = medicalrecordMapper.fromRequest(request).build();
+        // Make null the attributes if the value is blank
+        String physicalExam = StringUtils.toNullIfBlank(request.getPhysicalExam());
+        String recipe = StringUtils.toNullIfBlank(request.getRecipe());
+        String diagnosis = StringUtils.toNullIfBlank(request.getDiagnosis());
+
+        MedicalRecord newMedicalRecord = medicalrecordMapper.fromRequest(request)
+                .physicalExam(physicalExam)
+                .recipe(recipe)
+                .diagnosis(diagnosis)
+                .build();
         newMedicalRecord = medicalrecordRepository.save(newMedicalRecord);
 
         log.info("Medical record created");
