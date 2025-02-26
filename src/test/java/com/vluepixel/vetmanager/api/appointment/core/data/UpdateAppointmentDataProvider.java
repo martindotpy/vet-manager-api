@@ -74,7 +74,7 @@ public class UpdateAppointmentDataProvider {
     public static final UpdateAppointmentRequest VALID_START_AT_TODAY_UPDATE_APPOINTMENT_REQUEST = UpdateAppointmentRequest
             .builder()
             .id(VALID_UPDATE_APPOINTMENT_REQUEST.getId())
-            .startAt(LocalDateTime.now().plusMinutes(15))
+            .startAt(LocalDateTime.now())
             .description(VALID_UPDATE_APPOINTMENT_REQUEST.getDescription())
             .details(VALID_UPDATE_APPOINTMENT_REQUEST.getDetails())
             .patientId(VALID_UPDATE_APPOINTMENT_REQUEST.getPatientId())
