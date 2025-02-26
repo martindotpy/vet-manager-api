@@ -44,6 +44,6 @@ public final class UpdateAppointmentRequest implements Request {
             return true;
         }
 
-        return startAt.isAfter(LocalDateTime.now());
+        return startAt.isAfter(LocalDateTime.now().minusSeconds(15)); // Seconds added by ping or otherwise
     }
 }

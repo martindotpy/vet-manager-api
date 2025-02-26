@@ -1,6 +1,5 @@
 package com.vluepixel.vetmanager.api.bill.core.integration;
 
-import static com.vluepixel.vetmanager.api.bill.core.data.UpdateBillDataProvider.VALID_UPDATE_BILL_REQUEST;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_USER_JWT;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -61,8 +60,17 @@ public class DeleteBillIntegrationTest extends BaseIntegrationTest {
     // Role: USER
     @Test
     @DirtiesContext
-    void user_DeleteBillWithValidParams_Ok() throws Exception {
-        mockMvc.perform(delete("/bill/{id}", VALID_UPDATE_BILL_REQUEST.getId())
+    void user_DeleteBillWithValidParams_Appointment_Ok() throws Exception {
+        mockMvc.perform(delete("/bill/{id}", 1) // APPOINTMENT
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value(MESSAGE_OK));
+    }
+
+    @Test
+    @DirtiesContext
+    void user_DeleteBillWithValidParams_Product_Ok() throws Exception {
+        mockMvc.perform(delete("/bill/{id}", 2) // PRODUCT
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value(MESSAGE_OK));
@@ -105,8 +113,17 @@ public class DeleteBillIntegrationTest extends BaseIntegrationTest {
     // Role: ADMIN
     @Test
     @DirtiesContext
-    void admin_DeleteBillWithValidParams_Ok() throws Exception {
-        mockMvc.perform(delete("/bill/{id}", 2)
+    void admin_DeleteBillWithValidParams_Appointment_Ok() throws Exception {
+        mockMvc.perform(delete("/bill/{id}", 1) // APPOINTMENT
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value(MESSAGE_OK));
+    }
+
+    @Test
+    @DirtiesContext
+    void admin_DeleteBillWithValidParams_Product_Ok() throws Exception {
+        mockMvc.perform(delete("/bill/{id}", 2) // PRODUCT
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value(MESSAGE_OK));
