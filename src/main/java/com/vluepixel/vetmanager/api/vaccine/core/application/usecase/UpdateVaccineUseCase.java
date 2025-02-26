@@ -45,10 +45,12 @@ public class UpdateVaccineUseCase implements UpdateVaccinePort {
 
         // Verify if the product sale id corresponds to a product sale
         Long productSaleId = request.getProductSaleId();
-        Sale sale = saleRepository.findById(productSaleId)
-                .orElseThrow(() -> new NotFoundException(Vaccine.class, productSaleId));
-        if (!(sale instanceof ProductSale)) {
-            throw new RegisterNotInstanceOfSubclassException(ProductSale.class);
+        if (productSaleId != null) {
+            Sale sale = saleRepository.findById(productSaleId)
+                    .orElseThrow(() -> new NotFoundException(Vaccine.class, productSaleId));
+            if (!(sale instanceof ProductSale)) {
+                throw new RegisterNotInstanceOfSubclassException(ProductSale.class);
+            }
         }
 
         Vaccine updatedVaccine = vaccineMapper.fromRequest(request).build();
@@ -62,7 +64,8 @@ public class UpdateVaccineUseCase implements UpdateVaccinePort {
                     FieldUpdate.set("name", updatedVaccine.getName()),
                     FieldUpdate.set("doseInMilliliters", updatedVaccine.getDoseInMilliliters()),
                     FieldUpdate.set("providedAt", updatedVaccine.getProvidedAt()),
-                    FieldUpdate.set("vaccinator", updatedVaccine.getVaccinator()));
+                    FieldUpdate.set("vaccinator", updatedVaccine.getVaccinator()),
+                    FieldUpdate.set("productSale", ProductSale.builder().id(productSaleId).build()));
         });
 
         // Verify any unexpected behavior

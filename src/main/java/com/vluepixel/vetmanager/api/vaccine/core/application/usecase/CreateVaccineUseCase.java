@@ -2,7 +2,12 @@ package com.vluepixel.vetmanager.api.vaccine.core.application.usecase;
 
 import org.slf4j.MDC;
 
+import com.vluepixel.vetmanager.api.bill.sale.domain.model.ProductSale;
+import com.vluepixel.vetmanager.api.bill.sale.domain.model.Sale;
+import com.vluepixel.vetmanager.api.bill.sale.domain.repository.SaleRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
+import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
+import com.vluepixel.vetmanager.api.shared.domain.exception.RegisterNotInstanceOfSubclassException;
 import com.vluepixel.vetmanager.api.vaccine.core.application.dto.VaccineDto;
 import com.vluepixel.vetmanager.api.vaccine.core.application.mapper.VaccineMapper;
 import com.vluepixel.vetmanager.api.vaccine.core.application.port.in.CreateVaccinePort;
@@ -20,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class CreateVaccineUseCase implements CreateVaccinePort {
+    private final SaleRepository saleRepository;
+
     private final VaccineRepository vaccineRepository;
     private final VaccineMapper vaccineMapper;
 
@@ -27,6 +34,16 @@ public class CreateVaccineUseCase implements CreateVaccinePort {
     public VaccineDto create(CreateVaccineRequest request) {
         MDC.put("operationId", "Vaccine name " + request.getName());
         log.info("Creating vaccine");
+
+        // Verify if the product sale id corresponds to a product sale
+        Long productSaleId = request.getProductSaleId();
+        if (productSaleId != null) {
+            Sale sale = saleRepository.findById(productSaleId)
+                    .orElseThrow(() -> new NotFoundException(Vaccine.class, productSaleId));
+            if (!(sale instanceof ProductSale)) {
+                throw new RegisterNotInstanceOfSubclassException(ProductSale.class);
+            }
+        }
 
         Vaccine newVaccine = vaccineMapper.fromRequest(request).build();
         newVaccine = vaccineRepository.save(newVaccine);
