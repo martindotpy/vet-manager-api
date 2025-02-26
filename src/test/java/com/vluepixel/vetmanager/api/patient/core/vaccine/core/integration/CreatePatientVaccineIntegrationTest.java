@@ -1,6 +1,7 @@
 package com.vluepixel.vetmanager.api.patient.core.vaccine.core.integration;
 
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
+import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_USER_JWT;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.CreatePatientVaccineDataProvider.INVALID_DOSE_IN_MILLILITERS_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.CreatePatientVaccineDataProvider.INVALID_DOSE_IN_MILLILITERS_NULL_CREATE_PATIENT_VACCINE_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.CreatePatientVaccineDataProvider.INVALID_DOSE_IN_MILLILITERS_TOO_BIG_CREATE_PATIENT_VACCINE_REQUEST;
@@ -49,15 +50,738 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
 
+    @Test
+    void noUser_CreatePatientVaccineWithValidArguments_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(VALID_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_ID_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 2)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(VALID_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Name
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_Name_TooLong_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_NAME_TOO_LONG_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithValidArguments_Name_MaxValue_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(VALID_NAME_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_Name_Blank_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_NAME_BLANK_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_Name_Empty_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_NAME_EMPTY_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_Name_Null_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_NAME_NULL_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Dose In Milliliters
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_DoseInMilliliters_TooBig_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_DOSE_IN_MILLILITERS_TOO_BIG_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithValidArguments_DoseInMilliliters_MaxValue_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_DOSE_IN_MILLILITERS_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_DoseInMilliliters_Zero_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_DOSE_IN_MILLILITERS_ZERO_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_DoseInMilliliters_Negative_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_DOSE_IN_MILLILITERS_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_DoseInMilliliters_Null_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_DOSE_IN_MILLILITERS_NULL_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Provided At
+    @Test
+    void noUser_CreatePatientVaccineWithValidArguments_ProvidedAt_MinusYear_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_PROVIDED_AT_MINUS_YEAR_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithValidArguments_ProvidedAt_Today_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_PROVIDED_AT_TODAY_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithValidArguments_ProvidedAt_Future_Forbidden() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_PROVIDED_AT_FUTURE_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_ProvidedAt_Null_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PROVIDED_AT_NULL_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Vaccinator ID
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_VaccinatorID_NotFound_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_VACCINATOR_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_Vaccinator_Negative_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_VACCINATOR_ID_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_Vaccinator_Null_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_VACCINATOR_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Product Sale ID
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_ProductSaleID_NotFound_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PRODUCT_SALE_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_ProductSaleID_Negative_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PRODUCT_SALE_ID_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_ProductSaleID_Null_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    // Patient ID
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_PatientID_NotFound_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine",
+                INVALID_PATIENT_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST.getPatientId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PATIENT_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
+    @Test
+    void noUser_CreatePatientVaccineWithInvalidArguments_PatientID_Negative_Forbidden()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine",
+                INVALID_PATIENT_ID_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST.getPatientId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PATIENT_ID_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
     // With authentication:
     // -----------------------------------------------------------------------------------------------------------------
 
     // Role: USER
+    @Test
+    @Order(1)
+    @DirtiesContext
+    void user_CreatePatientVaccineWithValidArguments_Ok() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(VALID_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(4),
+                        jsonPath("$.content.name").value(VALID_CREATE_PATIENT_VACCINE_REQUEST.getName()),
+                        jsonPath("$.content.dose_in_milliliters")
+                                .value(VALID_CREATE_PATIENT_VACCINE_REQUEST.getDoseInMilliliters()),
+                        jsonPath("$.content.provided_at").isString(),
+                        jsonPath("$.content.vaccinator.id")
+                                .value(VALID_CREATE_PATIENT_VACCINE_REQUEST.getVaccinatorId()),
+                        jsonPath("$.content.product_sale.id")
+                                .value(VALID_CREATE_PATIENT_VACCINE_REQUEST.getProductSaleId()));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_ID_UnprocessableEntity() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 2)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(VALID_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("body.patient_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("El id del paciente debe ser igual al id del paciente en la ruta"));
+    }
+
+    // Name
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_Name_TooLong_UnprocessableEntity() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_NAME_TOO_LONG_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("name"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("El nombre no puede tener más de 50 caracteres"));
+    }
+
+    @Test
+    @Order(2)
+    @DirtiesContext
+    void user_CreatePatientVaccineWithValidArguments_Name_MaxValue_Ok() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(VALID_NAME_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(4),
+                        jsonPath("$.content.name").value(VALID_NAME_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST.getName()),
+                        jsonPath("$.content.dose_in_milliliters")
+                                .value(VALID_NAME_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST.getDoseInMilliliters()),
+                        jsonPath("$.content.provided_at").isString(),
+                        jsonPath("$.content.vaccinator.id")
+                                .value(VALID_NAME_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST.getVaccinatorId()),
+                        jsonPath("$.content.product_sale.id")
+                                .value(VALID_NAME_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST.getProductSaleId()));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_Name_Blank_UnprocessableEntity() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_NAME_BLANK_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("name"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("El nombre es requerido"));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_Name_Empty_UnprocessableEntity() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_NAME_EMPTY_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("name"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("El nombre es requerido"));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_Name_Null_UnprocessableEntity() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_NAME_NULL_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("name"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("El nombre es requerido"));
+    }
+
+    // Dose In Milliliters
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_DoseInMilliliters_TooBig_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_DOSE_IN_MILLILITERS_TOO_BIG_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("dose_in_milliliters"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("La dosis en mililitros no puede ser mayor a 250"));
+    }
+
+    @Test
+    @Order(3)
+    @DirtiesContext
+    void user_CreatePatientVaccineWithValidArguments_DoseInMilliliters_MaxValue_Ok() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_DOSE_IN_MILLILITERS_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(4),
+                        jsonPath("$.content.name")
+                                .value(VALID_DOSE_IN_MILLILITERS_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST.getName()),
+                        jsonPath("$.content.dose_in_milliliters")
+                                .value(VALID_DOSE_IN_MILLILITERS_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getDoseInMilliliters()),
+                        jsonPath("$.content.provided_at").isString(),
+                        jsonPath("$.content.vaccinator.id")
+                                .value(VALID_DOSE_IN_MILLILITERS_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getVaccinatorId()),
+                        jsonPath("$.content.product_sale.id")
+                                .value(VALID_DOSE_IN_MILLILITERS_MAX_VALUE_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getProductSaleId()));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_DoseInMilliliters_Zero_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_DOSE_IN_MILLILITERS_ZERO_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("dose_in_milliliters"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("La dosis en mililitros debe ser mayor a 0"));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_DoseInMilliliters_Negative_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_DOSE_IN_MILLILITERS_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("dose_in_milliliters"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("La dosis en mililitros debe ser mayor a 0"));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_DoseInMilliliters_Null_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_DOSE_IN_MILLILITERS_NULL_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("dose_in_milliliters"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("La dosis en mililitros es requerida"));
+    }
+
+    // Provided At
+    @Test
+    @Order(4)
+    @DirtiesContext
+    void user_CreatePatientVaccineWithValidArguments_ProvidedAt_MinusYear_Ok() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_PROVIDED_AT_MINUS_YEAR_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(4),
+                        jsonPath("$.content.name")
+                                .value(VALID_PROVIDED_AT_MINUS_YEAR_CREATE_PATIENT_VACCINE_REQUEST.getName()),
+                        jsonPath("$.content.dose_in_milliliters")
+                                .value(VALID_PROVIDED_AT_MINUS_YEAR_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getDoseInMilliliters()),
+                        jsonPath("$.content.provided_at").isString(),
+                        jsonPath("$.content.vaccinator.id")
+                                .value(VALID_PROVIDED_AT_MINUS_YEAR_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getVaccinatorId()),
+                        jsonPath("$.content.product_sale.id")
+                                .value(VALID_PROVIDED_AT_MINUS_YEAR_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getProductSaleId()));
+    }
+
+    @Test
+    @Order(5)
+    @DirtiesContext
+    void user_CreatePatientVaccineWithValidArguments_ProvidedAt_Today_Ok() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_PROVIDED_AT_TODAY_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(4),
+                        jsonPath("$.content.name")
+                                .value(VALID_PROVIDED_AT_TODAY_CREATE_PATIENT_VACCINE_REQUEST.getName()),
+                        jsonPath("$.content.dose_in_milliliters")
+                                .value(VALID_PROVIDED_AT_TODAY_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getDoseInMilliliters()),
+                        jsonPath("$.content.provided_at").isString(),
+                        jsonPath("$.content.vaccinator.id")
+                                .value(VALID_PROVIDED_AT_TODAY_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getVaccinatorId()),
+                        jsonPath("$.content.product_sale.id")
+                                .value(VALID_PROVIDED_AT_TODAY_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getProductSaleId()));
+    }
+
+    @Test
+    @Order(6)
+    @DirtiesContext
+    void user_CreatePatientVaccineWithValidArguments_ProvidedAt_Future_Ok() throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_PROVIDED_AT_FUTURE_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(4),
+                        jsonPath("$.content.name")
+                                .value(VALID_PROVIDED_AT_FUTURE_CREATE_PATIENT_VACCINE_REQUEST.getName()),
+                        jsonPath("$.content.dose_in_milliliters")
+                                .value(VALID_PROVIDED_AT_FUTURE_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getDoseInMilliliters()),
+                        jsonPath("$.content.provided_at").isString(),
+                        jsonPath("$.content.vaccinator.id")
+                                .value(VALID_PROVIDED_AT_FUTURE_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getVaccinatorId()),
+                        jsonPath("$.content.product_sale.id")
+                                .value(VALID_PROVIDED_AT_FUTURE_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getProductSaleId()));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_ProvidedAt_Null_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PROVIDED_AT_NULL_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("provided_at"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("La fecha de aplicación es requerida"));
+    }
+
+    // Vaccinator ID
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_VaccinatorID_NotFound_NotFound()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_VACCINATOR_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(MESSAGE_VACCINATOR_NOT_FOUND));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_Vaccinator_Negative_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_VACCINATOR_ID_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("vaccinator_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("El id del vacunador debe ser mayor a 0"));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_Vaccinator_Null_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_VACCINATOR_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("vaccinator_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("El id del vacunador es requerido"));
+    }
+
+    // Product Sale ID
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_ProductSaleID_NotFound_NotFound()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PRODUCT_SALE_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_ProductSaleID_Negative_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PRODUCT_SALE_ID_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("product_sale_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("El id de la venta de producto debe ser mayor a 0"));
+    }
+
+    @Test
+    @Order(7)
+    @DirtiesContext
+    void user_CreatePatientVaccineWithInvalidArguments_ProductSaleID_Null_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(4),
+                        jsonPath("$.content.name")
+                                .value(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST.getName()),
+                        jsonPath("$.content.dose_in_milliliters")
+                                .value(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getDoseInMilliliters()),
+                        jsonPath("$.content.provided_at").isString(),
+                        jsonPath("$.content.vaccinator.id")
+                                .value(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getVaccinatorId()),
+                        jsonPath("$.content.product_sale")
+                                .value(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getProductSaleId()));
+    }
+
+    // Patient ID
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_PatientID_NotFound_NotFound()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine",
+                INVALID_PATIENT_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST.getPatientId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PATIENT_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(MESSAGE_PATIENT_NOT_FOUND));
+    }
+
+    @Test
+    void user_CreatePatientVaccineWithInvalidArguments_PatientID_Negative_UnprocessableEntity()
+            throws Exception {
+        mockMvc.perform(post("/patient/{patient_id}/vaccine",
+                INVALID_PATIENT_ID_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST.getPatientId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper
+                        .writeValueAsString(INVALID_PATIENT_ID_NEGATIVE_CREATE_PATIENT_VACCINE_REQUEST))
+                .header("Authorization", BEARER_USER_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(2),
+                        jsonPath("$.details[0].field").value("path.patient_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages")
+                                .value("El id del paciente debe ser mayor a 0"),
+                        jsonPath("$.details[1].field").value("patient_id"),
+                        jsonPath("$.details[1].messages.length()").value(1),
+                        jsonPath("$.details[1].messages")
+                                .value("El id del paciente debe ser mayor a 0"));
+    }
 
     // Role: ADMIN
     @Test
-    @Order(1)
+    @Order(8)
     @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
@@ -112,7 +836,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(2)
+    @Order(9)
     @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_Name_MaxValue_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
@@ -201,7 +925,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(3)
+    @Order(10)
     @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_DoseInMilliliters_MaxValue_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
@@ -283,7 +1007,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
 
     // Provided At
     @Test
-    @Order(4)
+    @Order(11)
     @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_ProvidedAt_MinusYear_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
@@ -310,7 +1034,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(12)
     @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_ProvidedAt_Today_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
@@ -337,7 +1061,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Order(5)
+    @Order(13)
     @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_ProvidedAt_Future_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
@@ -462,6 +1186,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
+    @Order(14)
     @DirtiesContext
     void admin_CreatePatientVaccineWithInvalidArguments_ProductSaleID_Null_UnprocessableEntity()
             throws Exception {
@@ -470,8 +1195,22 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
                 .content(objectMapper
                         .writeValueAsString(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk());
-        // TODO: Check response
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(4),
+                        jsonPath("$.content.name")
+                                .value(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST.getName()),
+                        jsonPath("$.content.dose_in_milliliters")
+                                .value(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getDoseInMilliliters()),
+                        jsonPath("$.content.provided_at").isString(),
+                        jsonPath("$.content.vaccinator.id")
+                                .value(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getVaccinatorId()),
+                        jsonPath("$.content.product_sale")
+                                .value(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST
+                                        .getProductSaleId()));
     }
 
     // Patient ID
