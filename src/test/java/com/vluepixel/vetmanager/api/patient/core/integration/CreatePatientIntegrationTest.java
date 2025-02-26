@@ -35,7 +35,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 
 /**
- * Integration test for the create patient functionality.
+ * Integration tests for the create patient functionality.
  */
 public class CreatePatientIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Paciente creado exitosamente";

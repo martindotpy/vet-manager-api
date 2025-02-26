@@ -416,3 +416,72 @@ VALUES
         'Accidente doméstico',
         'Antiinflamatorio y reposo'
     );
+
+INSERT INTO
+    product_sale (
+        discount,
+        price,
+        quantity,
+        bill_id,
+        product_id,
+        seller_id,
+        id
+    )
+VALUES
+    (
+        20,
+        300,
+        10,
+        1,
+        1,
+        1,
+        1
+    ),
+    (
+        30,
+        400,
+        2,
+        2,
+        2,
+        2,
+        2
+    );
+
+INSERT INTO
+    vaccine (
+        deleted,
+        dose_in_milliliters,
+        patient_id,
+        product_sale_id,
+        provided_at,
+        vaccinator_id,
+        `name`
+    )
+VALUES
+    (
+        0,
+        5,
+        1,
+        1,
+        '2025-02-22 10:15:45.654321',
+        1,
+        'Paracetamol'
+    ),
+    (
+        0,
+        10,
+        1,
+        1,
+        '2025-02-22 10:15:45.654321',
+        1,
+        'Paracetamol 2.0'
+    ),
+    (
+        0,
+        15,
+        2,
+        1,
+        '2025-02-22 10:15:45.654321',
+        1,
+        'Paracetamol 2.0'
+    );
