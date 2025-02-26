@@ -452,7 +452,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
                                 .value("El id de la venta de producto debe ser mayor a 0"));
     }
 
-    @Test // TODO: Validation to add
+    @Test
     void admin_CreatePatientVaccineWithInvalidArguments_ProductSaleID_Null_UnprocessableEntity()
             throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
@@ -460,8 +460,8 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
                 .content(objectMapper
                         .writeValueAsString(VALID_PRODUCT_SALE_ID_NULL_CREATE_PATIENT_VACCINE_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isNotFound())
-                .andExpectAll(jsonPath("$.message").value("Vacuna no encontrado(a)"));
+                .andExpect(status().isOk());
+        // TODO: Check response
     }
 
     // Patient ID

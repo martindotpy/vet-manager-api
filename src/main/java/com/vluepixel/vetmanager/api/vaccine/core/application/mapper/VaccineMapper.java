@@ -103,6 +103,10 @@ public interface VaccineMapper
      * @return the product sale
      */
     default ProductSale mapProductSaleIdToProductSale(Long productSaleId) {
+        if (productSaleId == null) {
+            return null;
+        }
+
         return ProductSale.builder().id(productSaleId).build();
     }
 }
