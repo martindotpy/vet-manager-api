@@ -149,46 +149,17 @@ VALUES
     );
 
 INSERT INTO
-    appointment_type (
-        duration_in_minutes,
-        id,
-        price,
-        `name`
-    )
-VALUES 
-    (
-        30,
-        1,
-        100,
-        'Limpieza'
-    ),
-    (
-        20,
-        2,
-        150,
-        'Operación'
-    ),
-    (
-        60,
-        3,
-        350,
-        'Paseo'
-    );
+    appointment_type (duration_in_minutes, id, price, `name`)
+VALUES
+    (30, 1, 100, 'Limpieza'),
+    (20, 2, 150, 'Operación'),
+    (60, 3, 350, 'Paseo');
 
 INSERT INTO
-    category (
-        id,
-        `name`
-    )
-VALUES 
-    (
-        1,
-        'Salud'
-    ),
-    (
-        2,
-        'Higiene'
-    );
+    category (id, `name`)
+VALUES
+    (1, 'Salud'),
+    (2, 'Higiene');
 
 INSERT INTO
     bill (
@@ -202,7 +173,7 @@ INSERT INTO
         created_at,
         last_paid_at
     )
-VALUES 
+VALUES
     (
         0,
         0.2,
@@ -234,7 +205,7 @@ INSERT INTO
         `description`,
         updated_at
     )
-VALUES 
+VALUES
     (
         199.0,
         10,
@@ -251,19 +222,10 @@ VALUES
     );
 
 INSERT INTO
-    product_categories (
-        category_id,
-        product_id
-    )
-VALUES 
-    (
-        1,
-        1
-    ),
-    (
-        1,
-        2
-    );
+    product_categories (category_id, product_id)
+VALUES
+    (1, 1),
+    (1, 2);
 
 INSERT INTO
     appointment_details (
@@ -272,34 +234,15 @@ INSERT INTO
         price,
         id
     )
-VALUES 
-    (
-        1,
-        120,
-        200,
-        1
-    ),
-    (
-        2,
-        60,
-        100,
-        2
-    );
+VALUES
+    (1, 120, 200, 1),
+    (2, 60, 100, 2);
 
 INSERT INTO
-    appointment_appointment_details (
-        appointment_id,
-        details_id
-    )
-VALUES 
-    (
-        1,
-        1
-    ),
-    (
-        2,
-        2
-    );
+    appointment_appointment_details (appointment_id, details_id)
+VALUES
+    (1, 1),
+    (2, 2);
 
 INSERT INTO
     sale (
@@ -314,28 +257,8 @@ INSERT INTO
         dtype
     )
 VALUES
-    (
-        20,
-        300,
-        10,
-        1,
-        1,
-        null,
-        1,
-        null,
-        'Appointment'
-    ),
-    (
-        20,
-        300,
-        10,
-        null,
-        1,
-        1,
-        2,
-        null,
-        'Product'
-    );
+    (20, 300, 10, 1, 1, null, 1, null, 'AppointmentSale'),
+    (20, 300, 10, null, 1, 1, 2, null, 'ProductSale');
 
 INSERT INTO
     medical_history (
@@ -388,7 +311,7 @@ INSERT INTO
         reason,
         recipe
     )
-VALUES 
+VALUES
     (
         0,
         80,
