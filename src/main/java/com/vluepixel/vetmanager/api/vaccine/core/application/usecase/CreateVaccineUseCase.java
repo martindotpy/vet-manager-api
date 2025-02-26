@@ -50,6 +50,6 @@ public class CreateVaccineUseCase implements CreateVaccinePort {
 
         log.info("Vaccine created");
 
-        return vaccineMapper.toDto(newVaccine);
+        return vaccineMapper.toDto(vaccineRepository.findById(newVaccine.getId()).get());
     }
 }
