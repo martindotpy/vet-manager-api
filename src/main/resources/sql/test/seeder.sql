@@ -126,7 +126,6 @@ INSERT INTO
         deleted,
         created_at,
         created_by_id,
-        id,
         patient_id,
         start_at,
         `description`
@@ -137,14 +136,12 @@ VALUES
         '2025-02-19T23:51:17.578',
         1,
         1,
-        1,
         '2025-02-20T23:51:17.578',
         'Limpieza dental'
     ),
     (
         0,
         '2025-02-17T23:51:17.578',
-        2,
         2,
         2,
         '2025-02-25T23:51:17.578',
@@ -233,7 +230,6 @@ INSERT INTO
     product (
         price,
         quantity,
-        id,
         `name`,
         `description`,
         updated_at
@@ -242,7 +238,6 @@ VALUES
     (
         199.0,
         10,
-        1,
         'Anti Pulgas',
         'Anti Pulgas para mascotas del hogar',
         '2025-02-19T23:51:17.578'
@@ -250,7 +245,6 @@ VALUES
     (
         50.0,
         10,
-        2,
         'Collar',
         'Collares para mascotas del hogar',
         '2025-02-19T23:51:17.578'
@@ -311,39 +305,36 @@ INSERT INTO
     sale (
         discount,
         price,
+        quantity,
+        appointment_id,
         bill_id,
-        id,
-        seller_id
+        product_id,
+        seller_id,
+        treatment_id,
+        dtype
     )
 VALUES
     (
         20,
         300,
-        1,
-        1,
-        1
-    ),
-     (
         10,
-        400,
-        2,
-        2,
-        2
-    );
-
-INSERT INTO
-    appointment_sale (
-        appointment_id,
-        id
-    )
-VALUES 
-    (
         1,
-        1
+        1,
+        null,
+        1,
+        null,
+        'Appointment'
     ),
     (
+        20,
+        300,
+        10,
+        null,
+        1,
+        1,
         2,
-        2
+        null,
+        'Product'
     );
 
 INSERT INTO
@@ -427,24 +418,6 @@ VALUES
         'Cojera en pata trasera',
         'Accidente doméstico',
         'Antiinflamatorio y reposo'
-    );
-
-INSERT INTO
-    product_sale (
-        quantity,
-        product_id,
-        id
-    )
-VALUES
-    (
-        10,
-        1,
-        1
-    ),
-    (
-        30,
-        2,
-        2
     );
 
 INSERT INTO
