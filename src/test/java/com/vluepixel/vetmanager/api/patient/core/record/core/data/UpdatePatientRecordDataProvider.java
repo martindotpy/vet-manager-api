@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import com.vluepixel.vetmanager.api.medicalrecord.core.domain.request.UpdateMedicalRecordRequest;
 
 /**
- * Integration tests for the update patient record use case.
+ * Integration tests for the update patient record data provider.
  */
 public class UpdatePatientRecordDataProvider {
     public static final UpdateMedicalRecordRequest INVALID_ID_NOT_FOUND_UPDATE_PATIENT_RECORD_REQUEST = UpdateMedicalRecordRequest
