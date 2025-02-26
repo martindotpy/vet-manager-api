@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 
 /**
- * Integration tests for the update patient use case.
+ * Integration tests for the update patient vaccine use case.
  */
 public class UpdatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     // -----------------------------------------------------------------------------------------------------------------
