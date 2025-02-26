@@ -31,7 +31,7 @@ import lombok.experimental.SuperBuilder;
  * Sale.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @EntityListeners(AuditingEntityListener.class)
 @Audited
 @Getter
