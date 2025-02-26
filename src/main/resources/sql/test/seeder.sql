@@ -308,28 +308,40 @@ VALUES
     );
 
 INSERT INTO
-    appointment_sale (
+    sale (
         discount,
         price,
-        appointment_id,
         bill_id,
         id,
         seller_id
     )
-VALUES 
+VALUES
     (
         20,
         300,
         1,
         1,
-        1,
         1
     ),
-    (
+     (
         10,
         400,
         2,
         2,
+        2
+    );
+
+INSERT INTO
+    appointment_sale (
+        appointment_id,
+        id
+    )
+VALUES 
+    (
+        1,
+        1
+    ),
+    (
         2,
         2
     );
@@ -419,30 +431,18 @@ VALUES
 
 INSERT INTO
     product_sale (
-        discount,
-        price,
         quantity,
-        bill_id,
         product_id,
-        seller_id,
         id
     )
 VALUES
     (
-        20,
-        300,
         10,
-        1,
-        1,
         1,
         1
     ),
     (
         30,
-        400,
-        2,
-        2,
-        2,
         2,
         2
     );
