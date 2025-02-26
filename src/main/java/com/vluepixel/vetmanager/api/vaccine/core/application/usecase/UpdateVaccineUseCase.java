@@ -47,9 +47,9 @@ public class UpdateVaccineUseCase implements UpdateVaccinePort {
         Long productSaleId = request.getProductSaleId();
         if (productSaleId != null) {
             Sale sale = saleRepository.findById(productSaleId)
-                    .orElseThrow(() -> new NotFoundException(Vaccine.class, productSaleId));
+                    .orElseThrow(() -> new NotFoundException(ProductSale.class, productSaleId));
             if (!(sale instanceof ProductSale)) {
-                throw new RegisterNotInstanceOfSubclassException(ProductSale.class);
+                throw new RegisterNotInstanceOfSubclassException(ProductSale.class, productSaleId);
             }
         }
 

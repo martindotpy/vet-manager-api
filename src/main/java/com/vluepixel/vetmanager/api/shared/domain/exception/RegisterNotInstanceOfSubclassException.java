@@ -9,14 +9,24 @@ import lombok.Getter;
  */
 @Getter
 public final class RegisterNotInstanceOfSubclassException extends ErrorException {
-    private String message = "% no pertenece al registro";
+    private String message = "El registro no es del mismo tipo %";
     private final int status = 409;
 
     public RegisterNotInstanceOfSubclassException() {
-        this.message = this.message.replace("%", "El recurso");
+        this.message = this.message.replace("%", "el recurso ingresado");
     }
 
     public RegisterNotInstanceOfSubclassException(Class<?> entity) {
-        this.message = this.message.replace("%", getName(entity));
+        String name = getName(entity);
+        name = name.substring(0, 1).toLowerCase() + name.substring(1);
+
+        this.message = this.message.replace("%", "que " + name);
+    }
+
+    public RegisterNotInstanceOfSubclassException(Class<?> entity, Object id) {
+        String name = getName(entity);
+        name = name.substring(0, 1).toLowerCase() + name.substring(1);
+
+        this.message = this.message.replace("%", "que " + name + " con id " + id);
     }
 }
