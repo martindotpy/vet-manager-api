@@ -40,7 +40,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Vacuna creada exitosamente";
     private static final String MESSAGE_VACCINATOR_NOT_FOUND = "Vacunador no encontrado(a)";
-    private static final String MESSAGE_PRODUCT_SALE_NOT_FOUND = "product_sale no encontrado(a)"; // TODO
+    private static final String MESSAGE_PRODUCT_SALE_NOT_FOUND = "Venta de producto no encontrado(a)";
     private static final String MESSAGE_PATIENT_NOT_FOUND = "Paciente no encontrado(a)";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:

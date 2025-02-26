@@ -43,6 +43,7 @@ public class SpanishUtils {
         values.put("appointment", "Cita");
         values.put("appointment_details", "Detalles de la cita");
         values.put("appointment_type", "Tipo de cita");
+        values.put("appointment_sale", "Venta de cita");
         values.put("birth_date", "Fecha de nacimiento");
         values.put("category", "Categoría");
         values.put("characteristics", "Características");
@@ -82,6 +83,8 @@ public class SpanishUtils {
         values.put("price", "Precio");
         values.put("profile_image_url", "Url de la imagen de perfil");
         values.put("provided_at", "Fecha de aplicación");
+        values.put("product_sale", "Venta de producto");
+        values.put("product_sales", "Ventas de productos");
         values.put("race", "Raza");
         values.put("races", "Razas");
         values.put("reason", "Motivo");
@@ -95,6 +98,7 @@ public class SpanishUtils {
         values.put("temperature_in_celsius", "Temperatura en Celsius");
         values.put("treatment", "Tratamiento");
         values.put("treatments", "Tratamientos");
+        values.put("treatment_sale", "Venta de tratamiento");
         values.put("type", "Tipo");
         values.put("updated_at", "Actualizado en");
         values.put("updated_by", "Actualizado por");
