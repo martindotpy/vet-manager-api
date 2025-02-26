@@ -4,11 +4,15 @@ import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.equal;
 
 import org.slf4j.MDC;
 
+import com.vluepixel.vetmanager.api.bill.sale.domain.model.ProductSale;
+import com.vluepixel.vetmanager.api.bill.sale.domain.model.Sale;
+import com.vluepixel.vetmanager.api.bill.sale.domain.repository.SaleRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
 import com.vluepixel.vetmanager.api.shared.application.port.out.TransactionalPort;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
+import com.vluepixel.vetmanager.api.shared.domain.exception.RegisterNotInstanceOfSubclassException;
 import com.vluepixel.vetmanager.api.shared.domain.query.FieldUpdate;
 import com.vluepixel.vetmanager.api.vaccine.core.application.dto.VaccineDto;
 import com.vluepixel.vetmanager.api.vaccine.core.application.mapper.VaccineMapper;
@@ -29,6 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 public class UpdateVaccineUseCase implements UpdateVaccinePort {
     private final TransactionalPort transactionalPort;
 
+    private final SaleRepository saleRepository;
+
     private final VaccineRepository vaccineRepository;
     private final VaccineMapper vaccineMapper;
 
@@ -36,6 +42,14 @@ public class UpdateVaccineUseCase implements UpdateVaccinePort {
     public VaccineDto update(Long patientId, UpdateVaccineRequest request) {
         MDC.put("operationId", "Vaccine id " + request.getId());
         log.info("Updating vaccine info");
+
+        // Verify if the product sale id corresponds to a product sale
+        Long productSaleId = request.getProductSaleId();
+        Sale sale = saleRepository.findById(productSaleId)
+                .orElseThrow(() -> new NotFoundException(Vaccine.class, productSaleId));
+        if (!(sale instanceof ProductSale)) {
+            throw new RegisterNotInstanceOfSubclassException(ProductSale.class);
+        }
 
         Vaccine updatedVaccine = vaccineMapper.fromRequest(request).build();
         int rowsModified = transactionalPort.run((aux) -> {
