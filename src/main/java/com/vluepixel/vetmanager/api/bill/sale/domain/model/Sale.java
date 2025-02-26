@@ -31,7 +31,7 @@ import lombok.experimental.SuperBuilder;
  * Sale.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @EntityListeners(AuditingEntityListener.class)
 @Audited
 @Getter
@@ -40,7 +40,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public abstract class Sale {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "bigint unsigned")
     private Long id;
 
