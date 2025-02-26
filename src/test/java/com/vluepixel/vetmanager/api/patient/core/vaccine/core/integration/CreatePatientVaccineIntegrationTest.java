@@ -31,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 
 import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 
@@ -40,8 +41,10 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Vacuna creada exitosamente";
     private static final String MESSAGE_VACCINATOR_NOT_FOUND = "Vacunador no encontrado(a)";
-    private static final String MESSAGE_PRODUCT_SALE_NOT_FOUND = "Venta de producto no encontrado(a)";
+    // private static final String MESSAGE_PRODUCT_SALE_NOT_FOUND = "Venta de
+    // producto no encontrado(a)";
     private static final String MESSAGE_PATIENT_NOT_FOUND = "Paciente no encontrado(a)";
+    private static final String MESSAGE_NOT_FOUND = "Vacuna con id 10 no encontrado(a)";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -55,6 +58,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     // Role: ADMIN
     @Test
     @Order(1)
+    @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -109,6 +113,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(2)
+    @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_Name_MaxValue_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -197,6 +202,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(3)
+    @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_DoseInMilliliters_MaxValue_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -278,6 +284,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     // Provided At
     @Test
     @Order(4)
+    @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_ProvidedAt_MinusYear_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -304,6 +311,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(4)
+    @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_ProvidedAt_Today_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -330,6 +338,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(5)
+    @DirtiesContext
     void admin_CreatePatientVaccineWithValidArguments_ProvidedAt_Future_Ok() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -431,7 +440,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
                         .writeValueAsString(INVALID_PRODUCT_SALE_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(MESSAGE_PRODUCT_SALE_NOT_FOUND));
+                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND));
     }
 
     @Test
@@ -453,6 +462,7 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
+    @DirtiesContext
     void admin_CreatePatientVaccineWithInvalidArguments_ProductSaleID_Null_UnprocessableEntity()
             throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/vaccine", 1)

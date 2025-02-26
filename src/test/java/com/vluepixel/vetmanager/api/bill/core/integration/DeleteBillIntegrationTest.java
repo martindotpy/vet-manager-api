@@ -20,6 +20,7 @@ public class DeleteBillIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Cuenta eliminada exitosamente";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
             .format("Bill con id %s no encontrado(a)", parameter);
+    private static final String MESSAGE_CONFLICT = "No se puede eliminar el/la bill porque está en uso en otros registros";
 
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
@@ -60,11 +61,11 @@ public class DeleteBillIntegrationTest extends BaseIntegrationTest {
     // Role: USER
     @Test
     @DirtiesContext
-    void user_DeleteBillWithValidParams_Appointment_Ok() throws Exception {
+    void user_DeleteBillWithValidParams_Appointment_Conflict() throws Exception {
         mockMvc.perform(delete("/bill/{id}", 1) // APPOINTMENT
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value(MESSAGE_OK));
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value(MESSAGE_CONFLICT));
     }
 
     @Test
@@ -113,11 +114,11 @@ public class DeleteBillIntegrationTest extends BaseIntegrationTest {
     // Role: ADMIN
     @Test
     @DirtiesContext
-    void admin_DeleteBillWithValidParams_Appointment_Ok() throws Exception {
+    void admin_DeleteBillWithValidParams_Appointment_Conflict() throws Exception {
         mockMvc.perform(delete("/bill/{id}", 1) // APPOINTMENT
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value(MESSAGE_OK));
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value(MESSAGE_CONFLICT));
     }
 
     @Test

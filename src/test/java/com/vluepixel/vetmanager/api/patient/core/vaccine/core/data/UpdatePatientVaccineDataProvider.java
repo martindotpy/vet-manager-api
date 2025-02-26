@@ -15,7 +15,7 @@ public class UpdatePatientVaccineDataProvider {
             .doseInMilliliters(20)
             .providedAt(LocalDateTime.now())
             .vaccinatorId(1L)
-            .productSaleId(1L)
+            .productSaleId(2L)
             .build();
 
     public static final UpdateVaccineRequest INVALID_ID_NEGATIVE_UPDATE_PATIENT_VACCINE_REQUEST = UpdateVaccineRequest

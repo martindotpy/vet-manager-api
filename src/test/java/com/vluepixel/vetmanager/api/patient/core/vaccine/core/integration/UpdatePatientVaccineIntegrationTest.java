@@ -15,6 +15,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  * Integration tests for the update patient vaccine use case.
  */
 public class UpdatePatientVaccineIntegrationTest extends BaseIntegrationTest {
+    private static final String MESSAGE_OK = "Vacuna actualizada exitosamente";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ public class UpdatePatientVaccineIntegrationTest extends BaseIntegrationTest {
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value("a"),
+                        jsonPath("$.message").value(MESSAGE_OK),
                         jsonPath("$.content.id").value(VALID_UPDATE_PATIENT_VACCINE_REQUEST.getId()),
                         jsonPath("$.content.name").value(VALID_UPDATE_PATIENT_VACCINE_REQUEST.getName()),
                         jsonPath("$.content.dose_in_milliliters")
