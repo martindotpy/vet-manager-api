@@ -7,7 +7,7 @@ INSERT INTO
         last_name,
         email,
         profile_image_url,
-        password,
+        `password`,
         roles,
         deleted
     )
@@ -23,7 +23,7 @@ VALUES
         'User',
         'User',
         'user@user.com',
-        NULL,
+        null,
         '$2a$10$rGBA6G7JkDQscH3KQD1no.wUUjm1jupdpiGYH1Ie2ejE2QO9crCX.',
         'USER',
         0
@@ -35,7 +35,7 @@ INSERT INTO
         identification,
         first_name,
         last_name,
-        address,
+        `address`,
         identification_type
     )
 VALUES
@@ -71,14 +71,14 @@ VALUES
     (2, '922222222');
 
 INSERT INTO
-    species (id, name)
+    species (id, `name`)
 VALUES
     (1, 'Perro'),
     (2, 'Gato'),
     (3, 'Hámster');
 
 INSERT INTO
-    race (id, species_id, name)
+    race (id, species_id, `name`)
 VALUES
     (1, 1, 'Poodle'),
     (2, 1, 'Chihuahua'),
@@ -380,4 +380,31 @@ VALUES
         '2025-02-22 10:15:45.654321',
         1,
         'Paracetamol 2.0'
+    );
+
+INSERT INTO
+    treatment (
+        deleted,
+        `order`,
+        medical_record_id,
+        `description`
+    )
+VALUES
+    (
+        0,
+        1,
+        1,
+        'Cada 1 por 2'
+    ),
+    (
+        0,
+        2,
+        1,
+        'Cada 3 por 4'
+    ),
+    (
+        0,
+        1,
+        2,
+        'Uh, aquí no sé chamo, con la fe te sanarás'
     );

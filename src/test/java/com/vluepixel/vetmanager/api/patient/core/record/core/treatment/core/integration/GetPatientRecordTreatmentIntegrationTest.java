@@ -1,0 +1,37 @@
+package com.vluepixel.vetmanager.api.patient.core.record.core.treatment.core.integration;
+
+import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.Test;
+
+import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
+
+/**
+ * Integration tests for the get patient record treatment use case.
+ */
+public class GetPatientRecordTreatmentIntegrationTest extends BaseIntegrationTest {
+    private static final String MESSAGE_OK = "Tratamientos del paciente encontrados exitosamente";
+    // -----------------------------------------------------------------------------------------------------------------
+    // Without authentication:
+    // -----------------------------------------------------------------------------------------------------------------
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // With authentication:
+    // -----------------------------------------------------------------------------------------------------------------
+
+    // Role: USER
+
+    // Role: ADMIN
+    @Test
+    void admin_GetPatientRecordTreatmentWithValidParams_Ok() throws Exception {
+        mockMvc.perform(get("/patient/{patient_id}/record/{record_id}/treatment", 1, 1)
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isOk())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.length()").value(2));
+    }
+}
