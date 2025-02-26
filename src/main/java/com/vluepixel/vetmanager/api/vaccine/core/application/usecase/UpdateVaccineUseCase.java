@@ -65,7 +65,7 @@ public class UpdateVaccineUseCase implements UpdateVaccinePort {
                     FieldUpdate.set("doseInMilliliters", updatedVaccine.getDoseInMilliliters()),
                     FieldUpdate.set("providedAt", updatedVaccine.getProvidedAt()),
                     FieldUpdate.set("vaccinator", updatedVaccine.getVaccinator()),
-                    FieldUpdate.set("productSale", ProductSale.builder().id(productSaleId).build()));
+                    FieldUpdate.set("productSale", updatedVaccine.getProductSale()));
         });
 
         // Verify any unexpected behavior
