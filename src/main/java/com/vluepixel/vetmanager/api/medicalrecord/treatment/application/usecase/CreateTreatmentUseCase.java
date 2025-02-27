@@ -12,6 +12,8 @@ import com.vluepixel.vetmanager.api.medicalrecord.treatment.application.port.in.
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.model.Treatment;
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.repository.TreatmentRepository;
 import com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.request.CreateTreatmentRequest;
+import com.vluepixel.vetmanager.api.patient.core.domain.model.Patient;
+import com.vluepixel.vetmanager.api.patient.core.domain.repository.PatientRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
@@ -27,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @UseCase
 @RequiredArgsConstructor
 public class CreateTreatmentUseCase implements CreateTreatmentPort {
+    private final PatientRepository patientRepository;
+
     private final MedicalRecordRepository medicalRecordRepository;
 
     private final TreatmentRepository treatmentRepository;
@@ -37,7 +41,12 @@ public class CreateTreatmentUseCase implements CreateTreatmentPort {
         MDC.put("operationId", "Treatment with medical record id " + request.getMedicalRecordId());
         log.info("Creating treatment");
 
-        // Verify if the patient and record id exists
+        // Verify if the patient exists
+        if (!patientRepository.existsById(patientId)) {
+            throw new NotFoundException(Patient.class, patientId);
+        }
+
+        // Verify if the record exists
         Long count = medicalRecordRepository.countBy(Criteria.of(
                 equal("id", recordId),
                 equal("patient.id", patientId)));
