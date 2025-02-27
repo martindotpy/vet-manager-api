@@ -309,9 +309,9 @@ public class UpdatePatientRecordTreatmentIntegrationTest extends BaseIntegration
     }
 
     // Medical Record ID
-    @Test // TODO: Return 200 when Medical Record ID is not found.
+    @Test
     void admin_UpdatePatientRecordTreatmentWithInvalidArguments_MedicalRecordID_NotFound() throws Exception {
-        mockMvc.perform(put("/patient/{patient_id}/record/{record_id}/treatment", 1, 1)
+        mockMvc.perform(put("/patient/{patient_id}/record/{record_id}/treatment", 1, 10)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(
                         INVALID_MEDICAL_RECORD_ID_NOT_FOUND_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST))
