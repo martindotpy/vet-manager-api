@@ -4,7 +4,6 @@ import static com.vluepixel.vetmanager.api.shared.adapter.in.util.AnsiShortcuts.
 import static com.vluepixel.vetmanager.api.shared.adapter.in.util.AnsiShortcuts.fgBrightBlue;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -124,7 +123,7 @@ public abstract class EntityPersistenceAdapter<E, ID, R extends JpaRepository<E,
             Root<E> root = update.from(entityClass);
 
             // Set each field for the update
-            applyFieldUpdates(update, root, fieldUpdates);
+            applyFieldUpdates(cb, update, root, fieldUpdates);
 
             // Add the condition for the specific ID
             update.where(cb.equal(root.get(getIdFieldName()), id));
@@ -160,9 +159,23 @@ public abstract class EntityPersistenceAdapter<E, ID, R extends JpaRepository<E,
     }
 
     @SuppressWarnings("unchecked")
-    protected void applyFieldUpdates(CriteriaUpdate<E> update, Root<E> root, FieldUpdate[] fieldUpdates) {
-        Arrays.stream(fieldUpdates)
-                .forEach(fu -> update.set((Path<Object>) resolvePath(root, fu.getField()), fu.getValue()));
+    protected void applyFieldUpdates(CriteriaBuilder cb, CriteriaUpdate<E> update, Root<E> root,
+            FieldUpdate[] fieldUpdates) {
+        for (FieldUpdate fu : fieldUpdates) {
+            Path<?> path = resolvePath(root, fu.getField());
+            Object value = fu.getValue();
+
+            if (value == null) {
+                setNull(update, path, cb);
+            } else {
+                update.set((Path<Object>) path, value);
+            }
+        }
+        ;
+    }
+
+    private <T> void setNull(CriteriaUpdate<E> update, Path<T> path, CriteriaBuilder cb) {
+        update.set(path, cb.nullLiteral(path.getJavaType()));
     }
 
     public E update(ID id, Collection<FieldUpdate> fieldUpdates) {

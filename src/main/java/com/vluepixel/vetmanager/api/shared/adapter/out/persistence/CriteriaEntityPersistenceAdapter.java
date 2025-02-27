@@ -290,7 +290,10 @@ public abstract class CriteriaEntityPersistenceAdapter<E, ID, R extends JpaRepos
         switch (criteria.getOrder().getType()) {
             case ASC -> query.orderBy(entityManager.getCriteriaBuilder().asc(path));
             case DESC -> query.orderBy(entityManager.getCriteriaBuilder().desc(path));
-            default -> log.warn("Unsupported order type: {}", criteria.getOrder().getType());
+            case NONE -> {
+                // Do nothing
+                log.debug("Skipping order: {}", fgBrightYellow(criteria.getOrder()));
+            }
         }
     }
 
@@ -299,7 +302,7 @@ public abstract class CriteriaEntityPersistenceAdapter<E, ID, R extends JpaRepos
         CriteriaUpdate<E> update = cb.createCriteriaUpdate(entityClass);
         Root<E> root = update.from(entityClass);
 
-        applyFieldUpdates(update, root, fieldUpdates);
+        applyFieldUpdates(cb, update, root, fieldUpdates);
         applyCriteria(criteria, cb, update, root, true);
 
         return update;
