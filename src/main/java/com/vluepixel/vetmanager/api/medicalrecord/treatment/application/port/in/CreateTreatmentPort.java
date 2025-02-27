@@ -10,8 +10,10 @@ public interface CreateTreatmentPort {
     /**
      * Create treatment.
      *
-     * @param request the create treatment request.
+     * @param patientId the patient id.
+     * @param recordId  the record id.
+     * @param request   the create treatment request.
      * @return the created treatment
      */
-    TreatmentDto create(CreateTreatmentRequest request);
+    TreatmentDto create(Long patientId, Long recordId, CreateTreatmentRequest request);
 }

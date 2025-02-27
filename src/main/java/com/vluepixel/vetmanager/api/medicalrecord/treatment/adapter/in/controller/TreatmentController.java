@@ -96,7 +96,7 @@ public final class TreatmentController {
             @PathVariable(name = "record_id") Long recordId,
             @RequestBody CreateTreatmentRequest request)
             throws ValidationException, NotFoundException {
-        return ok(() -> createTreatmentPort.create(request),
+        return ok(() -> createTreatmentPort.create(patientId, recordId, request),
                 "Tratamiento creado exitosamente",
                 InvalidStateValidation.of(
                         patientId < 1,

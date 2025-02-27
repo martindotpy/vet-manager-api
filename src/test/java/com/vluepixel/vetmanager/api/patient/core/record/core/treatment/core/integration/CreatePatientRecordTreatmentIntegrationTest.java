@@ -1,5 +1,6 @@
 package com.vluepixel.vetmanager.api.patient.core.record.core.treatment.core.integration;
 
+import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
 import static com.vluepixel.vetmanager.api.patient.core.record.core.treatment.core.data.CreatePatientRecordTreatmentDataProvider.INVALID_DESCRIPTION_BLANK_CREATE_PATIENT_RECORD_TREATMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.record.core.treatment.core.data.CreatePatientRecordTreatmentDataProvider.INVALID_DESCRIPTION_EMPTY_CREATE_PATIENT_RECORD_TREATMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.record.core.treatment.core.data.CreatePatientRecordTreatmentDataProvider.INVALID_DESCRIPTION_NULL_CREATE_PATIENT_RECORD_TREATMENT_REQUEST;
@@ -10,12 +11,11 @@ import static com.vluepixel.vetmanager.api.patient.core.record.core.treatment.co
 import static com.vluepixel.vetmanager.api.patient.core.record.core.treatment.core.data.CreatePatientRecordTreatmentDataProvider.INVALID_ORDER_NULL_CREATE_PATIENT_RECORD_TREATMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.record.core.treatment.core.data.CreatePatientRecordTreatmentDataProvider.INVALID_ORDER_ZERO_CREATE_PATIENT_RECORD_TREATMENT_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.record.core.treatment.core.data.CreatePatientRecordTreatmentDataProvider.VALID_CREATE_PATIENT_RECORD_TREATMENT_REQUEST;
-import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import java.util.function.Function;
 
 import org.junit.jupiter.api.Order;
@@ -61,7 +61,7 @@ public class CreatePatientRecordTreatmentIntegrationTest extends BaseIntegration
     }
 
     // Patient ID
-    @Test // TODO: Should be return NotFound or Conflict because the patient doesn't exist
+    @Test
     void admin_UpdatePatientRecordTreatmentWithInvalidArguments_PatientID_NotFound() throws Exception {
         mockMvc.perform(post("/patient/{patient_id}/record/{record_id}/treatment", 10, 1)
                 .contentType(MediaType.APPLICATION_JSON)
