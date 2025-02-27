@@ -27,8 +27,4 @@ public final class UpdateTreatmentRequest implements Request {
     @NotNull(message = "El orden es requerido")
     @Positive(message = "El orden debe ser mayor a 0")
     private Integer order;
-
-    @NotNull(message = "El id del registro médico es requerido")
-    @Positive(message = "El id del registro médico debe ser mayor a 0")
-    private Long medicalRecordId;
 }
