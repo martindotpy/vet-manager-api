@@ -245,57 +245,6 @@ VALUES
     (2, 2);
 
 INSERT INTO
-    sale (
-        discount,
-        price,
-        quantity,
-        appointment_id,
-        bill_id,
-        product_id,
-        seller_id,
-        treatment_id,
-        dtype
-    )
-VALUES
-    (20, 300, 10, 1, 1, null, 1, null, 'AppointmentSale'),
-    (20, 300, 10, null, 1, 1, 2, null, 'ProductSale');
-
-INSERT INTO
-    medical_history (
-        deleted,
-        created_at,
-        id,
-        patient_id,
-        updated_at,
-        content
-    )
-VALUES
-    (
-        0,
-        '2025-02-19T23:51:17.578',
-        1,
-        1,
-        '2025-02-19T23:51:17.578',
-        'Primera cita'
-    ),
-    (
-        0,
-        '2025-02-19T23:51:17.578',
-        2,
-        1,
-        '2025-02-19T23:51:17.578',
-        'Segunda cita'
-    ),
-    (
-        0,
-        '2025-02-19T23:51:17.578',
-        3,
-        2,
-        '2025-02-19T23:51:17.578',
-        'Primera cita'
-    );
-
-INSERT INTO
     medical_record (
         deleted,
         heart_rate,
@@ -344,6 +293,85 @@ VALUES
     );
 
 INSERT INTO
+    treatment (
+        deleted,
+        `order`,
+        medical_record_id,
+        `description`
+    )
+VALUES
+    (
+        0,
+        1,
+        1,
+        'Cada 1 por 2'
+    ),
+    (
+        0,
+        2,
+        1,
+        'Cada 3 por 4'
+    ),
+    (
+        0,
+        1,
+        2,
+        'Uh, aquí no sé chamo, con la fe te sanarás'
+    );
+
+INSERT INTO
+    sale (
+        discount,
+        price,
+        quantity,
+        appointment_id,
+        bill_id,
+        product_id,
+        seller_id,
+        treatment_id,
+        dtype
+    )
+VALUES
+    (20, 300, 10, 1, 1, null, 1, null, 'AppointmentSale'),
+    (20, 300, 10, null, 1, 1, 2, null, 'ProductSale'),
+    (10, 400, 1, null, 1, null, 2, 1, 'TreatmentSale');
+
+INSERT INTO
+    medical_history (
+        deleted,
+        created_at,
+        id,
+        patient_id,
+        updated_at,
+        content
+    )
+VALUES
+    (
+        0,
+        '2025-02-19T23:51:17.578',
+        1,
+        1,
+        '2025-02-19T23:51:17.578',
+        'Primera cita'
+    ),
+    (
+        0,
+        '2025-02-19T23:51:17.578',
+        2,
+        1,
+        '2025-02-19T23:51:17.578',
+        'Segunda cita'
+    ),
+    (
+        0,
+        '2025-02-19T23:51:17.578',
+        3,
+        2,
+        '2025-02-19T23:51:17.578',
+        'Primera cita'
+    );
+
+INSERT INTO
     vaccine (
         deleted,
         dose_in_milliliters,
@@ -380,31 +408,4 @@ VALUES
         '2025-02-22 10:15:45.654321',
         1,
         'Paracetamol 2.0'
-    );
-
-INSERT INTO
-    treatment (
-        deleted,
-        `order`,
-        medical_record_id,
-        `description`
-    )
-VALUES
-    (
-        0,
-        1,
-        1,
-        'Cada 1 por 2'
-    ),
-    (
-        0,
-        2,
-        1,
-        'Cada 3 por 4'
-    ),
-    (
-        0,
-        1,
-        2,
-        'Uh, aquí no sé chamo, con la fe te sanarás'
     );
