@@ -118,7 +118,7 @@ public class UpdatePatientRecordTreatmentIntegrationTest extends BaseIntegration
                         .apply(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId().toString())));
     }
 
-    @Test // TODO: Validation to add
+    @Test
     void admin_UpdatePatientRecordTreatmentWithInvalidArguments_RecordID_Negative_UnprocessableEntity()
             throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/record/{record_id}/treatment", 1, -10)
@@ -132,7 +132,7 @@ public class UpdatePatientRecordTreatmentIntegrationTest extends BaseIntegration
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("path.record_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El id del registro debe ser mayor a 0"));
+                        jsonPath("$.details[0].messages").value("El id del historial médico debe ser mayor a 0"));
     }
 
     @Test
