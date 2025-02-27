@@ -141,6 +141,10 @@ public final class TreatmentController {
                         patientId < 1,
                         "path.patient_id",
                         "El id del paciente debe ser mayor a 0"),
+                InvalidStateValidation.of(
+                        recordId < 1,
+                        "path.record_id",
+                        "El id del historial médico debe ser mayor a 0"),
                 ValidationRequest.of(request));
     }
 
