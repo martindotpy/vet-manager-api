@@ -16,12 +16,12 @@ import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.Update
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.INVALID_VACCINATOR_ID_NOT_FOUND_UPDATE_PATIENT_VACCINE_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.INVALID_VACCINATOR_ID_NULL_UPDATE_PATIENT_VACCINE_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.VALID_DOSE_IN_MILLILITERS_MAX_VALUE_UPDATE_PATIENT_VACCINE_REQUEST;
-import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.VALID_UPDATE_PATIENT_VACCINE_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.VALID_NAME_MAX_VALUE_UPDATE_PATIENT_VACCINE_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.VALID_PRODUCT_SALE_ID_NULL_UPDATE_PATIENT_VACCINE_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.VALID_PROVIDED_AT_FUTURE_UPDATE_PATIENT_VACCINE_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.VALID_PROVIDED_AT_MINUS_YEAR_UPDATE_PATIENT_VACCINE_REQUEST;
 import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.VALID_PROVIDED_AT_TODAY_UPDATE_PATIENT_VACCINE_REQUEST;
+import static com.vluepixel.vetmanager.api.patient.core.vaccine.core.data.UpdatePatientVaccineDataProvider.VALID_UPDATE_PATIENT_VACCINE_REQUEST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -455,8 +455,8 @@ public class UpdatePatientVaccineIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @Order(14)
-    @DirtiesContext // TODO: Invalidation to add
-    void admin_UpdatePatientVaccineWithInvalidArguments_ProductSaleID_Null_UnprocessableEntity()
+    @DirtiesContext
+    void admin_UpdatePatientVaccineWithInvalidArguments_ProductSaleID_Null_Ok()
             throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/vaccine", 1)
                 .contentType(MediaType.APPLICATION_JSON)
