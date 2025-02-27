@@ -43,6 +43,8 @@ public class UpdatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
             .format("Vacuna con id %s no encontrado(a)", parameter);
     private static final String MESSAGE_VACCINATOR_NOT_FOUND = "Vacunador no encontrado(a)";
+    private static final Function<String, String> MESSAGE_PRODUCT_SALE_NOT_FOUND = parameter -> String
+            .format("Venta de producto con id %s no encontrado(a)", parameter);
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
@@ -421,7 +423,7 @@ public class UpdatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     }
 
     // Product Sale ID
-    @Test // TODO: Message not found to add
+    @Test
     void admin_UpdatePatientVaccineWithInvalidArguments_ProductSaleID_NotFound_NotFound()
             throws Exception {
         mockMvc.perform(put("/patient/{patient_id}/vaccine", 1)
@@ -430,7 +432,7 @@ public class UpdatePatientVaccineIntegrationTest extends BaseIntegrationTest {
                         .writeValueAsString(INVALID_PRODUCT_SALE_ID_NOT_FOUND_UPDATE_PATIENT_VACCINE_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND));
+                .andExpect(jsonPath("$.message").value(MESSAGE_PRODUCT_SALE_NOT_FOUND.apply("10")));
     }
 
     @Test
