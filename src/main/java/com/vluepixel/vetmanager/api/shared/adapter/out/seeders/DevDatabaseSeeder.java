@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 // Temporary production profile added to test the application in production mode
-@Profile({ "dev", "prod" })
+@Profile({ "dev", "test", "prod" })
 @Configuration
 public class DevDatabaseSeeder {
     @Value("classpath:sql/dev/seeder.sql")
