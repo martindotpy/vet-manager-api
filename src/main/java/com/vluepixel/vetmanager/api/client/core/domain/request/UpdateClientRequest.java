@@ -65,4 +65,24 @@ public final class UpdateClientRequest implements Request {
             case FOREIGNER_CARNET -> RegexConstants.FOREIGNER_CARNET;
         });
     }
+
+    /**
+     * Validate repeated emails.
+     *
+     * @return true if the emails are valid, false otherwise
+     */
+    @AssertTrue(message = "Los correos no pueden estar repetidos")
+    public boolean isEmails() {
+        return emails == null || emails.stream().distinct().count() == emails.size();
+    }
+
+    /**
+     * Validate repeated phones.
+     *
+     * @return true if the phones are valid, false otherwise
+     */
+    @AssertTrue(message = "Los teléfonos no pueden estar repetidos")
+    public boolean isPhones() {
+        return phones == null || phones.stream().distinct().count() == phones.size();
+    }
 }
