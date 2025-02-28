@@ -3,17 +3,17 @@ package com.vluepixel.vetmanager.api.bill.sale.application.dto;
 import com.vluepixel.vetmanager.api.product.core.application.dto.ProductDto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Product sale DTO.
  */
 @Getter
-@Builder
+@SuperBuilder
 @ToString
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor

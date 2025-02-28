@@ -50,6 +50,8 @@ public class UpdateSaleUseCase implements UpdateSalePort {
         log.info("Updating sale");
 
         Sale updatedSale = saleMapper.fromRequest(request);
+        Sale salePreUpdate = saleRepository.findById(updatedSale.getId())
+                .orElseThrow(() -> new NotFoundException(Sale.class, updatedSale.getId()));
         Sale updatedSaleAux = transactionalPort.run((aux) -> {
             Sale sale = updatedSale;
 
@@ -57,10 +59,7 @@ public class UpdateSaleUseCase implements UpdateSalePort {
                 case ProductSale productSale -> {
                     aux.setEntityClass(Sale.class);
 
-                    sale = saleRepository.findById(productSale.getId())
-                            .orElseThrow(() -> new NotFoundException(Sale.class, productSale.getId()));
-
-                    if (!(sale instanceof ProductSale)) {
+                    if (!(salePreUpdate instanceof ProductSale)) {
                         throw new RegisterNotInstanceOfSubclassException(ProductSale.class);
                     }
 
@@ -82,12 +81,13 @@ public class UpdateSaleUseCase implements UpdateSalePort {
                     BigDecimal price = product.getPrice().multiply(BigDecimal.valueOf(productSale.getQuantity()));
 
                     sale = ProductSale.builder()
+                            .id(productSale.getId())
                             .price(price)
                             .product(product)
                             .quantity(productSale.getQuantity())
                             .discount(productSale.getDiscount())
-                            .seller(productSale.getSeller())
-                            .bill(productSale.getBill())
+                            .seller(salePreUpdate.getSeller())
+                            .bill(salePreUpdate.getBill())
                             .build();
 
                     aux.setEntityClass(productSale.getClass());
@@ -103,17 +103,26 @@ public class UpdateSaleUseCase implements UpdateSalePort {
                             .reduce(BigDecimal.ZERO, (total, detail) -> total.add(detail.getPrice()), BigDecimal::add);
 
                     sale = AppointmentSale.builder()
+                            .id(appointmentSale.getId())
                             .price(price)
                             .appointment(appointment)
                             .discount(appointmentSale.getDiscount())
-                            .seller(appointmentSale.getSeller())
-                            .bill(appointmentSale.getBill())
+                            .seller(salePreUpdate.getSeller())
+                            .bill(salePreUpdate.getBill())
                             .build();
 
                     aux.setEntityClass(appointmentSale.getClass());
                 }
                 case TreatmentSale treatmentSale -> {
                     aux.setEntityClass(treatmentSale.getClass());
+                    sale = TreatmentSale.builder()
+                            .id(treatmentSale.getId())
+                            .price(treatmentSale.getPrice())
+                            .treatment(treatmentSale.getTreatment())
+                            .discount(treatmentSale.getDiscount())
+                            .seller(salePreUpdate.getSeller())
+                            .bill(salePreUpdate.getBill())
+                            .build();
                 }
                 default -> throw new RegisterNotInstanceOfSubclassException(Sale.class);
             }
@@ -127,6 +136,6 @@ public class UpdateSaleUseCase implements UpdateSalePort {
 
         log.info("Sale updated");
 
-        return saleMapper.toDto(updatedSaleAux);
+        return saleMapper.toDto(saleRepository.findById(updatedSaleAux.getId()).get());
     }
 }
