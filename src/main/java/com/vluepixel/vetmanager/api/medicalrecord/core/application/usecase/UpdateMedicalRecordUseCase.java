@@ -59,7 +59,7 @@ public class UpdateMedicalRecordUseCase implements UpdateMedicalRecordPort {
                     FieldUpdate.set("reason", updatedMedicalRecord.getReason()),
                     FieldUpdate.set("physicalExam", updatedMedicalRecord.getPhysicalExam()),
                     FieldUpdate.set("temperatureInCelsius", updatedMedicalRecord.getTemperatureInCelsius()),
-                    FieldUpdate.set("respitarionRate", updatedMedicalRecord.getRespitarionRate()),
+                    FieldUpdate.set("respirationRate", updatedMedicalRecord.getRespirationRate()),
                     FieldUpdate.set("heartRate", updatedMedicalRecord.getHeartRate()),
                     FieldUpdate.set("weight", updatedMedicalRecord.getWeight()),
                     FieldUpdate.set("sterilized", updatedMedicalRecord.isSterilized()),

@@ -64,7 +64,7 @@ public final class MedicalRecord {
     @NotNull
     @Positive
     @Column(columnDefinition = "tinyint unsigned")
-    private Integer respitarionRate;
+    private Integer respirationRate;
     @NotNull
     @Positive
     @Max(1000)

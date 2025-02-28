@@ -34,7 +34,7 @@ public final class CreateMedicalRecordRequest implements Request {
     private BigDecimal temperatureInCelsius;
     @NotNull(message = "La frecuencia respiratoria es requerida")
     @Positive(message = "La frecuencia respiratoria debe ser mayor a 0")
-    private Integer respitarionRate;
+    private Integer respirationRate;
     @NotNull(message = "La frecuencia cardiaca es requerida")
     @Positive(message = "La frecuencia cardiaca debe ser mayor a 0")
     @Max(value = 1000, message = "La frecuencia cardiaca no puede ser mayor a 1000")

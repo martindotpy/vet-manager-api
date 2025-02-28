@@ -504,8 +504,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.entry_at").isString(),
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate").value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight").value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getWeight()),
                         jsonPath("$.content.sterilized").value(VALID_UPDATE_PATIENT_RECORD_REQUEST.isSterilized()),
@@ -622,8 +622,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_ENTRY_AT_MINUS_YEAR_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_ENTRY_AT_MINUS_YEAR_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_ENTRY_AT_MINUS_YEAR_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_ENTRY_AT_MINUS_YEAR_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -657,8 +657,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_ENTRY_AT_TODAY_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_ENTRY_AT_TODAY_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_ENTRY_AT_TODAY_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_ENTRY_AT_TODAY_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -692,8 +692,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_ENTRY_AT_FUTURE_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_ENTRY_AT_FUTURE_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_ENTRY_AT_FUTURE_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_ENTRY_AT_FUTURE_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -742,8 +742,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_PHYSICAL_EXAM_BLANK_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_PHYSICAL_EXAM_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_PHYSICAL_EXAM_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_PHYSICAL_EXAM_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -776,8 +776,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_PHYSICAL_EXAM_EMPTY_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_PHYSICAL_EXAM_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_PHYSICAL_EXAM_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_PHYSICAL_EXAM_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -811,8 +811,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_PHYSICAL_EXAM_NULL_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_PHYSICAL_EXAM_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_PHYSICAL_EXAM_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_PHYSICAL_EXAM_NULL_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -869,9 +869,9 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                                 .value(Double.parseDouble(
                                         VALID_TEMPERATURE_IN_CELSIUS_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
                                                 .getTemperatureInCelsius().toString())),
-                        jsonPath("$.content.respitarion_rate")
+                        jsonPath("$.content.respiration_rate")
                                 .value(VALID_TEMPERATURE_IN_CELSIUS_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
-                                        .getRespitarionRate()),
+                                        .getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_TEMPERATURE_IN_CELSIUS_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
                                         .getHeartRate()),
@@ -955,7 +955,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("respitarion_rate"),
+                        jsonPath("$.details[0].field").value("respiration_rate"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value("La frecuencia respiratoria debe ser mayor a 0"));
     }
@@ -972,7 +972,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("respitarion_rate"),
+                        jsonPath("$.details[0].field").value("respiration_rate"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value("La frecuencia respiratoria debe ser mayor a 0"));
     }
@@ -989,7 +989,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("respitarion_rate"),
+                        jsonPath("$.details[0].field").value("respiration_rate"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value("La frecuencia respiratoria es requerida"));
     }
@@ -1033,8 +1033,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_HEART_RATE_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_HEART_RATE_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_HEART_RATE_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_HEART_RATE_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1139,8 +1139,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_WEIGHT_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_WEIGHT_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_WEIGHT_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_WEIGHT_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1228,8 +1228,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1262,8 +1262,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1296,8 +1296,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1331,8 +1331,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_DIAGNOSIS_BLANK_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_DIAGNOSIS_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_DIAGNOSIS_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_DIAGNOSIS_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1365,8 +1365,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_DIAGNOSIS_EMPTY_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_DIAGNOSIS_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_DIAGNOSIS_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_DIAGNOSIS_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1399,8 +1399,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_DIAGNOSIS_NULL_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_DIAGNOSIS_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_DIAGNOSIS_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_DIAGNOSIS_NULL_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1473,8 +1473,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.entry_at").isString(),
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate").value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight").value(VALID_UPDATE_PATIENT_RECORD_REQUEST.getWeight()),
                         jsonPath("$.content.sterilized").value(VALID_UPDATE_PATIENT_RECORD_REQUEST.isSterilized()),
@@ -1591,8 +1591,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_ENTRY_AT_MINUS_YEAR_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_ENTRY_AT_MINUS_YEAR_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_ENTRY_AT_MINUS_YEAR_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_ENTRY_AT_MINUS_YEAR_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1626,8 +1626,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_ENTRY_AT_TODAY_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_ENTRY_AT_TODAY_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_ENTRY_AT_TODAY_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_ENTRY_AT_TODAY_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1661,8 +1661,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_ENTRY_AT_FUTURE_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_ENTRY_AT_FUTURE_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_ENTRY_AT_FUTURE_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_ENTRY_AT_FUTURE_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1711,8 +1711,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_PHYSICAL_EXAM_BLANK_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_PHYSICAL_EXAM_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_PHYSICAL_EXAM_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_PHYSICAL_EXAM_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1745,8 +1745,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_PHYSICAL_EXAM_EMPTY_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_PHYSICAL_EXAM_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_PHYSICAL_EXAM_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_PHYSICAL_EXAM_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1780,8 +1780,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_PHYSICAL_EXAM_NULL_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_PHYSICAL_EXAM_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_PHYSICAL_EXAM_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_PHYSICAL_EXAM_NULL_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -1838,9 +1838,9 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                                 .value(Double.parseDouble(
                                         VALID_TEMPERATURE_IN_CELSIUS_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
                                                 .getTemperatureInCelsius().toString())),
-                        jsonPath("$.content.respitarion_rate")
+                        jsonPath("$.content.respiration_rate")
                                 .value(VALID_TEMPERATURE_IN_CELSIUS_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
-                                        .getRespitarionRate()),
+                                        .getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_TEMPERATURE_IN_CELSIUS_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
                                         .getHeartRate()),
@@ -1924,7 +1924,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("respitarion_rate"),
+                        jsonPath("$.details[0].field").value("respiration_rate"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value("La frecuencia respiratoria debe ser mayor a 0"));
     }
@@ -1941,7 +1941,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("respitarion_rate"),
+                        jsonPath("$.details[0].field").value("respiration_rate"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value("La frecuencia respiratoria debe ser mayor a 0"));
     }
@@ -1958,7 +1958,7 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                 .andExpectAll(
                         jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
                         jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("respitarion_rate"),
+                        jsonPath("$.details[0].field").value("respiration_rate"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]").value("La frecuencia respiratoria es requerida"));
     }
@@ -2002,8 +2002,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_HEART_RATE_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_HEART_RATE_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_HEART_RATE_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_HEART_RATE_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -2108,8 +2108,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_WEIGHT_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_WEIGHT_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_WEIGHT_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_WEIGHT_MAX_VALUE_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -2197,8 +2197,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_RECIPE_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -2231,8 +2231,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_RECIPE_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -2265,8 +2265,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_RECIPE_NULL_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -2300,8 +2300,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_DIAGNOSIS_BLANK_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_DIAGNOSIS_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_DIAGNOSIS_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_DIAGNOSIS_BLANK_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -2334,8 +2334,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_DIAGNOSIS_EMPTY_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_DIAGNOSIS_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_DIAGNOSIS_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_DIAGNOSIS_EMPTY_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")
@@ -2368,8 +2368,8 @@ public class UpdatePatientRecordIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.temperature_in_celsius")
                                 .value(VALID_DIAGNOSIS_NULL_UPDATE_PATIENT_RECORD_REQUEST
                                         .getTemperatureInCelsius()),
-                        jsonPath("$.content.respitarion_rate")
-                                .value(VALID_DIAGNOSIS_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespitarionRate()),
+                        jsonPath("$.content.respiration_rate")
+                                .value(VALID_DIAGNOSIS_NULL_UPDATE_PATIENT_RECORD_REQUEST.getRespirationRate()),
                         jsonPath("$.content.heart_rate")
                                 .value(VALID_DIAGNOSIS_NULL_UPDATE_PATIENT_RECORD_REQUEST.getHeartRate()),
                         jsonPath("$.content.weight")

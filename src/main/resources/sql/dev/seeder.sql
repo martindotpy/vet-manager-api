@@ -248,7 +248,7 @@ INSERT INTO
     medical_record (
         deleted,
         heart_rate,
-        respitarion_rate,
+        respiration_rate,
         sterilized,
         temperature_in_celsius,
         `weight`,

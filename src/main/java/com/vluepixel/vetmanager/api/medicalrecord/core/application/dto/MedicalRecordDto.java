@@ -30,7 +30,7 @@ public final class MedicalRecordDto {
     private String physicalExam;
     private LocalDateTime entryAt;
     private BigDecimal temperatureInCelsius;
-    private Integer respitarionRate;
+    private Integer respirationRate;
     private Integer heartRate;
     private BigDecimal weight;
     private boolean sterilized;
