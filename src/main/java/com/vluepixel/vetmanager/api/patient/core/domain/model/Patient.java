@@ -35,7 +35,6 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * Patient.
@@ -46,7 +45,6 @@ import lombok.ToString;
 @SQLRestriction("deleted = false")
 @Getter
 @Builder
-@ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
@@ -109,5 +107,24 @@ public final class Patient {
         }
 
         return !birthDate.isAfter(LocalDate.now());
+    }
+
+    @Override
+    public String toString() {
+        return "Patient(id=" + id +
+                ", name='" + name + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender=" + gender +
+                ", characteristics='" + characteristics + '\'' +
+                ", deceased=" + deceased +
+                ", medicalHistories="
+                + (medicalHistories == null ? null : medicalHistories.stream().map(MedicalHistory::getId).toList()) +
+                ", medicalRecords="
+                + (medicalRecords == null ? null : medicalRecords.stream().map(MedicalRecord::getId).toList()) +
+                ", vaccines=" + (vaccines == null ? null : vaccines.stream().map(Vaccine::getId).toList()) +
+                ", race=" + race +
+                ", owner=" + (owner == null ? "null" : owner.getId()) +
+                ", deleted=" + deleted +
+                ')';
     }
 }

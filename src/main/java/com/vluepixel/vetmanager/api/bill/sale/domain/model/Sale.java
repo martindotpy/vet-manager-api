@@ -26,7 +26,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -37,7 +36,6 @@ import lombok.experimental.SuperBuilder;
 @EntityListeners(AuditingEntityListener.class)
 @Audited
 @Getter
-@ToString
 @SuperBuilder
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -67,4 +65,14 @@ public abstract class Sale {
     @NotNull
     @ManyToOne
     private Bill bill;
+
+    @Override
+    public String toString() {
+        return "Sale(id=" + id +
+                ", price=" + price +
+                ", discount=" + discount +
+                ", seller=" + (seller == null ? null : seller.getId()) +
+                ", bill=" + (bill == null ? null : bill.getId()) +
+                ")";
+    }
 }

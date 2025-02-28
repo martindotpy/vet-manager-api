@@ -21,7 +21,6 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * Treatment.
@@ -32,7 +31,6 @@ import lombok.ToString;
 @SQLRestriction("deleted = false")
 @Getter
 @Builder
-@ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
@@ -56,4 +54,13 @@ public final class Treatment {
 
     @Builder.Default
     private boolean deleted = false;
+
+    @Override
+    public String toString() {
+        return "Treatment(id=" + id +
+                ", description='" + description + '\'' +
+                ", order=" + order +
+                ", medicalRecord=" + (medicalRecord == null ? "null" : medicalRecord.getId()) +
+                ')';
+    }
 }
