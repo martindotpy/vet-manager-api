@@ -60,7 +60,7 @@ public final class Treatment {
         return "Treatment(id=" + id +
                 ", description='" + description + '\'' +
                 ", order=" + order +
-                ", medicalRecord=" + (medicalRecord == null ? "null" : medicalRecord.getId()) +
+                ", medicalRecord=" + (medicalRecord == null ? null : medicalRecord.getId()) +
                 ')';
     }
 }

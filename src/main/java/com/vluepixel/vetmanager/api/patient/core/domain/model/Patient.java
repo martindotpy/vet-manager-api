@@ -123,7 +123,7 @@ public final class Patient {
                 + (medicalRecords == null ? null : medicalRecords.stream().map(MedicalRecord::getId).toList()) +
                 ", vaccines=" + (vaccines == null ? null : vaccines.stream().map(Vaccine::getId).toList()) +
                 ", race=" + race +
-                ", owner=" + (owner == null ? "null" : owner.getId()) +
+                ", owner=" + (owner == null ? null : owner.getId()) +
                 ", deleted=" + deleted +
                 ')';
     }
