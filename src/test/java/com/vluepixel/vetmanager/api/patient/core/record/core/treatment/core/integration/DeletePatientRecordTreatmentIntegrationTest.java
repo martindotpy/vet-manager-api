@@ -80,7 +80,7 @@ public class DeletePatientRecordTreatmentIntegrationTest extends BaseIntegration
     }
 
     // Record ID
-    @Test // TODO: Should be returns Record Not Found but return patient is Not Found
+    @Test
     void admin_DeletePatientRecordTreatmentWithInvalidParams_RecordID_NotFound_NotFound() throws Exception {
         mockMvc.perform(delete("/patient/{patient_id}/record/{record_id}/treatment/{id}", 1, 10, 1)
                 .header("Authorization", BEARER_USER_JWT))
