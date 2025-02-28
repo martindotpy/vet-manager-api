@@ -11,7 +11,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(10L)
             .description("Tratamiento actualizado")
             .order(1)
-            .medicalRecordId(1L)
             .build();
 
     public static final UpdateTreatmentRequest INVALID_ID_NEGATIVE_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
@@ -19,7 +18,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(-10L)
             .description(INVALID_ID_NOT_FOUND_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(INVALID_ID_NOT_FOUND_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .medicalRecordId(INVALID_ID_NOT_FOUND_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getMedicalRecordId())
             .build();
 
     public static final UpdateTreatmentRequest INVALID_ID_NULL_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
@@ -27,7 +25,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(null)
             .description(INVALID_ID_NEGATIVE_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(INVALID_ID_NEGATIVE_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .medicalRecordId(INVALID_ID_NEGATIVE_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getMedicalRecordId())
             .build();
 
     public static final UpdateTreatmentRequest VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
@@ -35,7 +32,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(1L)
             .description(INVALID_ID_NULL_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(INVALID_ID_NULL_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .medicalRecordId(INVALID_ID_NULL_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getMedicalRecordId())
             .build();
 
     // Description
@@ -44,7 +40,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
             .description(" ")
             .order(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .medicalRecordId(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getMedicalRecordId())
             .build();
 
     public static final UpdateTreatmentRequest INVALID_DESCRIPTION_EMPTY_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
@@ -52,7 +47,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
             .description("")
             .order(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .medicalRecordId(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getMedicalRecordId())
             .build();
 
     public static final UpdateTreatmentRequest INVALID_DESCRIPTION_NULL_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
@@ -60,7 +54,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
             .description(null)
             .order(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .medicalRecordId(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getMedicalRecordId())
             .build();
 
     // Order
@@ -69,7 +62,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
             .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(-1)
-            .medicalRecordId(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getMedicalRecordId())
             .build();
 
     public static final UpdateTreatmentRequest INVALID_ORDER_ZERO_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
@@ -77,7 +69,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
             .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(0)
-            .medicalRecordId(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getMedicalRecordId())
             .build();
 
     public static final UpdateTreatmentRequest INVALID_ORDER_NULL_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
@@ -85,7 +76,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
             .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(null)
-            .medicalRecordId(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getMedicalRecordId())
             .build();
 
     // Medical Record ID
@@ -94,7 +84,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
             .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .medicalRecordId(10L)
             .build();
 
     public static final UpdateTreatmentRequest INVALID_MEDICAL_RECORD_ID_NEGATIVE_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
@@ -102,7 +91,6 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
             .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .medicalRecordId(-1L)
             .build();
 
     public static final UpdateTreatmentRequest INVALID_MEDICAL_RECORD_ID_NULL_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
@@ -110,6 +98,5 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
             .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .medicalRecordId(null)
             .build();
 }
