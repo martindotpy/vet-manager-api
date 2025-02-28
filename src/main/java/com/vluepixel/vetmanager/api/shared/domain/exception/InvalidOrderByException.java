@@ -2,12 +2,10 @@ package com.vluepixel.vetmanager.api.shared.domain.exception;
 
 import static com.vluepixel.vetmanager.api.shared.domain.util.CaseConverterUtils.toSnakeCase;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
+import com.vluepixel.vetmanager.api.shared.domain.util.ClassUtils;
 import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationError;
 
 import lombok.Getter;
@@ -22,31 +20,7 @@ public final class InvalidOrderByException extends ValidationException {
                 new ValidationError(
                         "query.order_by",
                         "Solo los siguientes campos son válidos: " + Stream.of(clazz.getDeclaredFields())
-                                .filter(field -> {
-                                    Class<?> type = field.getType();
-
-                                    return type.equals(String.class) ||
-                                            type.equals(Integer.class) ||
-                                            type.equals(Long.class) ||
-                                            type.equals(Double.class) ||
-                                            type.equals(Float.class) ||
-                                            type.equals(Boolean.class) ||
-                                            type.equals(BigDecimal.class) ||
-                                            type.equals(LocalDate.class) ||
-                                            type.equals(LocalDateTime.class) ||
-                                            type.equals(int.class) ||
-                                            type.equals(long.class) ||
-                                            type.equals(double.class) ||
-                                            type.equals(float.class) ||
-                                            type.equals(boolean.class) ||
-                                            type.equals(byte.class) ||
-                                            type.equals(short.class) ||
-                                            type.equals(char.class) ||
-                                            type.equals(Byte.class) ||
-                                            type.equals(Short.class) ||
-                                            type.equals(Character.class) ||
-                                            type.isEnum();
-                                })
+                                .filter(field -> ClassUtils.isPrimitive(field.getType()))
                                 .map(field -> toSnakeCase(field.getName()))
                                 .filter(
                                         field -> {
