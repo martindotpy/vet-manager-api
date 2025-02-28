@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
-    private static final int COLUMN_WIDTH_OFFSET = 500;
+    private static final int COLUMN_WIDTH_OFFSET = 1000;
     private static final String DATE_FORMAT = "yyyy/MM/dd";
     private static final String DATE_TIME_FORMAT = "yyyy/MM/dd HH:mm";
     private CellStyle dateCellStyle;
@@ -127,14 +127,37 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
 
     private void populateDataRows(Workbook workbook, Sheet sheet, Table table) {
         List<Object[]> rows = table.getRows();
+        int rowSize = table.getHeaders().length;
+
+        Object id = null;
+        boolean isEven = true;
+        CellStyle evenStyle = createEvenRowStyle(workbook);
+        CellStyle startEvenStyle = createStartEvenRowStyle(workbook);
+        CellStyle endEvenStyle = createEndEvenRowStyle(workbook);
+        CellStyle oddStyle = createOddRowStyle(workbook);
+        CellStyle startOddStyle = createStartOddRowStyle(workbook);
+        CellStyle endOddStyle = createEndOddRowStyle(workbook);
+
         for (int i = 0; i < rows.size(); i++) {
             Row row = sheet.createRow(i + 1);
             Object[] rowValues = rows.get(i);
 
-            for (int j = 0; j < table.getHeaders().length; j++) {
+            if (id == null || !id.equals(rowValues[0])) {
+                id = rowValues[0];
+                isEven = !isEven;
+            }
+
+            for (int j = 0; j < rowSize; j++) {
                 Object value = rowValues[j];
 
                 createCell(workbook, row, j, value);
+
+                if (j == 0)
+                    row.getCell(j).setCellStyle(isEven ? startEvenStyle : startOddStyle);
+                else if (j == rowSize - 1)
+                    row.getCell(j).setCellStyle(isEven ? endEvenStyle : endOddStyle);
+                else
+                    row.getCell(j).setCellStyle(isEven ? evenStyle : oddStyle);
             }
         }
     }
@@ -186,20 +209,114 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
     private CellStyle createHeaderStyle(Workbook workbook) {
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
+
         font.setBold(true);
         font.setColor(IndexedColors.WHITE.getIndex());
+        font.setFontName("Aptos Narrow");
         style.setFont(font);
 
-        style.setFillForegroundColor(IndexedColors.ROYAL_BLUE.getIndex());
+        style.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        style.setBorderTop(BorderStyle.THIN);
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBorderLeft(BorderStyle.THIN);
-        style.setBorderRight(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.WHITE.getIndex());
+        style.setBottomBorderColor(IndexedColors.WHITE.getIndex());
+        style.setLeftBorderColor(IndexedColors.WHITE.getIndex());
+        style.setRightBorderColor(IndexedColors.WHITE.getIndex());
 
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        return style;
+    }
+
+    private CellStyle createEvenRowStyle(Workbook workbook) {
+        CellStyle style = workbook.createCellStyle();
+
+        style.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+
+        return style;
+    }
+
+    private CellStyle createStartEvenRowStyle(Workbook workbook) {
+        CellStyle style = workbook.createCellStyle();
+
+        style.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setLeftBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+
+        return style;
+    }
+
+    private CellStyle createEndEvenRowStyle(Workbook workbook) {
+        CellStyle style = workbook.createCellStyle();
+
+        style.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderRight(BorderStyle.THIN);
+        style.setRightBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+
+        return style;
+    }
+
+    private CellStyle createOddRowStyle(Workbook workbook) {
+        CellStyle style = workbook.createCellStyle();
+
+        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+
+        return style;
+    }
+
+    private CellStyle createStartOddRowStyle(Workbook workbook) {
+        CellStyle style = workbook.createCellStyle();
+
+        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderLeft(BorderStyle.THIN);
+        style.setLeftBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+
+        return style;
+    }
+
+    private CellStyle createEndOddRowStyle(Workbook workbook) {
+        CellStyle style = workbook.createCellStyle();
+
+        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderRight(BorderStyle.THIN);
+        style.setRightBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
 
         return style;
     }
