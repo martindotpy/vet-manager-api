@@ -60,7 +60,7 @@ public final class JakartaValidator implements ExternalRequestValidator {
                     Objects.requireNonNull(v.getMessage(), "Message cannot be null");
                 })
                 .map(v -> {
-                    String path = v.getPropertyPath().toString();
+                    String path = v.getPropertyPath().toString().replace(".<list element>", "");
                     log.debug("Violation on path {} of type {}",
                             fgBrightRed(path),
                             fgBrightRed(v.getRootBeanClass().getSimpleName()));
