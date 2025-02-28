@@ -64,6 +64,7 @@ public class SpanishUtils {
         values.put("email", "Correo electrónico");
         values.put("emails", "Correos electrónicos");
         values.put("entry_at", "Fecha de ingreso");
+        values.put("female", "Hembra");
         values.put("first_name", "Nombre");
         values.put("gender", "Género");
         values.put("heart_rate", "Frecuencia cardíaca");
@@ -72,6 +73,7 @@ public class SpanishUtils {
         values.put("id", "Id");
         values.put("last_name", "Apellido");
         values.put("last_paid_at", "Último pago en");
+        values.put("male", "Macho");
         values.put("medical_history", "Historia clínica");
         values.put("medical_histories", "Historias clínicas");
         values.put("medical_record", "Registro médico");
