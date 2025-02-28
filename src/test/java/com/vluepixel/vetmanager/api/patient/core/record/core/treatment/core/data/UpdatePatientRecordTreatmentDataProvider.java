@@ -77,26 +77,4 @@ public class UpdatePatientRecordTreatmentDataProvider {
             .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
             .order(null)
             .build();
-
-    // Medical Record ID
-    public static final UpdateTreatmentRequest INVALID_MEDICAL_RECORD_ID_NOT_FOUND_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
-            .builder()
-            .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
-            .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
-            .order(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .build();
-
-    public static final UpdateTreatmentRequest INVALID_MEDICAL_RECORD_ID_NEGATIVE_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
-            .builder()
-            .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
-            .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
-            .order(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .build();
-
-    public static final UpdateTreatmentRequest INVALID_MEDICAL_RECORD_ID_NULL_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST = UpdateTreatmentRequest
-            .builder()
-            .id(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getId())
-            .description(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getDescription())
-            .order(VALID_UPDATE_PATIENT_RECORD_TREATMENT_REQUEST.getOrder())
-            .build();
 }
