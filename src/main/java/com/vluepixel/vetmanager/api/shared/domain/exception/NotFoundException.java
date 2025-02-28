@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.shared.domain.exception;
 
-import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.getName;
+import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.translate;
 
 import lombok.Getter;
 
@@ -17,26 +17,26 @@ public final class NotFoundException extends ErrorException {
     }
 
     public NotFoundException(String entity) {
-        this.message = this.message.replace("%", getName(entity));
+        this.message = this.message.replace("%", translate(entity));
     }
 
     public NotFoundException(Class<?> entity) {
-        this(getName(entity));
+        this(translate(entity));
     }
 
     public NotFoundException(String entity, Object id) {
-        this.message = this.message.replace("%", getName(entity) + " con id " + id);
+        this.message = this.message.replace("%", translate(entity) + " con id " + id);
     }
 
     public NotFoundException(Class<?> entity, Object id) {
-        this(getName(entity), id);
+        this(translate(entity), id);
     }
 
     public NotFoundException(String entity, String field, Object value) {
-        this.message = this.message.replace("%", getName(entity) + " con " + getName(field) + " " + value);
+        this.message = this.message.replace("%", translate(entity) + " con " + translate(field) + " " + value);
     }
 
     public NotFoundException(Class<?> entity, String field, Object value) {
-        this(getName(entity), getName(field), value);
+        this(translate(entity), translate(field), value);
     }
 }

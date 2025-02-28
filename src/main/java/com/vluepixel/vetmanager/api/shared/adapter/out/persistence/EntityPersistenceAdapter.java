@@ -40,7 +40,7 @@ public abstract class EntityPersistenceAdapter<E, ID, R extends JpaRepository<E,
         this.entityClass = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass())
                 .getActualTypeArguments()[0];
         this.entityName = entityClass.getSimpleName();
-        this.representationName = SpanishUtils.getName(entityClass);
+        this.representationName = SpanishUtils.translate(entityClass);
     }
 
     public List<E> findAll() {

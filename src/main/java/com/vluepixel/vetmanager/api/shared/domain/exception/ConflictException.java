@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.shared.domain.exception;
 
-import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.getName;
+import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.translate;
 
 import lombok.Getter;
 
@@ -17,21 +17,21 @@ public final class ConflictException extends ErrorException {
     }
 
     public ConflictException(String entity) {
-        this.message = this.message.replace("%", getName(entity));
+        this.message = this.message.replace("%", translate(entity));
     }
 
     public ConflictException(Class<?> entity) {
-        this(getName(entity));
+        this(translate(entity));
     }
 
     public ConflictException(String entity, String field) {
-        String entityName = getName(entity);
+        String entityName = translate(entity);
         entityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
 
-        this.message = this.message.replace("%", getName(field) + " de " + entityName);
+        this.message = this.message.replace("%", translate(field) + " de " + entityName);
     }
 
     public ConflictException(Class<?> entity, String field) {
-        this(getName(entity), getName(field));
+        this(translate(entity), translate(field));
     }
 }

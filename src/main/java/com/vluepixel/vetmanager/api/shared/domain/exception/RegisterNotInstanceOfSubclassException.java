@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.shared.domain.exception;
 
-import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.getName;
+import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.translate;
 
 import lombok.Getter;
 
@@ -17,14 +17,14 @@ public final class RegisterNotInstanceOfSubclassException extends ErrorException
     }
 
     public RegisterNotInstanceOfSubclassException(Class<?> entity) {
-        String name = getName(entity);
+        String name = translate(entity);
         name = name.substring(0, 1).toLowerCase() + name.substring(1);
 
         this.message = this.message.replace("%", "que " + name);
     }
 
     public RegisterNotInstanceOfSubclassException(Class<?> entity, Object id) {
-        String name = getName(entity);
+        String name = translate(entity);
         name = name.substring(0, 1).toLowerCase() + name.substring(1);
 
         this.message = this.message.replace("%", "que " + name + " con id " + id);

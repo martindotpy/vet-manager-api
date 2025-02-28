@@ -121,7 +121,7 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
         for (int i = 0; i < headers.length; i++) {
             Cell cell = headerRow.createCell(i);
             cell.setCellStyle(headerStyle);
-            cell.setCellValue(SpanishUtils.getName(headers[i]));
+            cell.setCellValue(SpanishUtils.translate(headers[i]));
         }
     }
 
@@ -166,7 +166,7 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
 
     private void handleEnumCell(Cell cell, Object value) {
         String enumName = ((Enum<?>) value).name().toLowerCase();
-        cell.setCellValue(SpanishUtils.getName(enumName));
+        cell.setCellValue(SpanishUtils.translate(enumName));
     }
 
     private void handleDateCell(Workbook workbook, Cell cell, LocalDate date) {
@@ -205,7 +205,7 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
     }
 
     private String generateSheetName(Class<?> clazz) {
-        return SpanishUtils.getName(clazz.getSimpleName().replaceAll("(?i)dto", ""));
+        return SpanishUtils.translate(clazz.getSimpleName().replaceAll("(?i)dto", ""));
     }
 
     private void initializeCellStyles(Workbook workbook) {

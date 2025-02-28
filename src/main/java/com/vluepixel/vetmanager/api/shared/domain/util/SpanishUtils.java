@@ -21,7 +21,7 @@ public class SpanishUtils {
      * @param value the value.
      * @return the Spanish name
      */
-    public static String getName(String value) {
+    public static String translate(String value) {
         return values.getOrDefault(toSnakeCase(value), value);
     }
 
@@ -31,8 +31,8 @@ public class SpanishUtils {
      * @param clazz the class.
      * @return the Spanish name
      */
-    public static String getName(Class<?> clazz) {
-        return getName(clazz.getSimpleName());
+    public static String translate(Class<?> clazz) {
+        return translate(clazz.getSimpleName());
     }
 
     private static Map<String, String> loadValues() {
@@ -44,8 +44,10 @@ public class SpanishUtils {
         values.put("appointment_details", "Detalles de la cita");
         values.put("appointment_type", "Tipo de cita");
         values.put("appointment_sale", "Venta de cita");
+        values.put("bill", "Cuenta");
         values.put("birth_date", "Fecha de nacimiento");
         values.put("category", "Categoría");
+        values.put("categories", "Categorías");
         values.put("characteristics", "Características");
         values.put("client", "Cliente");
         values.put("content", "Contenido");
@@ -54,6 +56,7 @@ public class SpanishUtils {
         values.put("deleted", "Eliminado");
         values.put("description", "Descripción");
         values.put("diagnosis", "Diagnóstico");
+        values.put("discount", "Descuento");
         values.put("deceased", "Fallecido");
         values.put("dose_in_milliliters", "Dosis en mililitros");
         values.put("duration_in_minutes", "Duración en minutos");
@@ -62,12 +65,13 @@ public class SpanishUtils {
         values.put("emails", "Correos electrónicos");
         values.put("entry_at", "Fecha de ingreso");
         values.put("first_name", "Nombre");
-        values.put("genre", "Género");
-        values.put("hear_rate", "Frecuencia cardíaca");
+        values.put("gender", "Género");
+        values.put("heart_rate", "Frecuencia cardíaca");
         values.put("identification", "Identificación");
         values.put("identification_type", "Tipo de identificación");
         values.put("id", "Id");
         values.put("last_name", "Apellido");
+        values.put("last_paid_at", "Último pago en");
         values.put("medical_history", "Historia clínica");
         values.put("medical_histories", "Historias clínicas");
         values.put("medical_record", "Registro médico");
@@ -83,15 +87,20 @@ public class SpanishUtils {
         values.put("price", "Precio");
         values.put("profile_image_url", "Url de la imagen de perfil");
         values.put("provided_at", "Fecha de aplicación");
+        values.put("product", "Producto");
         values.put("product_sale", "Venta de producto");
         values.put("product_sales", "Ventas de productos");
+        values.put("quantity", "Cantidad");
         values.put("race", "Raza");
         values.put("races", "Razas");
         values.put("reason", "Motivo");
         values.put("recipe", "Receta");
-        values.put("respiratory_rate", "Frecuencia respiratoria");
+        values.put("respiration_rate", "Frecuencia respiratoria");
         values.put("role", "Rol");
         values.put("roles", "Roles");
+        values.put("sale", "Venta");
+        values.put("sales", "Ventas");
+        values.put("seller", "Vendedor");
         values.put("species", "Especie");
         values.put("start_at", "Fecha de inicio");
         values.put("sterilized", "Esterilizado");
@@ -100,6 +109,8 @@ public class SpanishUtils {
         values.put("treatments", "Tratamientos");
         values.put("treatment_sale", "Venta de tratamiento");
         values.put("type", "Tipo");
+        values.put("total", "Total");
+        values.put("total_paid", "Total pagado");
         values.put("updated_at", "Actualizado en");
         values.put("updated_by", "Actualizado por");
         values.put("user", "Usuario");

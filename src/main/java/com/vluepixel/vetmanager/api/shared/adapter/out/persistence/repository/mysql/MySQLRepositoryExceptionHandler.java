@@ -2,7 +2,7 @@ package com.vluepixel.vetmanager.api.shared.adapter.out.persistence.repository.m
 
 import static com.vluepixel.vetmanager.api.shared.adapter.in.util.AnsiShortcuts.fgBrightRed;
 import static com.vluepixel.vetmanager.api.shared.domain.util.CaseConverterUtils.toSnakeCase;
-import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.getName;
+import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.translate;
 
 import java.util.List;
 
@@ -151,7 +151,7 @@ public final class MySQLRepositoryExceptionHandler implements RepositoryExceptio
             throw new ValidationException(
                     List.of(new ValidationError(
                             toSnakeCase(field),
-                            getName(field) + " no puede ser nulo(a)")));
+                            translate(field) + " no puede ser nulo(a)")));
         }
 
         else if (type == RepositoryErrorType.DELETE_ENTITY_REFERENCED) {

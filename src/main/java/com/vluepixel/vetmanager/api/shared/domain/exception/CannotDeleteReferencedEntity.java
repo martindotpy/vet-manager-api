@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.shared.domain.exception;
 
-import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.getName;
+import static com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils.translate;
 
 import lombok.Getter;
 
@@ -13,7 +13,7 @@ public final class CannotDeleteReferencedEntity extends ErrorException {
     private final int status = 409;
 
     public CannotDeleteReferencedEntity(Class<?> clazz) {
-        String name = getName(clazz);
+        String name = translate(clazz);
         this.message = this.message.replace("%", name.substring(0, 1).toLowerCase() + name.substring(1));
     }
 }
