@@ -74,6 +74,7 @@ security:
         - /user
         - /user/{id}
         - /user/email
+        - /user/excel
 
     - methods:
         - PUT

@@ -4,6 +4,8 @@ import static com.vluepixel.vetmanager.api.shared.adapter.in.util.ResponseShortc
 import static com.vluepixel.vetmanager.api.shared.adapter.in.util.ResponseShortcuts.okPaginated;
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.like;
 
+import java.time.LocalDateTime;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import com.vluepixel.vetmanager.api.client.core.application.port.in.CreateClient
 import com.vluepixel.vetmanager.api.client.core.application.port.in.DeleteClientPort;
 import com.vluepixel.vetmanager.api.client.core.application.port.in.FindClientPort;
 import com.vluepixel.vetmanager.api.client.core.application.port.in.UpdateClientPort;
+import com.vluepixel.vetmanager.api.client.core.application.port.out.ExportClientExcelPort;
 import com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType;
 import com.vluepixel.vetmanager.api.client.core.domain.request.CreateClientRequest;
 import com.vluepixel.vetmanager.api.client.core.domain.request.UpdateClientRequest;
@@ -30,6 +33,7 @@ import com.vluepixel.vetmanager.api.shared.application.annotation.RestController
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Order;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
+import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
 import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
@@ -51,6 +55,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public final class ClientController {
     private final FindClientPort findClientPort;
+    private final ExportClientExcelPort exportClientExcelPort;
     private final CreateClientPort createClientPort;
     private final UpdateClientPort updateClientPort;
     private final DeleteClientPort deleteClientPort;
@@ -132,6 +137,25 @@ public final class ClientController {
         return ok(() -> createClientPort.create(request),
                 "Cliente creado exitosamente",
                 ValidationRequest.of(request));
+    }
+
+    /**
+     * Export clients to excel.
+     *
+     * @return response with the excel file
+     * @throws InternalServerErrorException if the export fails.
+     */
+    @Operation(summary = "Export clients to excel", description = "Export all clients to excel", responses = {
+            @ApiResponse(responseCode = "200", description = "Clients exported successfully"),
+            @ApiResponse(responseCode = "500", description = "Error exporting clients to excel", content = @Content(schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @GetMapping("/excel")
+    public ResponseEntity<byte[]> exportExcel()
+            throws InternalServerErrorException {
+        return ok(exportClientExcelPort::export,
+                "Clientes " + LocalDateTime.now().format(ExportClientExcelPort.DATE_TIME_FORMATTER) + ".xlsx",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "No se ha podido exportar los clientes a excel correctamente");
     }
 
     /**

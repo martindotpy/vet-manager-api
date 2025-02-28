@@ -4,6 +4,8 @@ import static com.vluepixel.vetmanager.api.shared.adapter.in.util.ResponseShortc
 import static com.vluepixel.vetmanager.api.shared.adapter.in.util.ResponseShortcuts.okPaginated;
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.like;
 
+import java.time.LocalDateTime;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import com.vluepixel.vetmanager.api.appointment.core.application.port.in.CreateA
 import com.vluepixel.vetmanager.api.appointment.core.application.port.in.DeleteAppointmentPort;
 import com.vluepixel.vetmanager.api.appointment.core.application.port.in.FindAppointmentPort;
 import com.vluepixel.vetmanager.api.appointment.core.application.port.in.UpdateAppointmentPort;
+import com.vluepixel.vetmanager.api.appointment.core.application.port.out.ExportAppointmentExcelPort;
 import com.vluepixel.vetmanager.api.appointment.core.domain.request.CreateAppointmentRequest;
 import com.vluepixel.vetmanager.api.appointment.core.domain.request.UpdateAppointmentRequest;
 import com.vluepixel.vetmanager.api.shared.adapter.in.response.BasicResponse;
@@ -29,6 +32,7 @@ import com.vluepixel.vetmanager.api.shared.application.annotation.RestController
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Order;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
+import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
 import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
@@ -50,6 +54,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public final class AppointmentController {
     private final FindAppointmentPort findAppointmentPort;
+    private final ExportAppointmentExcelPort exportAppointmentExcelPort;
     private final CreateAppointmentPort createAppointmentPort;
     private final UpdateAppointmentPort updateAppointmentPort;
     private final DeleteAppointmentPort deleteAppointmentPort;
@@ -118,6 +123,25 @@ public final class AppointmentController {
                         id < 1,
                         "query.id",
                         "El id debe ser mayor a 0"));
+    }
+
+    /**
+     * Export appointments to excel.
+     *
+     * @return response with the excel file
+     * @throws InternalServerErrorException if the export fails.
+     */
+    @Operation(summary = "Export appointments to excel", description = "Export all appointments to excel", responses = {
+            @ApiResponse(responseCode = "200", description = "Appointments exported successfully"),
+            @ApiResponse(responseCode = "500", description = "Error exporting appointments to excel", content = @Content(schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @GetMapping("/excel")
+    public ResponseEntity<byte[]> exportExcel()
+            throws InternalServerErrorException {
+        return ok(exportAppointmentExcelPort::export,
+                "Citas " + LocalDateTime.now().format(ExportAppointmentExcelPort.DATE_TIME_FORMATTER) + ".xlsx",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "No se ha podido exportar las citas a excel correctamente");
     }
 
     /**

@@ -5,6 +5,8 @@ import static com.vluepixel.vetmanager.api.shared.adapter.in.util.ResponseShortc
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.equal;
 import static com.vluepixel.vetmanager.api.shared.domain.criteria.Filter.like;
 
+import java.time.LocalDateTime;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import com.vluepixel.vetmanager.api.patient.core.application.port.in.CreatePatie
 import com.vluepixel.vetmanager.api.patient.core.application.port.in.DeletePatientPort;
 import com.vluepixel.vetmanager.api.patient.core.application.port.in.FindPatientPort;
 import com.vluepixel.vetmanager.api.patient.core.application.port.in.UpdatePatientPort;
+import com.vluepixel.vetmanager.api.patient.core.application.port.out.ExportPatientExcelPort;
 import com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender;
 import com.vluepixel.vetmanager.api.patient.core.domain.request.CreatePatientRequest;
 import com.vluepixel.vetmanager.api.patient.core.domain.request.UpdatePatientRequest;
@@ -32,6 +35,7 @@ import com.vluepixel.vetmanager.api.shared.application.annotation.RestController
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Criteria;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.Order;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
+import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
 import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
@@ -53,6 +57,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public final class PatientController {
     private final FindPatientPort findPatientPort;
+    private final ExportPatientExcelPort exportPatientExcelPort;
     private final CreatePatientPort createPatientPort;
     private final UpdatePatientPort updatePatientPort;
     private final DeletePatientPort deletePatientPort;
@@ -172,6 +177,25 @@ public final class PatientController {
                         id < 1,
                         "query.id",
                         "El id debe ser mayor a 0"));
+    }
+
+    /**
+     * Export patients to excel.
+     *
+     * @return response with the excel file
+     * @throws InternalServerErrorException if the export fails.
+     */
+    @Operation(summary = "Export patients to excel", description = "Export all patients to excel", responses = {
+            @ApiResponse(responseCode = "200", description = "Patients exported successfully"),
+            @ApiResponse(responseCode = "500", description = "Error exporting patients to excel", content = @Content(schema = @Schema(implementation = FailureResponse.class)))
+    })
+    @GetMapping("/excel")
+    public ResponseEntity<byte[]> exportExcel()
+            throws InternalServerErrorException {
+        return ok(exportPatientExcelPort::export,
+                "Pacientes " + LocalDateTime.now().format(ExportPatientExcelPort.DATE_TIME_FORMATTER) + ".xlsx",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "No se ha podido exportar los pacientes a excel correctamente");
     }
 
     /**
