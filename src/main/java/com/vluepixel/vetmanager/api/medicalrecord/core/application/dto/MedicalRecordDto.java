@@ -9,14 +9,18 @@ import com.vluepixel.vetmanager.api.user.core.application.dto.UserDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Medical record DTO.
  */
 @Getter
 @Builder
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public final class MedicalRecordDto {

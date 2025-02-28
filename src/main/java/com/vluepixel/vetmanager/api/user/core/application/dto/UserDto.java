@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.vluepixel.vetmanager.api.user.core.domain.model.enums.UserRole;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
@@ -14,6 +17,9 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 public final class UserDto {
     private Long id;
 
