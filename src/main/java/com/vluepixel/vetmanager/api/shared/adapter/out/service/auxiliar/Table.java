@@ -190,7 +190,13 @@ public class Table {
                             Field idField = ClassUtils.getIdField(o1.getClass());
                             idField.setAccessible(true);
 
-                            return ((Comparable<Object>) idField.get(o1)).compareTo(idField.get(o2));
+                            Object id1 = idField.get(o1);
+                            Object id2 = idField.get(o2);
+
+                            if (id1 == null || id2 == null)
+                                return 0;
+
+                            return ((Comparable<Object>) id1).compareTo(id2);
                         } catch (IllegalAccessException e) {
                             log.error("Error sorting nested data", e);
 
