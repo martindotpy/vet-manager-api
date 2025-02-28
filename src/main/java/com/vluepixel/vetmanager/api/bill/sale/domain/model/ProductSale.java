@@ -14,8 +14,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -25,7 +27,9 @@ import lombok.experimental.SuperBuilder;
 @Audited
 @EntityListeners(AuditingEntityListener.class)
 @Getter
+@ToString(callSuper = true)
 @SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public final class ProductSale extends Sale {
