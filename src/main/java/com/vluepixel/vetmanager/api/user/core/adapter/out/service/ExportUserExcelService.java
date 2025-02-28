@@ -16,6 +16,6 @@ import com.vluepixel.vetmanager.api.user.core.domain.repository.UserRepository;
 public final class ExportUserExcelService extends ExportExcelSubService<User, UserDto>
         implements ExportUserExcelPort {
     public ExportUserExcelService(UserRepository userRepository, UserMapper userMapper) {
-        super(userRepository, userMapper);
+        super(userRepository, userMapper, UserDto.class);
     }
 }

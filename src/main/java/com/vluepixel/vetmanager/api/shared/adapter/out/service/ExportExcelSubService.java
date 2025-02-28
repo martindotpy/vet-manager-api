@@ -1,10 +1,13 @@
 package com.vluepixel.vetmanager.api.shared.adapter.out.service;
 
 import java.io.OutputStream;
-import java.lang.reflect.ParameterizedType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -29,29 +32,29 @@ import com.vluepixel.vetmanager.api.shared.domain.util.SpanishUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Export excel service.
- *
- * @param <E>   Entity type.
- * @param <DTO> DTO type.
+ * Export excel sub service.
  */
 @Slf4j
 public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
     private static final int COLUMN_WIDTH_OFFSET = 1000;
     private static final String DATE_FORMAT = "yyyy/MM/dd";
     private static final String DATE_TIME_FORMAT = "yyyy/MM/dd HH:mm";
-    private CellStyle dateCellStyle;
-    private CellStyle dateTimeCellStyle;
+    private static final String DEFAULT_FONT = "Arial";
+
+    private final Map<CellStyle, CellStyle> dateStyleCache = new HashMap<>();
+    private final Map<CellStyle, CellStyle> dateTimeStyleCache = new HashMap<>();
 
     private final BasicRepository<E, ?> basicRepository;
     private final BasicMapper<E, DTO> basicMapper;
     private final Class<DTO> clazz;
 
-    @SuppressWarnings("unchecked")
-    public ExportExcelSubService(BasicRepository<E, ?> basicRepository, BasicMapper<E, DTO> basicMapper) {
+    public ExportExcelSubService(
+            BasicRepository<E, ?> basicRepository,
+            BasicMapper<E, DTO> basicMapper,
+            Class<DTO> clazz) {
         this.basicRepository = basicRepository;
         this.basicMapper = basicMapper;
-        this.clazz = (Class<DTO>) ((ParameterizedType) getClass().getGenericSuperclass())
-                .getActualTypeArguments()[1];
+        this.clazz = clazz;
     }
 
     @Override
@@ -67,47 +70,22 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
             initializeCellStyles(workbook);
             generateSheet(workbook, table, clazz);
 
-            // Adjust column width
-            for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-                Sheet sheet = workbook.getSheetAt(i);
-                Row firstRow = sheet.getRow(0);
-                Cell cell = firstRow.getCell(0);
-
-                while (cell != null) {
-                    sheet.autoSizeColumn(cell.getColumnIndex());
-                    sheet.setColumnWidth(cell.getColumnIndex(),
-                            sheet.getColumnWidth(cell.getColumnIndex()) + COLUMN_WIDTH_OFFSET);
-                    cell = firstRow.getCell(cell.getColumnIndex() + 1);
-                }
-            }
-
-            // Sort sheets alphabetically
-            int numberOfSheets = workbook.getNumberOfSheets();
-            for (int i = 0; i < numberOfSheets - 1; i++) {
-                for (int j = 0; j < numberOfSheets - i - 1; j++) {
-                    Sheet sheet1 = workbook.getSheetAt(j);
-                    Sheet sheet2 = workbook.getSheetAt(j + 1);
-                    if (sheet1.getSheetName().compareTo(sheet2.getSheetName()) > 0) {
-                        workbook.setSheetOrder(sheet2.getSheetName(), j);
-                        workbook.setSheetOrder(sheet1.getSheetName(), j + 1);
-                    }
-                }
-            }
-
-            workbook.setSheetOrder(generateSheetName(clazz), 0);
+            adjustColumnWidths(workbook);
+            sortSheetsAlphabetically(workbook);
+            moveMainSheetToFirstPosition(workbook, clazz);
 
             workbook.write(outputStream);
         } catch (Exception e) {
+            log.error("Error exporting Excel", e);
             throw new InternalServerErrorException(e);
         }
     }
 
-    private void generateSheet(Workbook workbook, Table table, Class<?> clazz)
-            throws IllegalArgumentException, IllegalAccessException {
+    private void generateSheet(Workbook workbook, Table table, Class<?> clazz) throws Exception {
         Sheet sheet = workbook.createSheet(generateSheetName(clazz));
 
-        populateDataRows(workbook, sheet, table);
         createHeaderRow(workbook, sheet, table.getHeaders());
+        populateDataRows(workbook, sheet, table);
 
         for (Table innerTable : table.getNestedTables()) {
             generateSheet(workbook, innerTable, innerTable.getEntityType());
@@ -129,14 +107,15 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
         List<Object[]> rows = table.getRows();
         int rowSize = table.getHeaders().length;
 
-        Object id = null;
-        boolean isEven = true;
         CellStyle evenStyle = createEvenRowStyle(workbook);
         CellStyle startEvenStyle = createStartEvenRowStyle(workbook);
         CellStyle endEvenStyle = createEndEvenRowStyle(workbook);
         CellStyle oddStyle = createOddRowStyle(workbook);
         CellStyle startOddStyle = createStartOddRowStyle(workbook);
         CellStyle endOddStyle = createEndOddRowStyle(workbook);
+
+        boolean isEven = false;
+        Object id = null;
 
         for (int i = 0; i < rows.size(); i++) {
             Row row = sheet.createRow(i + 1);
@@ -149,42 +128,64 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
 
             for (int j = 0; j < rowSize; j++) {
                 Object value = rowValues[j];
+                CellStyle style = determineCellStyle(j, rowSize, isEven,
+                        startEvenStyle, endEvenStyle, evenStyle,
+                        startOddStyle, endOddStyle, oddStyle);
 
-                createCell(workbook, row, j, value);
-
-                if (j == 0)
-                    row.getCell(j).setCellStyle(isEven ? startEvenStyle : startOddStyle);
-                else if (j == rowSize - 1)
-                    row.getCell(j).setCellStyle(isEven ? endEvenStyle : endOddStyle);
-                else
-                    row.getCell(j).setCellStyle(isEven ? evenStyle : oddStyle);
+                createCell(workbook, row, j, value, style);
             }
         }
     }
 
-    private void createCell(Workbook workbook, Row row, int cellIndex, Object value) {
+    private CellStyle determineCellStyle(
+            int columnIndex,
+            int rowSize,
+            boolean isEven,
+            CellStyle startEven,
+            CellStyle endEven,
+            CellStyle even,
+            CellStyle startOdd,
+            CellStyle endOdd,
+            CellStyle odd) {
+        if (columnIndex == 0) {
+            return isEven ? startEven : startOdd;
+        } else if (columnIndex == rowSize - 1) {
+            return isEven ? endEven : endOdd;
+        }
+        return isEven ? even : odd;
+    }
+
+    private void createCell(Workbook workbook, Row row, int cellIndex, Object value, CellStyle style) {
         Cell cell = row.createCell(cellIndex);
 
         if (value == null) {
             cell.setCellValue("");
+            cell.setCellStyle(style);
             return;
         }
 
         Class<?> valueType = value.getClass();
 
-        if (valueType.isEnum())
-            handleEnumCell(cell, value);
-        else if (value instanceof LocalDateTime localDateTimeValue)
-            handleDateTimeCell(workbook, cell, localDateTimeValue);
-        else if (value instanceof LocalDate localDateValue)
-            handleDateCell(workbook, cell, localDateValue);
-        else if (value instanceof Number numberValue)
-            cell.setCellValue(numberValue.doubleValue());
-        else if (value instanceof Boolean booleanValue)
-            cell.setCellValue(booleanValue);
-        else
-            cell.setCellValue(value.toString());
+        // Dates
+        if (value instanceof LocalDateTime) {
+            handleDateTimeCell(workbook, cell, (LocalDateTime) value, style);
+            return;
+        } else if (value instanceof LocalDate) {
+            handleDateCell(workbook, cell, (LocalDate) value, style);
+            return;
+        }
 
+        if (valueType.isEnum()) {
+            handleEnumCell(cell, value);
+        } else if (value instanceof Number) {
+            cell.setCellValue(((Number) value).doubleValue());
+        } else if (value instanceof Boolean) {
+            cell.setCellValue((Boolean) value);
+        } else {
+            cell.setCellValue(value.toString());
+        }
+
+        cell.setCellStyle(style);
     }
 
     private void handleEnumCell(Cell cell, Object value) {
@@ -192,18 +193,74 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
         cell.setCellValue(SpanishUtils.translate(enumName));
     }
 
-    private void handleDateCell(Workbook workbook, Cell cell, LocalDate date) {
-        CellStyle style = workbook.createCellStyle();
-        style.cloneStyleFrom(dateCellStyle);
-        cell.setCellStyle(style);
+    private void handleDateCell(Workbook workbook, Cell cell, LocalDate date, CellStyle baseStyle) {
+        CellStyle dateStyle = dateStyleCache.computeIfAbsent(baseStyle, s -> {
+            CellStyle newStyle = workbook.createCellStyle();
+            newStyle.cloneStyleFrom(s);
+            newStyle.setDataFormat(workbook.createDataFormat().getFormat(DATE_FORMAT));
+            return newStyle;
+        });
+
         cell.setCellValue(date);
+        cell.setCellStyle(dateStyle);
     }
 
-    private void handleDateTimeCell(Workbook workbook, Cell cell, LocalDateTime dateTime) {
-        CellStyle style = workbook.createCellStyle();
-        style.cloneStyleFrom(dateTimeCellStyle);
-        cell.setCellStyle(style);
+    private void handleDateTimeCell(Workbook workbook, Cell cell, LocalDateTime dateTime, CellStyle baseStyle) {
+        CellStyle dateTimeStyle = dateTimeStyleCache.computeIfAbsent(baseStyle, s -> {
+            CellStyle newStyle = workbook.createCellStyle();
+            newStyle.cloneStyleFrom(s);
+            newStyle.setDataFormat(workbook.createDataFormat().getFormat(DATE_TIME_FORMAT));
+            return newStyle;
+        });
+
         cell.setCellValue(dateTime);
+        cell.setCellStyle(dateTimeStyle);
+    }
+
+    private void adjustColumnWidths(Workbook workbook) {
+        for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+            Sheet sheet = workbook.getSheetAt(i);
+            Row firstRow = sheet.getRow(0);
+            if (firstRow == null)
+                continue;
+
+            int numColumns = firstRow.getLastCellNum();
+            for (int col = 0; col < numColumns; col++) {
+                Cell cell = firstRow.getCell(col, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                if (cell != null) {
+                    sheet.autoSizeColumn(col);
+                    int currentWidth = sheet.getColumnWidth(col);
+                    sheet.setColumnWidth(col, currentWidth + COLUMN_WIDTH_OFFSET);
+                }
+            }
+        }
+    }
+
+    private void sortSheetsAlphabetically(Workbook workbook) {
+        List<String> sheetNames = new ArrayList<>();
+
+        for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
+            sheetNames.add(workbook.getSheetName(i));
+        }
+
+        Collections.sort(sheetNames);
+
+        for (int i = 0; i < sheetNames.size(); i++) {
+            String sheetName = sheetNames.get(i);
+            int currentIndex = workbook.getSheetIndex(sheetName);
+            if (currentIndex != i) {
+                workbook.setSheetOrder(sheetName, i);
+            }
+        }
+    }
+
+    private void moveMainSheetToFirstPosition(Workbook workbook, Class<?> clazz) {
+        String mainSheetName = generateSheetName(clazz);
+        int mainSheetIndex = workbook.getSheetIndex(mainSheetName);
+
+        if (mainSheetIndex > 0) {
+            workbook.setSheetOrder(mainSheetName, 0);
+        }
     }
 
     private CellStyle createHeaderStyle(Workbook workbook) {
@@ -212,11 +269,10 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
 
         font.setBold(true);
         font.setColor(IndexedColors.WHITE.getIndex());
-        font.setFontName("Aptos Narrow");
+        font.setFontName(DEFAULT_FONT);
         style.setFont(font);
 
-        style.setFillForegroundColor(IndexedColors.SEA_GREEN.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        applyFill(style, IndexedColors.SEA_GREEN);
 
         style.setTopBorderColor(IndexedColors.WHITE.getIndex());
         style.setBottomBorderColor(IndexedColors.WHITE.getIndex());
@@ -232,13 +288,9 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
     private CellStyle createEvenRowStyle(Workbook workbook) {
         CellStyle style = workbook.createCellStyle();
 
-        style.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        applyFill(style, IndexedColors.WHITE);
 
-        style.setBorderTop(BorderStyle.THIN);
-        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        applyCommonBorders(style);
 
         return style;
     }
@@ -246,13 +298,10 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
     private CellStyle createStartEvenRowStyle(Workbook workbook) {
         CellStyle style = workbook.createCellStyle();
 
-        style.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        applyFill(style, IndexedColors.WHITE);
 
-        style.setBorderTop(BorderStyle.THIN);
-        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        applyCommonBorders(style);
+
         style.setBorderLeft(BorderStyle.THIN);
         style.setLeftBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
 
@@ -262,13 +311,10 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
     private CellStyle createEndEvenRowStyle(Workbook workbook) {
         CellStyle style = workbook.createCellStyle();
 
-        style.setFillForegroundColor(IndexedColors.LIGHT_GREEN.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        applyFill(style, IndexedColors.WHITE);
 
-        style.setBorderTop(BorderStyle.THIN);
-        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        applyCommonBorders(style);
+
         style.setBorderRight(BorderStyle.THIN);
         style.setRightBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
 
@@ -278,13 +324,9 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
     private CellStyle createOddRowStyle(Workbook workbook) {
         CellStyle style = workbook.createCellStyle();
 
-        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        applyFill(style, IndexedColors.LIGHT_GREEN);
 
-        style.setBorderTop(BorderStyle.THIN);
-        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        applyCommonBorders(style);
 
         return style;
     }
@@ -292,44 +334,49 @@ public class ExportExcelSubService<E, DTO> implements ExportExcelPort<E, DTO> {
     private CellStyle createStartOddRowStyle(Workbook workbook) {
         CellStyle style = workbook.createCellStyle();
 
-        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        applyFill(style, IndexedColors.LIGHT_GREEN);
 
-        style.setBorderTop(BorderStyle.THIN);
-        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        applyCommonBorders(style);
+
         style.setBorderLeft(BorderStyle.THIN);
         style.setLeftBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
-
         return style;
     }
 
     private CellStyle createEndOddRowStyle(Workbook workbook) {
         CellStyle style = workbook.createCellStyle();
 
-        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        applyFill(style, IndexedColors.LIGHT_GREEN);
 
-        style.setBorderTop(BorderStyle.THIN);
-        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
-        style.setBorderBottom(BorderStyle.THIN);
-        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        applyCommonBorders(style);
+
         style.setBorderRight(BorderStyle.THIN);
         style.setRightBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
 
         return style;
     }
 
+    private void applyCommonBorders(CellStyle style) {
+        style.setBorderTop(BorderStyle.THIN);
+        style.setTopBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style.setBorderBottom(BorderStyle.THIN);
+        style.setBottomBorderColor(IndexedColors.GREY_25_PERCENT.getIndex());
+    }
+
+    private void applyFill(CellStyle style, IndexedColors color) {
+        style.setFillForegroundColor(color.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+    }
+
     private String generateSheetName(Class<?> clazz) {
-        return SpanishUtils.translate(clazz.getSimpleName().replaceAll("(?i)dto", ""));
+        return SpanishUtils.translate(clazz.getSimpleName().replace("Dto", ""));
     }
 
     private void initializeCellStyles(Workbook workbook) {
-        dateCellStyle = workbook.createCellStyle();
-        dateCellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat(DATE_FORMAT));
+        CellStyle baseDateStyle = workbook.createCellStyle();
+        baseDateStyle.setDataFormat(workbook.createDataFormat().getFormat(DATE_FORMAT));
 
-        dateTimeCellStyle = workbook.createCellStyle();
-        dateTimeCellStyle.setDataFormat(workbook.getCreationHelper().createDataFormat().getFormat(DATE_TIME_FORMAT));
+        CellStyle baseDateTimeStyle = workbook.createCellStyle();
+        baseDateTimeStyle.setDataFormat(workbook.createDataFormat().getFormat(DATE_TIME_FORMAT));
     }
 }

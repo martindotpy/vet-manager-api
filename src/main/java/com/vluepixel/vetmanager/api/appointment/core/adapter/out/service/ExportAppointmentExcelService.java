@@ -19,6 +19,6 @@ public final class ExportAppointmentExcelService
     public ExportAppointmentExcelService(
             AppointmentRepository appointmentRepository,
             AppointmentMapper appointmentMapper) {
-        super(appointmentRepository, appointmentMapper);
+        super(appointmentRepository, appointmentMapper, AppointmentDto.class);
     }
 }

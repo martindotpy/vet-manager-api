@@ -16,6 +16,6 @@ import com.vluepixel.vetmanager.api.shared.adapter.out.service.ExportExcelSubSer
 public final class ExportPatientExcelService extends ExportExcelSubService<Patient, PatientDto>
         implements ExportPatientExcelPort {
     public ExportPatientExcelService(PatientRepository patientRepository, PatientMapper patientMapper) {
-        super(patientRepository, patientMapper);
+        super(patientRepository, patientMapper, PatientDto.class);
     }
 }

@@ -19,6 +19,6 @@ public final class ExportBillExcelService
     public ExportBillExcelService(
             BillRepository billRepository,
             BillMapper billMapper) {
-        super(billRepository, billMapper);
+        super(billRepository, billMapper, BillDto.class);
     }
 }
