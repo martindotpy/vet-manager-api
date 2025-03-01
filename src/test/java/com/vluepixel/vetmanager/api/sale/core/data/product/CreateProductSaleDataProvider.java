@@ -1,8 +1,8 @@
 package com.vluepixel.vetmanager.api.sale.core.data.product;
 
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_APPOINTMENT_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_APPOINTMENT_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_APPOINTMENT_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_PRODUCT_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_PRODUCT_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_PRODUCT_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_BILL_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_BILL_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_BILL_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST;
@@ -13,9 +13,9 @@ import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductS
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_QUANTITY_NULL_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_QUANTITY_TOO_BIG_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_DISCOUNT_MAX_VALUE_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_QUANTITY_MAX_VALUE_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_QUANTITY_ZERO_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_QUANTITY_ZERO_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_UPDATE_PRODUCT_SALE_REQUEST;
 import com.vluepixel.vetmanager.api.bill.sale.domain.request.CreateProductSaleRequest;
 
@@ -60,7 +60,7 @@ public class CreateProductSaleDataProvider {
     public static final CreateProductSaleRequest INVALID_PRODUCT_ID_NOT_FOUND_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
             .builder()
             .billId(VALID_CREATE_PRODUCT_SALE_REQUEST.getBillId())
-            .productId(INVALID_APPOINTMENT_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST.getProductId())
+            .productId(INVALID_PRODUCT_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST.getProductId())
             .quantity(VALID_CREATE_PRODUCT_SALE_REQUEST.getQuantity())
             .discount(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
@@ -68,7 +68,7 @@ public class CreateProductSaleDataProvider {
     public static final CreateProductSaleRequest INVALID_PRODUCT_ID_NEGATIVE_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
             .builder()
             .billId(VALID_CREATE_PRODUCT_SALE_REQUEST.getBillId())
-            .productId(INVALID_APPOINTMENT_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST.getProductId())
+            .productId(INVALID_PRODUCT_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST.getProductId())
             .quantity(VALID_CREATE_PRODUCT_SALE_REQUEST.getQuantity())
             .discount(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
@@ -76,7 +76,7 @@ public class CreateProductSaleDataProvider {
     public static final CreateProductSaleRequest INVALID_PRODUCT_ID_NULL_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
             .builder()
             .billId(VALID_CREATE_PRODUCT_SALE_REQUEST.getBillId())
-            .productId(INVALID_APPOINTMENT_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST.getProductId())
+            .productId(INVALID_PRODUCT_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST.getProductId())
             .quantity(VALID_CREATE_PRODUCT_SALE_REQUEST.getQuantity())
             .discount(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
@@ -98,11 +98,11 @@ public class CreateProductSaleDataProvider {
             .discount(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
 
-    public static final CreateProductSaleRequest INVALID_QUANTITY_ZERO_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
+    public static final CreateProductSaleRequest ININVALID_QUANTITY_ZERO_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
             .builder()
             .billId(VALID_CREATE_PRODUCT_SALE_REQUEST.getBillId())
             .productId(VALID_CREATE_PRODUCT_SALE_REQUEST.getProductId())
-            .quantity(VALID_QUANTITY_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getQuantity())
+            .quantity(INVALID_QUANTITY_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getQuantity())
             .discount(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
 
@@ -144,7 +144,7 @@ public class CreateProductSaleDataProvider {
             .billId(VALID_CREATE_PRODUCT_SALE_REQUEST.getBillId())
             .productId(VALID_CREATE_PRODUCT_SALE_REQUEST.getProductId())
             .quantity(VALID_CREATE_PRODUCT_SALE_REQUEST.getQuantity())
-            .discount(VALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getDiscount())
+            .discount(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
 
     public static final CreateProductSaleRequest VALID_DISCOUNT_NEGATIVE_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest

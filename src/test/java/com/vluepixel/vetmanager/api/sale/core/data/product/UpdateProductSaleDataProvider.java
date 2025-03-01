@@ -35,7 +35,7 @@ public class UpdateProductSaleDataProvider {
 
     public static final UpdateProductSaleRequest VALID_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
             .builder()
-            .id(1)
+            .id(2)
             .billId(INVALID_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST.getBillId())
             .productId(INVALID_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST.getProductId())
             .quantity(INVALID_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST.getQuantity())
@@ -75,7 +75,7 @@ public class UpdateProductSaleDataProvider {
             .build();
 
     // Product ID
-    public static final UpdateProductSaleRequest INVALID_APPOINTMENT_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
+    public static final UpdateProductSaleRequest INVALID_PRODUCT_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
             .builder()
             .id(VALID_UPDATE_PRODUCT_SALE_REQUEST.getId())
             .billId(VALID_UPDATE_PRODUCT_SALE_REQUEST.getBillId())
@@ -84,7 +84,7 @@ public class UpdateProductSaleDataProvider {
             .discount(VALID_UPDATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
 
-    public static final UpdateProductSaleRequest INVALID_APPOINTMENT_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
+    public static final UpdateProductSaleRequest INVALID_PRODUCT_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
             .builder()
             .id(VALID_UPDATE_PRODUCT_SALE_REQUEST.getId())
             .billId(VALID_UPDATE_PRODUCT_SALE_REQUEST.getBillId())
@@ -93,7 +93,7 @@ public class UpdateProductSaleDataProvider {
             .discount(VALID_UPDATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
 
-    public static final UpdateProductSaleRequest INVALID_APPOINTMENT_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
+    public static final UpdateProductSaleRequest INVALID_PRODUCT_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
             .builder()
             .id(VALID_UPDATE_PRODUCT_SALE_REQUEST.getId())
             .billId(VALID_UPDATE_PRODUCT_SALE_REQUEST.getBillId())
@@ -122,7 +122,7 @@ public class UpdateProductSaleDataProvider {
             .discount(VALID_UPDATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
 
-    public static final UpdateProductSaleRequest VALID_QUANTITY_ZERO_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
+    public static final UpdateProductSaleRequest INVALID_QUANTITY_ZERO_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
             .builder()
             .id(VALID_UPDATE_PRODUCT_SALE_REQUEST.getId())
             .billId(VALID_UPDATE_PRODUCT_SALE_REQUEST.getBillId())
@@ -169,7 +169,7 @@ public class UpdateProductSaleDataProvider {
             .discount(MAX_DISCOUNT_VALUE)
             .build();
 
-    public static final UpdateProductSaleRequest VALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
+    public static final UpdateProductSaleRequest INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
             .builder()
             .id(VALID_UPDATE_PRODUCT_SALE_REQUEST.getId())
             .billId(VALID_UPDATE_PRODUCT_SALE_REQUEST.getBillId())
