@@ -1,22 +1,22 @@
 package com.vluepixel.vetmanager.api.sale.core.integration.product;
 
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_NULL_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_TOO_BIG_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_PRODUCT_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_PRODUCT_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_PRODUCT_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_QUANTITY_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_QUANTITY_NULL_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_QUANTITY_TOO_BIG_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_QUANTITY_MAX_VALUE_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_QUANTITY_ZERO_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_DISCOUNT_MAX_VALUE_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_NULL_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_TOO_BIG_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_QUANTITY_MAX_VALUE_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_UPDATE_PRODUCT_SALE_REQUEST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -172,7 +172,7 @@ public class UpdateSaleProductIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO: Returns 500 when quantity has maximum value.
+    @DirtiesContext
     void admin_UpdateSaleProductWithValidArguments_Quantity_MaxValue_Ok() throws Exception {
         mockMvc.perform(put("/sale")
                 .contentType(MediaType.APPLICATION_JSON)
