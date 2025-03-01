@@ -6,13 +6,17 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+import com.vluepixel.vetmanager.api.bill.core.domain.model.Bill;
 import com.vluepixel.vetmanager.api.bill.core.domain.repository.BillRepository;
 import com.vluepixel.vetmanager.api.bill.sale.application.port.in.UpdateBillTotalPort;
 import com.vluepixel.vetmanager.api.bill.sale.domain.model.Sale;
 import com.vluepixel.vetmanager.api.bill.sale.domain.repository.SaleRepository;
 import com.vluepixel.vetmanager.api.shared.application.annotation.UseCase;
+import com.vluepixel.vetmanager.api.shared.domain.exception.ConflictException;
+import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.query.FieldUpdate;
 
+import jakarta.validation.constraints.DecimalMax;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,6 +52,16 @@ public final class UpdateBillTotalUsecase implements UpdateBillTotalPort {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         log.info("Total calculated: {}", total);
+
+        try {
+            DecimalMax totalMax = Bill.class.getField("total").getAnnotation(DecimalMax.class);
+
+            if (total.compareTo(new BigDecimal(totalMax.value())) > 0)
+                throw new ConflictException("El total no puede ser mayor a " + totalMax.value());
+
+        } catch (NoSuchFieldException | SecurityException e) {
+            throw new InternalServerErrorException(e);
+        }
 
         billRepository.update(billId, FieldUpdate.set("total", total));
 
