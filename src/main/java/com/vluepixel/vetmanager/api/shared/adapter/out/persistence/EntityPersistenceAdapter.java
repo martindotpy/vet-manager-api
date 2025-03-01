@@ -23,6 +23,9 @@ import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Root;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Entity persistence adapter.
+ */
 @Slf4j
 public abstract class EntityPersistenceAdapter<E, ID, R extends JpaRepository<E, ID>> {
     private final R repository;
