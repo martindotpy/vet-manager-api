@@ -110,7 +110,7 @@ public class UpdateAppointmentSaleDataProvider {
             .discount(MAX_DISCOUNT_VALUE)
             .build();
 
-    public static final UpdateAppointmentSaleRequest VALID_DISCOUNT_ZERO_UPDATE_APPOINTMENT_SALE_REQUEST = UpdateAppointmentSaleRequest
+    public static final UpdateAppointmentSaleRequest INVALID_DISCOUNT_ZERO_UPDATE_APPOINTMENT_SALE_REQUEST = UpdateAppointmentSaleRequest
             .builder()
             .id(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getId())
             .billId(VALID_UPDATE_APPOINTMENT_SALE_REQUEST.getBillId())

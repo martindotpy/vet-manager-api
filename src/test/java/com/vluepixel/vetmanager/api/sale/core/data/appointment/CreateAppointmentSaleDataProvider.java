@@ -8,8 +8,8 @@ import static com.vluepixel.vetmanager.api.sale.core.data.appointment.UpdateAppo
 import static com.vluepixel.vetmanager.api.sale.core.data.appointment.UpdateAppointmentSaleDataProvider.INVALID_DISCOUNT_NEGATIVE_UPDATE_APPOINTMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.appointment.UpdateAppointmentSaleDataProvider.INVALID_DISCOUNT_NULL_UPDATE_APPOINTMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.appointment.UpdateAppointmentSaleDataProvider.INVALID_DISCOUNT_TOO_BIG_UPDATE_APPOINTMENT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.appointment.UpdateAppointmentSaleDataProvider.INVALID_DISCOUNT_ZERO_UPDATE_APPOINTMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.appointment.UpdateAppointmentSaleDataProvider.VALID_DISCOUNT_MAX_VALUE_UPDATE_APPOINTMENT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.appointment.UpdateAppointmentSaleDataProvider.VALID_DISCOUNT_ZERO_UPDATE_APPOINTMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.appointment.UpdateAppointmentSaleDataProvider.VALID_UPDATE_APPOINTMENT_SALE_REQUEST;
 
 import com.vluepixel.vetmanager.api.bill.sale.domain.request.CreateAppointmentSaleRequest;
@@ -84,11 +84,11 @@ public class CreateAppointmentSaleDataProvider {
             .discount(VALID_DISCOUNT_MAX_VALUE_UPDATE_APPOINTMENT_SALE_REQUEST.getDiscount())
             .build();
 
-    public static final CreateAppointmentSaleRequest VALID_DISCOUNT_ZERO_CREATE_APPOINTMENT_SALE_REQUEST = CreateAppointmentSaleRequest
+    public static final CreateAppointmentSaleRequest INVALID_DISCOUNT_ZERO_CREATE_APPOINTMENT_SALE_REQUEST = CreateAppointmentSaleRequest
             .builder()
             .billId(VALID_CREATE_APPOINTMENT_SALE_REQUEST.getBillId())
             .appointmentId(VALID_CREATE_APPOINTMENT_SALE_REQUEST.getAppointmentId())
-            .discount(VALID_DISCOUNT_ZERO_UPDATE_APPOINTMENT_SALE_REQUEST.getDiscount())
+            .discount(INVALID_DISCOUNT_ZERO_UPDATE_APPOINTMENT_SALE_REQUEST.getDiscount())
             .build();
 
     public static final CreateAppointmentSaleRequest INVALID_DISCOUNT_NEGATIVE_CREATE_APPOINTMENT_SALE_REQUEST = CreateAppointmentSaleRequest
