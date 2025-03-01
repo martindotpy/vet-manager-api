@@ -327,7 +327,7 @@ public class UpdateSaleTreatmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO:
+    @DirtiesContext
     void user_UpdateSaleTreatmentWithValidArguments_Price_MaxValue_Ok() throws Exception {
         mockMvc.perform(put("/sale")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -603,7 +603,7 @@ public class UpdateSaleTreatmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DirtiesContext // TODO:
+    @DirtiesContext
     void admin_UpdateSaleTreatmentWithValidArguments_Price_MaxValue_Ok() throws Exception {
         mockMvc.perform(put("/sale")
                 .contentType(MediaType.APPLICATION_JSON)
