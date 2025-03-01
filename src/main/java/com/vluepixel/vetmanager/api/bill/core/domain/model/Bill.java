@@ -54,8 +54,8 @@ public final class Bill {
 
     @NotNull
     @PositiveOrZero
-    @DecimalMax(value = "99999.99")
-    @Column(columnDefinition = "decimal(7, 2)")
+    @DecimalMax(value = "999999.99")
+    @Column(columnDefinition = "decimal(8, 2)")
     private BigDecimal total;
     @NotNull
     @PositiveOrZero
