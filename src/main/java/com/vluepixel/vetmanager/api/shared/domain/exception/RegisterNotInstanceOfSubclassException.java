@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @Getter
 public final class RegisterNotInstanceOfSubclassException extends ErrorException {
-    private String message = "El registro no es del mismo tipo %";
+    private String message = "El registro no es del mismo tipo que %";
     private final int status = 409;
 
     public RegisterNotInstanceOfSubclassException() {
@@ -20,13 +20,13 @@ public final class RegisterNotInstanceOfSubclassException extends ErrorException
         String name = translate(entity);
         name = name.substring(0, 1).toLowerCase() + name.substring(1);
 
-        this.message = this.message.replace("%", "que " + name);
+        this.message = this.message.replace("%", name);
     }
 
     public RegisterNotInstanceOfSubclassException(Class<?> entity, Object id) {
         String name = translate(entity);
         name = name.substring(0, 1).toLowerCase() + name.substring(1);
 
-        this.message = this.message.replace("%", "que " + name + " con id " + id);
+        this.message = this.message.replace("%", name + " con id " + id);
     }
 }
