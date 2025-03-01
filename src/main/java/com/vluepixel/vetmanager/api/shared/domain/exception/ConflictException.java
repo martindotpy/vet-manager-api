@@ -16,22 +16,14 @@ public final class ConflictException extends ErrorException {
         this.message = this.message.replace("%", "El recurso");
     }
 
-    public ConflictException(String entity) {
-        this.message = this.message.replace("%", translate(entity));
-    }
-
-    public ConflictException(Class<?> entity) {
-        this(translate(entity));
-    }
-
-    public ConflictException(String entity, String field) {
-        String entityName = translate(entity);
-        entityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
-
-        this.message = this.message.replace("%", translate(field) + " de " + entityName);
+    public ConflictException(String message) {
+        this.message = message;
     }
 
     public ConflictException(Class<?> entity, String field) {
-        this(translate(entity), translate(field));
+        String entityName = translate(entity.getSimpleName());
+        entityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
+
+        this.message = this.message.replace("%", translate(field) + " de " + entityName);
     }
 }
