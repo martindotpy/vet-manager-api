@@ -1,0 +1,111 @@
+# Application
+spring:
+  config:
+    import:
+      - optional:classpath:.env[.properties]
+
+  application:
+    name: vet-manager
+
+  mvc:
+    servlet:
+      path: /api/${spring.api.version}
+
+  api:
+    version: v0
+
+  profiles:
+    active:
+      - test
+
+  output:
+    ansi:
+      enabled: always
+
+  datasource:
+    url: jdbc:mysql://${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    open-in-view: false
+    properties:
+      "[org.hibernate.envers.audit_table_suffix]": _log
+
+  image:
+    path: /var/img
+
+# Security
+security:
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+    - OPTIONS
+
+  allowed-headers:
+    - Authorization
+    - Origin
+    - Content-Type
+    - Accept
+    - Accept-Encoding
+    - Accept-Language
+
+  public-routes:
+    # Api
+    - /health
+    - /image/**
+    - /external-dependencies
+    - /auth/login
+    # Swagger
+    - /docs
+    - /swagger-ui*/**
+    - /v3/api-docs*/**
+
+  admin-routes:
+    - methods:
+        - GET
+        - POST
+        - DELETE
+      routes:
+        - /auth/register
+        - /user
+        - /user/{id}
+        - /user/email
+        - /user/excel
+
+    - methods:
+        - PUT
+      routes:
+        - /user
+        - /user/profile-image/{id}
+
+    - methods:
+        - DELETE
+      routes:
+        - /client/{id}
+        - /appointment/{id}
+
+  no-admin-operation-to-self-routes:
+    - methods:
+        - PUT
+      routes:
+        - /user/{id:^(?!profile-image$).*$}
+        - /user/{id}/email
+
+  allowed-origins:
+    - "*"
+
+  allowed-credentials: false
+
+  jwt:
+    secret: ${JWT_SECRET}
+
+# Swagger
+springdoc:
+  swagger-ui:
+    path: /docs
+    operationsSorter: alpha
+    tagsSorter: alpha

@@ -11,9 +11,6 @@ import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductS
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_QUANTITY_ZERO_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.VALID_DISCOUNT_MAX_VALUE_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_BILL_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_BILL_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_BILL_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_NULL_UPDATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.UpdateProductSaleDataProvider.INVALID_DISCOUNT_TOO_BIG_UPDATE_PRODUCT_SALE_REQUEST;
@@ -110,50 +107,6 @@ public class UpdateSaleProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
                                 .value("El id es requerido"));
-    }
-
-    // Bill ID
-    @Test // TODO
-    void admin_UpdateSaleProductWithInvalidArguments_BillID_NotFound_NotFound() throws Exception {
-        mockMvc.perform(put("/sale")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_BILL_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST))
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(
-                        MESSAGE_NOT_FOUND.apply(INVALID_ID_NOT_FOUND_UPDATE_PRODUCT_SALE_REQUEST.getId().toString())));
-    }
-
-    @Test
-    void admin_UpdateSaleProductWithInvalidArguments_BillID_Negative_UnprocessableEntity() throws Exception {
-        mockMvc.perform(put("/sale")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_BILL_ID_NEGATIVE_UPDATE_PRODUCT_SALE_REQUEST))
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("bill_id"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("El id de la cuenta debe ser mayor a 0"));
-    }
-
-    @Test
-    void admin_UpdateSaleProductWithInvalidArguments_BillID_Null_UnprocessableEntity() throws Exception {
-        mockMvc.perform(put("/sale")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_BILL_ID_NULL_UPDATE_PRODUCT_SALE_REQUEST))
-                .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
-                .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("bill_id"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("El id de la cuenta es requerido"));
     }
 
     // Product ID

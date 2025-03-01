@@ -11,7 +11,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(10)
-            .billId(1L)
             .treatmentId(1L)
             .price(BigDecimal.valueOf(300))
             .discount(20)
@@ -20,7 +19,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_ID_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(-1)
-            .billId(INVALID_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(INVALID_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(INVALID_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(INVALID_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -29,7 +27,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(null)
-            .billId(INVALID_ID_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(INVALID_ID_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(INVALID_ID_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(INVALID_ID_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -38,7 +35,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest VALID_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(1)
-            .billId(INVALID_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(INVALID_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(INVALID_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(INVALID_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -52,7 +48,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_BILL_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(10L)
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -61,7 +56,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_BILL_ID_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(-1L)
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -70,7 +64,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_BILL_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(null)
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -80,7 +73,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_TREATMENT_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(10L)
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -89,7 +81,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_TREATMENT_ID_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(-1L)
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -98,7 +89,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_TREATMENT_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(null)
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -109,7 +99,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_PRICE_TOO_BIG_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(BigDecimal.valueOf(MAX_PRICE_VALUE + 1))
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -118,7 +107,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest VALID_PRICE_MAX_VALUE_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(BigDecimal.valueOf(MAX_PRICE_VALUE + 0.99))
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -127,7 +115,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest VALID_PRICE_ZERO_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(BigDecimal.valueOf(0))
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -136,7 +123,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_PRICE_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(BigDecimal.valueOf(-1))
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -145,7 +131,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_PRICE_NULL_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(null)
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -156,7 +141,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_DISCOUNT_TOO_BIG_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(MAX_DISCOUNT_VALUE + 1)
@@ -165,7 +149,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest VALID_DISCOUNT_MAX_VALUE_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(MAX_DISCOUNT_VALUE)
@@ -174,7 +157,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(0)
@@ -183,7 +165,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_DISCOUNT_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(-1)
@@ -192,7 +173,6 @@ public class UpdateTreatmentSaleDataProvider {
     public static final UpdateTreatmentSaleRequest INVALID_DISCOUNT_NULL_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .billId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(null)
