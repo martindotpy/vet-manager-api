@@ -37,8 +37,4 @@ public abstract class UpdateSaleRequest implements Request {
     @Positive(message = "El descuento debe ser mayor a 0")
     @Max(value = 100, message = "El descuento no puede ser mayor a 100")
     private Integer discount;
-
-    @NotNull(message = "El id de la cuenta es requerido")
-    @Positive(message = "El id de la cuenta debe ser mayor a 0")
-    private Long billId;
 }
