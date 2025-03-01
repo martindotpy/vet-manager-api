@@ -34,7 +34,7 @@ public class UpdateTreatmentSaleDataProvider {
 
     public static final UpdateTreatmentSaleRequest VALID_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
-            .id(1)
+            .id(3)
             .treatmentId(INVALID_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(INVALID_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(INVALID_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -43,31 +43,6 @@ public class UpdateTreatmentSaleDataProvider {
     // -----------------------------------------------------------------------------------------------------------------
     // Validations
     // -----------------------------------------------------------------------------------------------------
-
-    // Bill ID
-    public static final UpdateTreatmentSaleRequest INVALID_BILL_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
-            .builder()
-            .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
-            .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
-            .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
-            .build();
-
-    public static final UpdateTreatmentSaleRequest INVALID_BILL_ID_NEGATIVE_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
-            .builder()
-            .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
-            .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
-            .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
-            .build();
-
-    public static final UpdateTreatmentSaleRequest INVALID_BILL_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
-            .builder()
-            .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
-            .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
-            .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
-            .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
-            .build();
 
     // Treatment ID
     public static final UpdateTreatmentSaleRequest INVALID_TREATMENT_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
@@ -112,7 +87,7 @@ public class UpdateTreatmentSaleDataProvider {
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
             .build();
 
-    public static final UpdateTreatmentSaleRequest VALID_PRICE_ZERO_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
+    public static final UpdateTreatmentSaleRequest INVALID_PRICE_ZERO_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
@@ -154,7 +129,7 @@ public class UpdateTreatmentSaleDataProvider {
             .discount(MAX_DISCOUNT_VALUE)
             .build();
 
-    public static final UpdateTreatmentSaleRequest VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
+    public static final UpdateTreatmentSaleRequest INVALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
