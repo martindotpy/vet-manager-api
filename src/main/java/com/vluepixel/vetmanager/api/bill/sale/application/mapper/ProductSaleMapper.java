@@ -47,6 +47,7 @@ public interface ProductSaleMapper
      * <ul>
      * <li><strong>Ignores:</strong>
      * <ul>
+     * <li><code>bill</code></li>
      * <li><code>seller</code></li>
      * <li><code>price</code></li>
      * </ul>
@@ -58,7 +59,7 @@ public interface ProductSaleMapper
      */
     @Mapping(target = "seller", ignore = true)
     @Mapping(target = "price", ignore = true)
-    @Mapping(target = "bill", source = "billId")
+    @Mapping(target = "bill", ignore = true)
     @Mapping(target = "product", source = "productId")
     ProductSale fromRequest(UpdateProductSaleRequest request);
 

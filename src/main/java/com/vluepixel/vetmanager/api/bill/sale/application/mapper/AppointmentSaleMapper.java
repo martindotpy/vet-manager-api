@@ -48,6 +48,7 @@ public interface AppointmentSaleMapper
      * <ul>
      * <li><strong>Ignores:</strong>
      * <ul>
+     * <li><code>bill</code></li>
      * <li><code>seller</code></li>
      * <li><code>price</code></li>
      * </ul>
@@ -59,7 +60,7 @@ public interface AppointmentSaleMapper
      */
     @Mapping(target = "seller", ignore = true)
     @Mapping(target = "price", ignore = true)
-    @Mapping(target = "bill", source = "billId")
+    @Mapping(target = "bill", ignore = true)
     @Mapping(target = "appointment", source = "appointmentId")
     AppointmentSale fromRequest(UpdateAppointmentSaleRequest request);
 
