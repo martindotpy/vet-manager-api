@@ -46,6 +46,7 @@ public interface TreatmentSaleMapper
      * <li><strong>Ignores:</strong>
      * <ul>
      * <li><code>seller</code></li>
+     * <li><code>bill</code></li>
      * </ul>
      * </li>
      * </ul>
@@ -54,7 +55,7 @@ public interface TreatmentSaleMapper
      * @return the treatment sale builder
      */
     @Mapping(target = "seller", ignore = true)
-    @Mapping(target = "bill", source = "billId")
+    @Mapping(target = "bill", ignore = true)
     @Mapping(target = "treatment", source = "treatmentId")
     TreatmentSale fromRequest(UpdateTreatmentSaleRequest request);
 
