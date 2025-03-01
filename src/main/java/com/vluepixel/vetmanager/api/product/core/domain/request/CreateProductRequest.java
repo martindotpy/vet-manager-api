@@ -31,11 +31,11 @@ public final class CreateProductRequest implements Request {
     private String description;
     @NotNull(message = "El precio es requerido")
     @Positive(message = "El precio debe ser mayor a 0")
-    @DecimalMax(value = "9999.99", message = "El precio no puede ser mayor a 9999.99")
+    @DecimalMax(value = "999.99", message = "El precio no puede ser mayor a 999.99")
     private BigDecimal price;
     @NotNull(message = "La cantidad es requerida")
     @Positive(message = "La cantidad debe ser mayor a 0")
-    @Max(value = 999, message = "La cantidad no puede ser mayor a 999")
+    @Max(value = 99, message = "La cantidad no puede ser mayor a 99")
     private Integer quantity;
 
     private List<@NotNull(message = "El id de la categoría es requerido") @Positive(message = "El id de la categoría debe ser mayor a 0") Integer> categoryIds;

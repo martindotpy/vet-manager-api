@@ -48,8 +48,8 @@ public abstract class Sale {
 
     @NotNull
     @Positive
-    @DecimalMax(value = "999999.99")
-    @Column(columnDefinition = "decimal(8, 2)")
+    @DecimalMax(value = "9999.99")
+    @Column(columnDefinition = "decimal(6, 2)")
     private BigDecimal price;
     @NotNull
     @Positive

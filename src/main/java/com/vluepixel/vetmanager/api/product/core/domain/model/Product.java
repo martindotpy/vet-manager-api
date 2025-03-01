@@ -56,8 +56,8 @@ public final class Product {
     private String name;
     @NotNull
     @Positive
-    @DecimalMax(value = "9999.99")
-    @Column(columnDefinition = "decimal(6, 2)")
+    @DecimalMax(value = "999.99")
+    @Column(columnDefinition = "decimal(5, 2)")
     private BigDecimal price;
     @NotBlank
     @Column(columnDefinition = "text")

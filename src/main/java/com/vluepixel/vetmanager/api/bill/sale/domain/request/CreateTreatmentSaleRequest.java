@@ -24,7 +24,7 @@ public final class CreateTreatmentSaleRequest extends CreateSaleRequest {
 
     @NotNull(message = "El precio es requerido")
     @Positive(message = "El precio debe ser mayor a 0")
-    @DecimalMax(value = "999999.99", message = "El precio no puede ser mayor a 999999.99")
+    @DecimalMax(value = "999.99", message = "El precio no puede ser mayor a 999.99")
     private BigDecimal price;
 
     @NotNull(message = "El id del tratamiento es requerido")

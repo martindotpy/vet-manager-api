@@ -22,7 +22,7 @@ public final class UpdateProductSaleRequest extends UpdateSaleRequest {
 
     @NotNull(message = "La cantidad es requerida")
     @Positive(message = "La cantidad debe ser mayor a 0")
-    @Max(value = 999, message = "La cantidad no puede ser mayor a 999")
+    @Max(value = 99, message = "La cantidad no puede ser mayor a 99")
     private Integer quantity;
 
     @NotNull(message = "El id del producto es requerido")
