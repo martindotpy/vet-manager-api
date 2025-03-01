@@ -1,6 +1,0 @@
-# Created at 2025-02-19T02:52:16.141
-Corrupted channel by directly writing to native stream in forked JVM 1. Stream 'Error occurred during initialization of VM'.
-
-# Created at 2025-02-19T02:52:16.143
-Corrupted channel by directly writing to native stream in forked JVM 1. Stream 'Could not find agent library native-image-agent on the library path, with error: dlopen(libnative-image-agent.dylib, 0x0001): tried: 'libnative-image-agent.dylib' (no such file), '/System/Volumes/Preboot/Cryptexes/OSlibnative-image-agent.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk-23.jdk/Contents/Home/lib/server/./libnative-image-agent.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk-23.jdk/Contents/Home/lib/server/../libnative-image-agent.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk-23.jdk/Contents/Home/bin/./libnative-image-agent.dylib' (no such file), '/Library/Java/JavaVirtualMachines/jdk-23.jdk/Contents/Home/bin/../lib/libnative-image-agent.dylib' (no such file), '/usr/lib/libnative-image-agent.dylib' (no such file, not in dyld cache), 'libnative-image-agent.dylib' (no such file), '/usr/lib/libnative-image-agent.dylib' (no such file, not in dyld cache)'.
-

@@ -70,7 +70,7 @@ public class CreateProductSaleDataProvider {
             .discount(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
 
-    public static final CreateProductSaleRequest ININVALID_QUANTITY_ZERO_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
+    public static final CreateProductSaleRequest INVALID_QUANTITY_ZERO_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
             .builder()
             .billId(VALID_CREATE_PRODUCT_SALE_REQUEST.getBillId())
             .productId(VALID_CREATE_PRODUCT_SALE_REQUEST.getProductId())
