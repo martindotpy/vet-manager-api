@@ -18,7 +18,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 public class GetSaleAppointmentIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Venta encontrada";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
-            .format("Sale con id %s no encontrado(a)", parameter);
+            .format("Venta con id %s no encontrado(a)", parameter);
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
     // -----------------------------------------------------------------------------------------------------------------
