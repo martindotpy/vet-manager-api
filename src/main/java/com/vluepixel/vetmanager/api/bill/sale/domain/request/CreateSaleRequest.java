@@ -8,6 +8,7 @@ import com.vluepixel.vetmanager.api.shared.domain.request.Request;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ public abstract class CreateSaleRequest implements Request {
     public abstract SaleType getType();
 
     @NotNull(message = "El descuento es requerido")
-    @Positive(message = "El descuento debe ser mayor a 0")
+    @PositiveOrZero(message = "El descuento debe ser mayor o igual a 0")
     @Max(value = 100, message = "El descuento no puede ser mayor a 100")
     private Integer discount;
 

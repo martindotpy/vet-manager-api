@@ -22,6 +22,7 @@ import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -52,7 +53,7 @@ public abstract class Sale {
     @Column(columnDefinition = "decimal(6, 2)")
     private BigDecimal price;
     @NotNull
-    @Positive
+    @PositiveOrZero
     @Max(100)
     @Column(columnDefinition = "tinyint unsigned")
     private Integer discount;
