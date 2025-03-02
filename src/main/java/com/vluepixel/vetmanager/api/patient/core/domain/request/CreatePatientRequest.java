@@ -3,7 +3,7 @@ package com.vluepixel.vetmanager.api.patient.core.domain.request;
 import java.time.LocalDate;
 
 import com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender;
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreatePatientRequest implements Request {
+public final class CreatePatientRequest implements Payload {
     @NotBlank(message = "El nombre es requerido")
     @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")
     private String name;

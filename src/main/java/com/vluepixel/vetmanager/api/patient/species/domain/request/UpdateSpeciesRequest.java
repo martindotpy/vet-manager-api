@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.patient.species.domain.request;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class UpdateSpeciesRequest implements Request {
+public final class UpdateSpeciesRequest implements Payload {
     @NotNull(message = "El id es requerido")
     @Positive(message = "El id debe ser mayor a 0")
     private Integer id;

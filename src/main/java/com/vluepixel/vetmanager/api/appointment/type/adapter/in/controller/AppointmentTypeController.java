@@ -31,7 +31,7 @@ import com.vluepixel.vetmanager.api.shared.domain.criteria.Order;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
-import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
+import com.vluepixel.vetmanager.api.shared.domain.validation.PayloadValidation;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.InvalidStateValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -136,7 +136,7 @@ public final class AppointmentTypeController {
             throws ValidationException {
         return ok(() -> createAppointmentTypePort.create(request),
                 "Tipo de cita creada exitosamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**
@@ -157,7 +157,7 @@ public final class AppointmentTypeController {
             throws ValidationException, NotFoundException {
         return ok(() -> updateAppointmentTypePort.update(request),
                 "Tipo de cita actualizada exitosamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**

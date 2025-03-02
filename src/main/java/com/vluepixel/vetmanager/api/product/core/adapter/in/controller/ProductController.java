@@ -35,7 +35,7 @@ import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
-import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
+import com.vluepixel.vetmanager.api.shared.domain.validation.PayloadValidation;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.InvalidStateValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -160,7 +160,7 @@ public final class ProductController {
             throws ValidationException {
         return ok(() -> createProductPort.create(request),
                 "Producto creado exitosamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**
@@ -181,7 +181,7 @@ public final class ProductController {
             throws ValidationException, NotFoundException {
         return ok(() -> updateProductPort.update(request),
                 "Producto actualizado exitosamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**

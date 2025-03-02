@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.auth.core.domain.request;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class LoginUserRequest implements Request {
+public final class LoginUserRequest implements Payload {
     @NotBlank(message = "El correo es requerido")
     @Email(message = "El correo es inválido")
     private String email;

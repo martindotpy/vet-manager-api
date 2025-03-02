@@ -3,7 +3,7 @@ package com.vluepixel.vetmanager.api.bill.sale.domain.request;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.vluepixel.vetmanager.api.bill.sale.domain.model.enums.SaleType;
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 })
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class UpdateSaleRequest implements Request {
+public abstract class UpdateSaleRequest implements Payload {
     public abstract SaleType getType();
 
     @NotNull(message = "El id es requerido")

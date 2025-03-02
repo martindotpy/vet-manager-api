@@ -3,7 +3,7 @@ package com.vluepixel.vetmanager.api.product.core.domain.request;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class UpdateProductRequest implements Request {
+public final class UpdateProductRequest implements Payload {
     @NotNull(message = "El id es requerido")
     @Positive(message = "El id debe ser mayor a 0")
     private Long id;

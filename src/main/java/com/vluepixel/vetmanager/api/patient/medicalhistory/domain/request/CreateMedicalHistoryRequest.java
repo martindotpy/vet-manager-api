@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.patient.medicalhistory.domain.request;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateMedicalHistoryRequest implements Request {
+public final class CreateMedicalHistoryRequest implements Payload {
     @NotBlank(message = "El contenido del historial médico es requerido")
     private String content;
 

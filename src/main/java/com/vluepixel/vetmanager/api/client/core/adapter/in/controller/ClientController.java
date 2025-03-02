@@ -36,7 +36,7 @@ import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
-import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
+import com.vluepixel.vetmanager.api.shared.domain.validation.PayloadValidation;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.InvalidStateValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -136,7 +136,7 @@ public final class ClientController {
             throws ValidationException {
         return ok(() -> createClientPort.create(request),
                 "Cliente creado exitosamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**
@@ -176,7 +176,7 @@ public final class ClientController {
             throws ValidationException, NotFoundException {
         return ok(() -> updateClientPort.update(request),
                 "Cliente actualizado exitosamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**

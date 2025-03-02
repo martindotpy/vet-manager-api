@@ -2,7 +2,7 @@ package com.vluepixel.vetmanager.api.vaccine.core.domain.request;
 
 import java.time.LocalDateTime;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateVaccineRequest implements Request {
+public final class CreateVaccineRequest implements Payload {
     @NotBlank(message = "El nombre es requerido")
     @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")
     private String name;

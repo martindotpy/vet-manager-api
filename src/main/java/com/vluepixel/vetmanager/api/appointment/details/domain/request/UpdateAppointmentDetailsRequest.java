@@ -2,7 +2,7 @@ package com.vluepixel.vetmanager.api.appointment.details.domain.request;
 
 import java.math.BigDecimal;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class UpdateAppointmentDetailsRequest implements Request {
+public final class UpdateAppointmentDetailsRequest implements Payload {
     @NotNull(message = "El id del detalle de la cita es requerido")
     @Positive(message = "El id del detalle de la cita debe ser mayor a 0")
     private Long id;

@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.user.core.domain.request;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class UpdateUserEmailRequest implements Request {
+public final class UpdateUserEmailRequest implements Payload {
     @NotNull(message = "El id del usuario es requerido")
     @Positive(message = "El id del usuario debe ser mayor a 0")
     private Long id;

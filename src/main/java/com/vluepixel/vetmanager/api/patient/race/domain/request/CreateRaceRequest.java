@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.patient.race.domain.request;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateRaceRequest implements Request {
+public final class CreateRaceRequest implements Payload {
     @NotBlank(message = "El nombre es requerido")
     @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")
     private String name;

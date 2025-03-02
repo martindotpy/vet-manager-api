@@ -3,7 +3,7 @@ package com.vluepixel.vetmanager.api.patient.core.domain.request;
 import java.time.LocalDate;
 
 import com.vluepixel.vetmanager.api.patient.core.domain.enums.PatientGender;
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class UpdatePatientRequest implements Request {
+public final class UpdatePatientRequest implements Payload {
     @NotNull(message = "El id es requerido")
     @Positive(message = "El id debe ser mayor a 0")
     private Long id;

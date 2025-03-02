@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.auth.core.domain.request;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class UpdatePasswordRequest implements Request {
+public final class UpdatePasswordRequest implements Payload {
     @NotBlank(message = "La contraseña es requerida")
     @Size(min = 1, max = 60, message = "La contraseña debe tener entre 8 y 60 caracteres")
     private String password;

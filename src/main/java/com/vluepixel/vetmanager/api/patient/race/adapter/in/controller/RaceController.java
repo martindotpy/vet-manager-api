@@ -31,7 +31,7 @@ import com.vluepixel.vetmanager.api.shared.domain.criteria.Order;
 import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
-import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
+import com.vluepixel.vetmanager.api.shared.domain.validation.PayloadValidation;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.InvalidStateValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -139,7 +139,7 @@ public final class RaceController {
             throws ValidationException {
         return ok(() -> createRacePort.create(request),
                 "Raza creada exitosamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**
@@ -160,7 +160,7 @@ public final class RaceController {
             throws ValidationException {
         return ok(() -> updateRacePort.update(request),
                 "Raza actualizada exitosamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**

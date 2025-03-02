@@ -3,7 +3,7 @@ package com.vluepixel.vetmanager.api.product.core.domain.request;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateProductRequest implements Request {
+public final class CreateProductRequest implements Payload {
     @NotBlank(message = "El nombre es requerido")
     @Size(max = 125, message = "El nombre no puede tener más de 125 caracteres")
     private String name;

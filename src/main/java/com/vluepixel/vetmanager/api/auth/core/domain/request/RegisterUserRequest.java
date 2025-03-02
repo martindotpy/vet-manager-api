@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.auth.core.domain.request;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class RegisterUserRequest implements Request {
+public final class RegisterUserRequest implements Payload {
     @NotBlank(message = "El nombre es requerido")
     @Size(max = 50, message = "El nombre no debe de tener más de 50 caracteres")
     private String firstName;

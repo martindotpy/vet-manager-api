@@ -2,7 +2,7 @@ package com.vluepixel.vetmanager.api.appointment.type.domain.request;
 
 import java.math.BigDecimal;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateAppointmentTypeRequest implements Request {
+public final class CreateAppointmentTypeRequest implements Payload {
     @NotBlank(message = "El nombre del tipo de cita es requerido")
     @Size(max = 20, message = "El nombre del tipo de cita no puede tener más de 20 caracteres")
     private String name;

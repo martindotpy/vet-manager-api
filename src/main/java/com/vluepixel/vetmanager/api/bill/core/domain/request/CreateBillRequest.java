@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.bill.core.domain.request;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateBillRequest implements Request {
+public final class CreateBillRequest implements Payload {
     @NotNull(message = "El descuento es requerido")
     @PositiveOrZero(message = "El descuento debe ser mayor o igual a 0")
     @Max(value = 100, message = "El descuento no puede ser mayor a 100")

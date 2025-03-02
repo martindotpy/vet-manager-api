@@ -1,6 +1,6 @@
 package com.vluepixel.vetmanager.api.medicalrecord.treatment.domain.request;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateTreatmentRequest implements Request {
+public final class CreateTreatmentRequest implements Payload {
     @NotBlank(message = "La descripción es requerida")
     private String description;
     @NotNull(message = "El orden es requerido")

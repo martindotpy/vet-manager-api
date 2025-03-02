@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType;
 import com.vluepixel.vetmanager.api.shared.adapter.in.util.RegexConstants;
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateClientRequest implements Request {
+public final class CreateClientRequest implements Payload {
     @NotBlank(message = "El nombre es requerido")
     @Size(max = 50, message = "El nombre no puede tener más de 50 caracteres")
     private String firstName;

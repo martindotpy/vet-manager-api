@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.vluepixel.vetmanager.api.client.core.domain.enums.IdentificationType;
 import com.vluepixel.vetmanager.api.shared.adapter.in.util.RegexConstants;
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class UpdateClientRequest implements Request {
+public final class UpdateClientRequest implements Payload {
     @NotNull(message = "El id es requerido")
     @Positive(message = "El id debe ser mayor a 0")
     private Long id;

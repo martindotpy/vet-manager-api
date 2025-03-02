@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.vluepixel.vetmanager.api.shared.adapter.in.validation.JakartaValidator;
-import com.vluepixel.vetmanager.api.shared.domain.validation.ExternalRequestValidatorProvider;
+import com.vluepixel.vetmanager.api.shared.domain.validation.ExternalPayloadValidatorProvider;
 
 import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +26,11 @@ public class VetManagerApiApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Add external request validation
-        if (ExternalRequestValidatorProvider.get() == null)
-            ExternalRequestValidatorProvider.set(new JakartaValidator(validator));
+        // Add external payload validation
+        if (ExternalPayloadValidatorProvider.get() == null)
+            ExternalPayloadValidatorProvider.set(new JakartaValidator(validator));
 
         else
-            log.warn("External request validation provider already set");
+            log.warn("External payload validation provider already set");
     }
 }

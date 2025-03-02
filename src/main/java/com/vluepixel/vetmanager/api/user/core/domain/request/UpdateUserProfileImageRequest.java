@@ -1,7 +1,7 @@
 package com.vluepixel.vetmanager.api.user.core.domain.request;
 
 import com.vluepixel.vetmanager.api.image.core.domain.model.enums.ImageMimeType;
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class UpdateUserProfileImageRequest implements Request {
+public final class UpdateUserProfileImageRequest implements Payload {
     @NotNull(message = "El tipo de imagen es requerido")
     private ImageMimeType type;
     @NotNull(message = "Los datos de la imagen son requeridos")

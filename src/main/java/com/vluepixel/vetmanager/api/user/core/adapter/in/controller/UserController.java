@@ -28,7 +28,7 @@ import com.vluepixel.vetmanager.api.shared.domain.criteria.OrderType;
 import com.vluepixel.vetmanager.api.shared.domain.exception.InternalServerErrorException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
-import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
+import com.vluepixel.vetmanager.api.shared.domain.validation.PayloadValidation;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.InvalidStateValidation;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.ValidStateValidation;
 import com.vluepixel.vetmanager.api.user.core.adapter.in.response.PaginatedUserResponse;
@@ -154,7 +154,7 @@ public class UserController {
             throws ValidationException {
         return ok(() -> updateCurrentUserPort.updateCurrentUser(request),
                 "Usuario actualizado exitosamente",
-                ValidationRequest.of(request),
+                PayloadValidation.of(request),
                 ValidStateValidation.of(
                         request.getId().equals(getCurrentUserPort.get().getId()),
                         "path.id",
@@ -179,7 +179,7 @@ public class UserController {
             throws ValidationException {
         return ok(() -> updateCurrentUserPort.update(request),
                 "Usuario actualizado exitosamente",
-                ValidationRequest.of(request),
+                PayloadValidation.of(request),
                 ValidStateValidation.of(
                         request.getId().equals(id),
                         "path.id",
@@ -226,7 +226,7 @@ public class UserController {
             throws ValidationException {
         return ok(() -> updateUserEmailPort.updateCurrentUser(request),
                 "Usuario actualizado exitosamente",
-                ValidationRequest.of(request),
+                PayloadValidation.of(request),
                 ValidStateValidation.of(
                         request.getId().equals(getCurrentUserPort.get().getId()),
                         "path.id",
@@ -252,7 +252,7 @@ public class UserController {
             throws ValidationException, NotFoundException {
         return ok(() -> updateUserEmailPort.update(request),
                 "Usuario actualizado exitosamente",
-                ValidationRequest.of(request),
+                PayloadValidation.of(request),
                 ValidStateValidation.of(
                         request.getId().equals(id),
                         "path.id",

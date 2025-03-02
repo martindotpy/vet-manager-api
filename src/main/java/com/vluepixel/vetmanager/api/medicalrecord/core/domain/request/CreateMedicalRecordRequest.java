@@ -3,7 +3,7 @@ package com.vluepixel.vetmanager.api.medicalrecord.core.domain.request;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateMedicalRecordRequest implements Request {
+public final class CreateMedicalRecordRequest implements Payload {
     @NotBlank(message = "La razón es requerida")
     private String reason;
     @NotNull(message = "La fecha de ingreso es requerida")

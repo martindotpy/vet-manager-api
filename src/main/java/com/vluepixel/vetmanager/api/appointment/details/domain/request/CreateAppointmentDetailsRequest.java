@@ -2,7 +2,7 @@ package com.vluepixel.vetmanager.api.appointment.details.domain.request;
 
 import java.math.BigDecimal;
 
-import com.vluepixel.vetmanager.api.shared.domain.request.Request;
+import com.vluepixel.vetmanager.api.shared.domain.payload.Payload;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Max;
@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public final class CreateAppointmentDetailsRequest implements Request {
+public final class CreateAppointmentDetailsRequest implements Payload {
     @NotNull(message = "La duración de la cita es requerida")
     @Max(value = 1440, message = "La duración de la cita no puede ser mayor a 1440 minutos")
     @Positive(message = "La duración de la cita debe ser mayor a 0")

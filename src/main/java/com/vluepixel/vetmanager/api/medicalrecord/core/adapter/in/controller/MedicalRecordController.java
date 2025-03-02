@@ -24,7 +24,7 @@ import com.vluepixel.vetmanager.api.shared.adapter.in.response.FailureResponse;
 import com.vluepixel.vetmanager.api.shared.application.annotation.RestControllerAdapter;
 import com.vluepixel.vetmanager.api.shared.domain.exception.NotFoundException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
-import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
+import com.vluepixel.vetmanager.api.shared.domain.validation.PayloadValidation;
 import com.vluepixel.vetmanager.api.shared.domain.validation.impl.InvalidStateValidation;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -97,7 +97,7 @@ public final class MedicalRecordController {
                         !patientId.equals(request.getPatientId()),
                         "path.patient_id",
                         "El id del paciente no coincide con el id del historial médico"),
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**
@@ -125,7 +125,7 @@ public final class MedicalRecordController {
                         patientId < 1,
                         "path.patient_id",
                         "El id del paciente debe ser mayor a 0"),
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**

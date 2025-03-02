@@ -25,7 +25,7 @@ import com.vluepixel.vetmanager.api.shared.adapter.in.response.FailureResponse;
 import com.vluepixel.vetmanager.api.shared.application.annotation.RestControllerAdapter;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ConflictException;
 import com.vluepixel.vetmanager.api.shared.domain.exception.ValidationException;
-import com.vluepixel.vetmanager.api.shared.domain.validation.ValidationRequest;
+import com.vluepixel.vetmanager.api.shared.domain.validation.PayloadValidation;
 import com.vluepixel.vetmanager.api.user.core.adapter.in.response.UserResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -79,7 +79,7 @@ public class AuthController {
 
         return ok(() -> loginUserPort.login(request),
                 "Usuario " + request.getEmail() + " ha ingresado correctamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**
@@ -101,7 +101,7 @@ public class AuthController {
             throws ValidationException, ConflictException {
         return ok(() -> registerUserPort.register(request),
                 "Usuario " + request.getEmail() + " ha sido registrado correctamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 
     /**
@@ -121,6 +121,6 @@ public class AuthController {
             throws ValidationException, InvalidCredentialsException {
         return ok(() -> updatePasswordPort.update(request),
                 "Contraseña actualizada correctamente",
-                ValidationRequest.of(request));
+                PayloadValidation.of(request));
     }
 }
