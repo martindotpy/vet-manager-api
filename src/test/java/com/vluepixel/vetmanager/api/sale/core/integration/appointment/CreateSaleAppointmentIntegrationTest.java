@@ -371,7 +371,7 @@ public class CreateSaleAppointmentIntegrationTest extends BaseIntegrationTest {
 
     // Role: ADMIN
     @Test
-    @Order(1)
+    @Order(2)
     @DirtiesContext
     void admin_CreateSaleAppointmentWithValidArguments_Ok() throws Exception {
         mockMvc.perform(post("/sale")

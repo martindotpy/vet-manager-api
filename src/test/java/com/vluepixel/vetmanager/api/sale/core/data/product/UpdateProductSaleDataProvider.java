@@ -68,7 +68,7 @@ public class UpdateProductSaleDataProvider {
             .build();
 
     // Quantity
-    private static final int MAX_QUANTITY_VALUE = 999;
+    private static final int MAX_QUANTITY_VALUE = 99;
     public static final UpdateProductSaleRequest INVALID_QUANTITY_TOO_BIG_UPDATE_PRODUCT_SALE_REQUEST = UpdateProductSaleRequest
             .builder()
             .id(VALID_UPDATE_PRODUCT_SALE_REQUEST.getId())

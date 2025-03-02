@@ -22,6 +22,7 @@ import com.vluepixel.vetmanager.api.bill.sale.domain.request.CreateTreatmentSale
 public class CreateTreatmentSaleDataProvider {
     public static final CreateTreatmentSaleRequest VALID_CREATE_TREATMENT_SALE_REQUEST = CreateTreatmentSaleRequest
             .builder()
+            .billId(1L)
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
@@ -30,6 +31,7 @@ public class CreateTreatmentSaleDataProvider {
     // Treatment ID
     public static final CreateTreatmentSaleRequest INVALID_TREATMENT_ID_NOT_FOUND_CREATE_TREATMENT_SALE_REQUEST = CreateTreatmentSaleRequest
             .builder()
+            .billId(1L)
             .treatmentId(INVALID_TREATMENT_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
             .discount(VALID_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
