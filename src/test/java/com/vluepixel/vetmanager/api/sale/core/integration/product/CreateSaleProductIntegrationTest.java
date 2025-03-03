@@ -135,7 +135,7 @@ public class CreateSaleProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("product_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("El id del product debe ser mayor a 0")); // TODO
+                                .value("El id del producto debe ser mayor a 0"));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class CreateSaleProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("product_id"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("El id del product es requerido")); // TODO
+                                .value("El id del producto es requerido"));
     }
 
     // Quantity

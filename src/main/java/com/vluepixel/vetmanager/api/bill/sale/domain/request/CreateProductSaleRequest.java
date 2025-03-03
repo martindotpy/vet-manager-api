@@ -25,7 +25,7 @@ public final class CreateProductSaleRequest extends CreateSaleRequest {
     @Max(value = 99, message = "La cantidad no puede ser mayor a 99")
     private Integer quantity;
 
-    @NotNull(message = "El id del product es requerido")
-    @Positive(message = "El id del product debe ser mayor a 0")
+    @NotNull(message = "El id del producto es requerido")
+    @Positive(message = "El id del producto debe ser mayor a 0")
     private Long productId;
 }
