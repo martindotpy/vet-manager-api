@@ -70,7 +70,7 @@ public class UpdateTreatmentSaleDataProvider {
             .build();
 
     // Price
-    private static final int MAX_PRICE_VALUE = 999999;
+    private static final int MAX_PRICE_VALUE = 999;
     public static final UpdateTreatmentSaleRequest INVALID_PRICE_TOO_BIG_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
@@ -129,7 +129,7 @@ public class UpdateTreatmentSaleDataProvider {
             .discount(MAX_DISCOUNT_VALUE)
             .build();
 
-    public static final UpdateTreatmentSaleRequest INVALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
+    public static final UpdateTreatmentSaleRequest VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST = UpdateTreatmentSaleRequest
             .builder()
             .id(VALID_UPDATE_TREATMENT_SALE_REQUEST.getId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())

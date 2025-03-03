@@ -10,7 +10,7 @@ import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatm
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.INVALID_TREATMENT_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.INVALID_TREATMENT_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.VALID_DISCOUNT_MAX_VALUE_UPDATE_TREATMENT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.INVALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.VALID_PRICE_MAX_VALUE_UPDATE_TREATMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.INVALID_PRICE_ZERO_UPDATE_TREATMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.VALID_UPDATE_TREATMENT_SALE_REQUEST;
@@ -141,7 +141,7 @@ public class CreateTreatmentSaleDataProvider {
             .billId(VALID_CREATE_TREATMENT_SALE_REQUEST.getBillId())
             .treatmentId(VALID_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId())
             .price(VALID_UPDATE_TREATMENT_SALE_REQUEST.getPrice())
-            .discount(INVALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
+            .discount(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getDiscount())
             .build();
 
     public static final CreateTreatmentSaleRequest INVALID_DISCOUNT_NEGATIVE_CREATE_TREATMENT_SALE_REQUEST = CreateTreatmentSaleRequest

@@ -29,6 +29,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.function.Function;
+
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -42,8 +44,8 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Vacuna creada exitosamente";
     private static final String MESSAGE_VACCINATOR_NOT_FOUND = "Vacunador no encontrado(a)";
-    // private static final String MESSAGE_PRODUCT_SALE_NOT_FOUND = "Venta de
-    // producto no encontrado(a)";
+    private static final Function<String, String> MESSAGE_PRODUCT_SALE_NOT_FOUND = parameter -> String
+            .format("Venta de producto con id %s no encontrado(a)", parameter);
     private static final String MESSAGE_PATIENT_NOT_FOUND = "Paciente no encontrado(a)";
     private static final String MESSAGE_NOT_FOUND = "Vacuna con id 10 no encontrado(a)";
     // -----------------------------------------------------------------------------------------------------------------
@@ -693,7 +695,9 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
                         .writeValueAsString(INVALID_PRODUCT_SALE_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND));
+                .andExpect(jsonPath("$.message").value(MESSAGE_PRODUCT_SALE_NOT_FOUND
+                        .apply(INVALID_PRODUCT_SALE_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST.getProductSaleId()
+                                .toString())));
     }
 
     @Test
@@ -1164,7 +1168,9 @@ public class CreatePatientVaccineIntegrationTest extends BaseIntegrationTest {
                         .writeValueAsString(INVALID_PRODUCT_SALE_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(MESSAGE_NOT_FOUND));
+                .andExpect(jsonPath("$.message").value(MESSAGE_PRODUCT_SALE_NOT_FOUND
+                        .apply(INVALID_PRODUCT_SALE_ID_NOT_FOUND_CREATE_PATIENT_VACCINE_REQUEST.getProductSaleId()
+                                .toString())));
     }
 
     @Test

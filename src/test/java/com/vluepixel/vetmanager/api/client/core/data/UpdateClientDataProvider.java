@@ -397,7 +397,7 @@ public class UpdateClientDataProvider {
             .emails(new ArrayList<>() {
                 {
                     add(generateEmail(MAX_EMAIL_LENGTH));
-                    add(generateEmail(MAX_EMAIL_LENGTH));
+                    add(generateEmail(MAX_EMAIL_LENGTH - 1));
                 }
             })
             .phones(VALID_UPDATE_CLIENT_REQUEST.getPhones())
@@ -519,7 +519,7 @@ public class UpdateClientDataProvider {
             .phones(new ArrayList<>() {
                 {
                     add("9".repeat(MAX_PHONE_LENGTH));
-                    add("9".repeat(MAX_PHONE_LENGTH));
+                    add("9".repeat(MAX_PHONE_LENGTH - 1) + "0");
                 }
             })
             .build();

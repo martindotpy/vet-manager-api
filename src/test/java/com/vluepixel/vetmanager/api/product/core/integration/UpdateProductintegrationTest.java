@@ -43,7 +43,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
  */
 public class UpdateProductintegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Producto actualizado exitosamente";
-    private static final String MESSAGE_NOT_FOUND = "Product no encontrado(a)";
+    private static final String MESSAGE_NOT_FOUND = "Producto no encontrado(a)";
     private static final String MESSAGE_CATEGORY_NOT_FOUND = "Categoría no encontrado(a)";
     // -----------------------------------------------------------------------------------------------------------------
     // Without authentication:
@@ -494,7 +494,7 @@ public class UpdateProductintegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("price"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("El precio no puede ser mayor a 9999.99"));
+                                .value("El precio no puede ser mayor a 999.99"));
     }
 
     @Test
@@ -580,7 +580,7 @@ public class UpdateProductintegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("quantity"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("La cantidad no puede ser mayor a 999"));
+                                .value("La cantidad no puede ser mayor a 99"));
     }
 
     @Test
@@ -934,7 +934,7 @@ public class UpdateProductintegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("price"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("El precio no puede ser mayor a 9999.99"));
+                                .value("El precio no puede ser mayor a 999.99"));
     }
 
     @Test
@@ -1020,7 +1020,7 @@ public class UpdateProductintegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("quantity"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("La cantidad no puede ser mayor a 999"));
+                                .value("La cantidad no puede ser mayor a 99"));
     }
 
     @Test

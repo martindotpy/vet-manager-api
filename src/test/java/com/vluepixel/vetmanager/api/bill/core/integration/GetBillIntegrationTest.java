@@ -21,7 +21,7 @@ import com.vluepixel.vetmanager.api.base.BaseIntegrationTest;
 public class GetBillIntegrationTest extends BaseIntegrationTest {
     private static final String MESSAGE_OK = "Cuentas encontradas";
     private static final Function<String, String> MESSAGE_NOT_FOUND = parameter -> String
-            .format("Bill con id %s no encontrado(a)", parameter);
+            .format("Cuenta con id %s no encontrado(a)", parameter);
     private static final String MESSAGE_ID_OK = "Cuenta encontrada";
 
     // -----------------------------------------------------------------------------------------------------------------

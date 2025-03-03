@@ -131,7 +131,7 @@ public class UpdateProductDataprovider {
             .build();
 
     // Price
-    private static final int MAX_PRICE_VALUE = 9999;
+    private static final int MAX_PRICE_VALUE = 999;
     public static final UpdateProductRequest INVALID_PRICE_TOO_BIG_UPDATE_PRODUCT_REQUEST = UpdateProductRequest
             .builder()
             .id(VALID_UPDATE_PRODUCT_REQUEST.getId())
@@ -183,7 +183,7 @@ public class UpdateProductDataprovider {
             .build();
 
     // Quantity
-    private static final int MAX_QUANTITY_VALUE = 999;
+    private static final int MAX_QUANTITY_VALUE = 99;
     public static final UpdateProductRequest INVALID_QUANTITY_TOO_BIG_UPDATE_PRODUCT_REQUEST = UpdateProductRequest
             .builder()
             .id(VALID_UPDATE_PRODUCT_REQUEST.getId())

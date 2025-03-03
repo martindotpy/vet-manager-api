@@ -323,7 +323,7 @@ public class UpdateSaleProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("quantity"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("La cantidad no puede ser mayor a 999"));
+                                .value("La cantidad no puede ser mayor a 99"));
     }
 
     @Test
@@ -430,19 +430,21 @@ public class UpdateSaleProductIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_UpdateSaleProductWithValidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
+    void user_UpdateSaleProductWithValidArguments_Discount_Zero_Ok() throws Exception {
         mockMvc.perform(put("/sale")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("discount"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("El descuento debe ser mayor a 0"));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getId()),
+                        jsonPath("$.content.discount")
+                                .value(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getDiscount()),
+                        jsonPath("$.content.quantity")
+                                .value(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getQuantity()),
+                        jsonPath("$.content.product.id")
+                                .value(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getProductId()));
     }
 
     @Test
@@ -458,7 +460,7 @@ public class UpdateSaleProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("discount"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("El descuento debe ser mayor a 0"));
+                                .value("El descuento debe ser mayor o igual a 0"));
     }
 
     @Test
@@ -596,7 +598,7 @@ public class UpdateSaleProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("quantity"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("La cantidad no puede ser mayor a 999"));
+                                .value("La cantidad no puede ser mayor a 99"));
     }
 
     @Test
@@ -703,19 +705,21 @@ public class UpdateSaleProductIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_UpdateSaleProductWithValidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
+    void admin_UpdateSaleProductWithValidArguments_Discount_Zero_Ok() throws Exception {
         mockMvc.perform(put("/sale")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("discount"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages[0]")
-                                .value("El descuento debe ser mayor a 0"));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getId()),
+                        jsonPath("$.content.discount")
+                                .value(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getDiscount()),
+                        jsonPath("$.content.quantity")
+                                .value(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getQuantity()),
+                        jsonPath("$.content.product.id")
+                                .value(INVALID_DISCOUNT_ZERO_UPDATE_PRODUCT_SALE_REQUEST.getProductId()));
     }
 
     @Test
@@ -731,7 +735,7 @@ public class UpdateSaleProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details[0].field").value("discount"),
                         jsonPath("$.details[0].messages.length()").value(1),
                         jsonPath("$.details[0].messages[0]")
-                                .value("El descuento debe ser mayor a 0"));
+                                .value("El descuento debe ser mayor o igual a 0"));
     }
 
     @Test

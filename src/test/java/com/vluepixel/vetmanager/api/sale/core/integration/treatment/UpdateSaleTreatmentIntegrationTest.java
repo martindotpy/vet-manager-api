@@ -16,7 +16,7 @@ import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatm
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.INVALID_TREATMENT_ID_NOT_FOUND_UPDATE_TREATMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.INVALID_TREATMENT_ID_NULL_UPDATE_TREATMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.VALID_DISCOUNT_MAX_VALUE_UPDATE_TREATMENT_SALE_REQUEST;
-import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.INVALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.VALID_PRICE_MAX_VALUE_UPDATE_TREATMENT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.treatment.UpdateTreatmentSaleDataProvider.VALID_UPDATE_TREATMENT_SALE_REQUEST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -176,7 +176,7 @@ public class UpdateSaleTreatmentIntegrationTest extends BaseIntegrationTest {
     void noUser_UpdateSaleTreatmentWithInvalidArguments_Discount_Zero_Forbidden() throws Exception {
         mockMvc.perform(put("/sale")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST)))
+                .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST)))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.message").value(MESSAGE_FORBIDDEN));
     }
@@ -323,7 +323,7 @@ public class UpdateSaleTreatmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("price"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El precio no puede ser mayor a 999999.99"));
+                        jsonPath("$.details[0].messages").value("El precio no puede ser mayor a 999.99"));
     }
 
     @Test
@@ -432,19 +432,23 @@ public class UpdateSaleTreatmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_UpdateSaleTreatmentWithInvalidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
+    @DirtiesContext
+    void user_UpdateSaleTreatmentWithInvalidArguments_Discount_Zero_Ok() throws Exception {
         mockMvc.perform(put("/sale")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST))
+                .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST))
                 .header("Authorization", BEARER_USER_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details").isArray(),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("discount"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El descuento debe ser mayor a 0"));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getId()),
+                        jsonPath("$.content.discount")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getDiscount()),
+                        jsonPath("$.content.price")
+                                .value(Double.parseDouble(
+                                        VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getPrice().toString())),
+                        jsonPath("$.content.treatment.id")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId()));
     }
 
     @Test
@@ -460,7 +464,7 @@ public class UpdateSaleTreatmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("discount"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El descuento debe ser mayor a 0"));
+                        jsonPath("$.details[0].messages").value("El descuento debe ser mayor o igual a 0"));
     }
 
     @Test
@@ -599,7 +603,7 @@ public class UpdateSaleTreatmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("price"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El precio no puede ser mayor a 999999.99"));
+                        jsonPath("$.details[0].messages").value("El precio no puede ser mayor a 999.99"));
     }
 
     @Test
@@ -708,19 +712,23 @@ public class UpdateSaleTreatmentIntegrationTest extends BaseIntegrationTest {
     }
 
     @Test
-    void admin_UpdateSaleTreatmentWithInvalidArguments_Discount_Zero_UnprocessableEntity() throws Exception {
+    @DirtiesContext
+    void admin_UpdateSaleTreatmentWithInvalidArguments_Discount_Zero_Ok() throws Exception {
         mockMvc.perform(put("/sale")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(INVALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST))
+                .content(objectMapper.writeValueAsString(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST))
                 .header("Authorization", BEARER_ADMIN_JWT))
-                .andExpect(status().isUnprocessableEntity())
+                .andExpect(status().isOk())
                 .andExpectAll(
-                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
-                        jsonPath("$.details").isArray(),
-                        jsonPath("$.details.length()").value(1),
-                        jsonPath("$.details[0].field").value("discount"),
-                        jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El descuento debe ser mayor a 0"));
+                        jsonPath("$.message").value(MESSAGE_OK),
+                        jsonPath("$.content.id").value(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getId()),
+                        jsonPath("$.content.discount")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getDiscount()),
+                        jsonPath("$.content.price")
+                                .value(Double.parseDouble(
+                                        VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getPrice().toString())),
+                        jsonPath("$.content.treatment.id")
+                                .value(VALID_DISCOUNT_ZERO_UPDATE_TREATMENT_SALE_REQUEST.getTreatmentId()));
     }
 
     @Test
@@ -736,7 +744,7 @@ public class UpdateSaleTreatmentIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.details.length()").value(1),
                         jsonPath("$.details[0].field").value("discount"),
                         jsonPath("$.details[0].messages.length()").value(1),
-                        jsonPath("$.details[0].messages").value("El descuento debe ser mayor a 0"));
+                        jsonPath("$.details[0].messages").value("El descuento debe ser mayor o igual a 0"));
     }
 
     @Test
