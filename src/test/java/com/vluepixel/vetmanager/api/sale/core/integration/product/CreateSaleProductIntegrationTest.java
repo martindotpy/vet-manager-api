@@ -1,6 +1,9 @@
 package com.vluepixel.vetmanager.api.sale.core.integration.product;
 
 import static com.vluepixel.vetmanager.api.auth.core.data.AuthDataProvider.BEARER_ADMIN_JWT;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.CreateProductSaleDataProvider.INVALID_BILL_ID_NEGATIVE_CREATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.CreateProductSaleDataProvider.INVALID_BILL_ID_NOT_FOUND_CREATE_PRODUCT_SALE_REQUEST;
+import static com.vluepixel.vetmanager.api.sale.core.data.product.CreateProductSaleDataProvider.INVALID_BILL_ID_NULL_CREATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.CreateProductSaleDataProvider.INVALID_PRODUCT_ID_NEGATIVE_CREATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.CreateProductSaleDataProvider.INVALID_PRODUCT_ID_NOT_FOUND_CREATE_PRODUCT_SALE_REQUEST;
 import static com.vluepixel.vetmanager.api.sale.core.data.product.CreateProductSaleDataProvider.INVALID_PRODUCT_ID_NULL_CREATE_PRODUCT_SALE_REQUEST;
@@ -61,6 +64,50 @@ public class CreateSaleProductIntegrationTest extends BaseIntegrationTest {
                         jsonPath("$.content.discount").value(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount()),
                         jsonPath("$.content.product.id").value(VALID_CREATE_PRODUCT_SALE_REQUEST.getProductId()),
                         jsonPath("$.content.quantity").value(VALID_CREATE_PRODUCT_SALE_REQUEST.getQuantity()));
+    }
+
+    // Bill ID
+    @Test // TODO
+    void admin_CreateSaleProductWithInvalidArguments_BillID_NotFound_NotFound() throws Exception {
+        mockMvc.perform(post("/sale")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_BILL_ID_NOT_FOUND_CREATE_PRODUCT_SALE_REQUEST))
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(MESSAGE_PRODUCT_NOT_FOUND
+                        .apply(INVALID_BILL_ID_NOT_FOUND_CREATE_PRODUCT_SALE_REQUEST.getBillId().toString())));
+    }
+
+    @Test
+    void admin_CreateSaleProductWithInvalidArguments_BillID_Negative_UnprocessableEntity() throws Exception {
+        mockMvc.perform(post("/sale")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_BILL_ID_NEGATIVE_CREATE_PRODUCT_SALE_REQUEST))
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("bill_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]")
+                                .value("El id de la cuenta debe ser mayor a 0"));
+    }
+
+    @Test
+    void admin_CreateSaleProductWithInvalidArguments_BillID_Null_UnprocessableEntity() throws Exception {
+        mockMvc.perform(post("/sale")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(INVALID_BILL_ID_NULL_CREATE_PRODUCT_SALE_REQUEST))
+                .header("Authorization", BEARER_ADMIN_JWT))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpectAll(
+                        jsonPath("$.message").value(MESSAGE_UNPROCESSABLE_ENTITY),
+                        jsonPath("$.details.length()").value(1),
+                        jsonPath("$.details[0].field").value("bill_id"),
+                        jsonPath("$.details[0].messages.length()").value(1),
+                        jsonPath("$.details[0].messages[0]")
+                                .value("El id de la cuenta es requerido"));
     }
 
     // Product ID

@@ -28,6 +28,31 @@ public class CreateProductSaleDataProvider {
             .discount(VALID_UPDATE_PRODUCT_SALE_REQUEST.getDiscount())
             .build();
 
+    // Bill ID
+    public static final CreateProductSaleRequest INVALID_BILL_ID_NOT_FOUND_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
+            .builder()
+            .billId(10L)
+            .productId(VALID_CREATE_PRODUCT_SALE_REQUEST.getProductId())
+            .quantity(VALID_CREATE_PRODUCT_SALE_REQUEST.getQuantity())
+            .discount(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount())
+            .build();
+
+    public static final CreateProductSaleRequest INVALID_BILL_ID_NEGATIVE_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
+            .builder()
+            .billId(-1L)
+            .productId(VALID_CREATE_PRODUCT_SALE_REQUEST.getProductId())
+            .quantity(VALID_CREATE_PRODUCT_SALE_REQUEST.getQuantity())
+            .discount(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount())
+            .build();
+
+    public static final CreateProductSaleRequest INVALID_BILL_ID_NULL_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
+            .builder()
+            .billId(null)
+            .productId(VALID_CREATE_PRODUCT_SALE_REQUEST.getProductId())
+            .quantity(VALID_CREATE_PRODUCT_SALE_REQUEST.getQuantity())
+            .discount(VALID_CREATE_PRODUCT_SALE_REQUEST.getDiscount())
+            .build();
+
     // Product ID
     public static final CreateProductSaleRequest INVALID_PRODUCT_ID_NOT_FOUND_CREATE_PRODUCT_SALE_REQUEST = CreateProductSaleRequest
             .builder()
